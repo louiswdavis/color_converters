@@ -1,13 +1,12 @@
 module ColorConversion
   class NullConverter < ColorConverter
-
-    def self.matches?(color)
+    def self.matches?(_color)
       true
     end
 
     private
-    
-    def to_rgba(color)
+
+    def to_rgba(_color)
       raise InvalidColorError
     end
   end

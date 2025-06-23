@@ -1,10 +1,11 @@
 ## Color Conversion
 
-This gem provides conversions for colors to and from Hex, RGB, and HSL. 
+This gem provides conversions for colors to and from Hex, RGB, and HSL.
 
 ## Examples
 
 Initialize a color:
+
 ```ruby
 # from hex
 color = Color.new("#3366cc")
@@ -73,10 +74,9 @@ color.name
 => "steelblue"
 ```
 
-
 ## Installation
 
-To install ColorConversion, add the gem to your Gemfile: 
+To install ColorConversion, add the gem to your Gemfile:
 
 ```ruby
 gem "color_conversion"

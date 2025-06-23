@@ -1,89 +1,88 @@
 require 'spec_helper'
 
-describe ColorConverter do 
-  
-  describe ".rgb" do 
-    it "converts color to rgb" do 
+describe ColorConverter do
+  describe '.rgb' do
+    it 'converts color to rgb' do
       conv = RgbConverter.new(r: 51, g: 102, b: 204)
-      
-      rgb = {r: 51, g: 102, b: 204}
+
+      rgb = { r: 51, g: 102, b: 204 }
       expect(conv.rgb).to eq rgb
     end
   end
-  
-  describe ".hex" do 
-    it "converts color to hex" do 
-      conv = RgbConverter.new(r: 51, g: 102, b: 204)      
-      expect(conv.hex).to eq "#3366cc"
+
+  describe '.hex' do
+    it 'converts color to hex' do
+      conv = RgbConverter.new(r: 51, g: 102, b: 204)
+      expect(conv.hex).to eq '#3366cc'
     end
   end
-  
-  describe ".hsl" do 
-    it "converts color to hsl" do 
+
+  describe '.hsl' do
+    it 'converts color to hsl' do
       conv = RgbConverter.new(r: 51, g: 102, b: 204)
-      
-      hsl = {h: 220, s: 60, l: 50}
+
+      hsl = { h: 220, s: 60, l: 50 }
       expect(conv.hsl).to eq hsl
     end
   end
-  
-  describe ".hsv" do 
-    it "converts color to hsv" do 
+
+  describe '.hsv' do
+    it 'converts color to hsv' do
       conv = RgbConverter.new(r: 51, g: 102, b: 204)
-      
-      hsv = {h: 220, s: 75, v: 80}
+
+      hsv = { h: 220, s: 75, v: 80 }
       expect(conv.hsv).to eq hsv
     end
   end
-  
-  describe ".hsb" do 
-    it "converts color to hsb" do 
+
+  describe '.hsb' do
+    it 'converts color to hsb' do
       conv = RgbConverter.new(r: 51, g: 102, b: 204)
-      
-      hsb = {h: 220, s: 75, b: 80}
+
+      hsb = { h: 220, s: 75, b: 80 }
       expect(conv.hsb).to eq hsb
     end
   end
 
-  describe ".cmyk" do 
-    it "converts color to cmyk" do 
+  describe '.cmyk' do
+    it 'converts color to cmyk' do
       conv = RgbConverter.new(r: 64, g: 104, b: 193)
 
-      cmyk = {c: 67, m: 46, y: 0, k: 24}
+      cmyk = { c: 67, m: 46, y: 0, k: 24 }
       expect(conv.cmyk).to eq cmyk
     end
   end
 
-  describe ".xyz" do 
-    it "converts color to xyz" do 
+  describe '.xyz' do
+    it 'converts color to xyz' do
       conv = RgbConverter.new(r: 64, g: 104, b: 193)
-      xyz = {x: 16.69, y: 14.84, z: 52.43}
+      xyz = { x: 16.69, y: 14.84, z: 52.43 }
       expect(conv.xyz).to eq xyz
 
       conv = RgbConverter.new(r: 255, g: 255, b: 255)
-      xyz = {x: 95.05, y: 100.0, z: 108.88}
+      xyz = { x: 95.05, y: 100.0, z: 108.88 }
       expect(conv.xyz).to eq xyz
 
       conv = RgbConverter.new(r: 0, g: 0, b: 0)
-      xyz = {x: 0.0, y: 0.0, z: 0.0}
+      xyz = { x: 0.0, y: 0.0, z: 0.0 }
       expect(conv.xyz).to eq xyz
     end
   end
-  
-  describe ".name" do 
-    it "converts color to name" do 
+
+  describe '.name' do
+    it 'converts color to name' do
       conv = RgbConverter.new(r: 255, g: 0, b: 0)
-      expect(conv.name).to eq "red"
+      expect(conv.name).to eq 'red'
     end
-    
-    it "returns nil if no name found" do 
+
+    it 'returns nil if no name found' do
       conv = RgbConverter.new(r: 255, g: 0, b: 1)
       expect(conv.name).to be_nil
     end
   end
-  
-  describe ".alpha" do 
-    it "finds alpha for color" do 
+
+  describe '.alpha' do
+    it 'finds alpha for color' do
       conv = RgbConverter.new(r: 51, g: 102, b: 204, a: 0.5)
       expect(conv.alpha).to eq 0.5
     end

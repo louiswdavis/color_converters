@@ -1,5 +1,5 @@
 #!/usr/bin/env rake
-require "bundler/gem_tasks"
+require 'bundler/gem_tasks'
 
 require 'rspec/core/rake_task'
 
@@ -19,4 +19,4 @@ namespace :spec do
   end
 end
 
-task :default => :spec
+task default: :spec

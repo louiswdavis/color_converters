@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'bundler/setup'
 
-require_relative '../lib/color_conversion.rb'
+require_relative '../lib/color_conversion'
 
 include ColorConversion
 

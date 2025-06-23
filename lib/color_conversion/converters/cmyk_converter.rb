@@ -1,11 +1,10 @@
 module ColorConversion
   class CmykConverter < ColorConverter
-
     def self.matches?(color)
-      return false unless color.kind_of?(Hash)
+      return false unless color.is_a?(Hash)
 
-      color.include?(:c) && color.include?(:m) && 
-      color.include?(:y) && color.include?(:k)
+      color.include?(:c) && color.include?(:m) &&
+        color.include?(:y) && color.include?(:k)
     end
 
     private
@@ -20,7 +19,7 @@ module ColorConversion
       g = (255 * (1.0 - [1.0, m * (1.0 - k) + k].min)).round
       b = (255 * (1.0 - [1.0, y * (1.0 - k) + k].min)).round
 
-      {r: r, g: g, b: b, a: 1.0}
+      { r: r, g: g, b: b, a: 1.0 }
     end
   end
 end
