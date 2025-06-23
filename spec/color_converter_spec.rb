@@ -53,6 +53,22 @@ describe ColorConverter do
       expect(conv.cmyk).to eq cmyk
     end
   end
+
+  describe ".xyz" do 
+    it "converts color to xyz" do 
+      conv = RgbConverter.new(r: 64, g: 104, b: 193)
+      xyz = {x: 16.69, y: 14.84, z: 52.43}
+      expect(conv.xyz).to eq xyz
+
+      conv = RgbConverter.new(r: 255, g: 255, b: 255)
+      xyz = {x: 95.05, y: 100.0, z: 108.88}
+      expect(conv.xyz).to eq xyz
+
+      conv = RgbConverter.new(r: 0, g: 0, b: 0)
+      xyz = {x: 0.0, y: 0.0, z: 0.0}
+      expect(conv.xyz).to eq xyz
+    end
+  end
   
   describe ".name" do 
     it "converts color to name" do 

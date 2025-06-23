@@ -90,6 +90,11 @@ describe Color do
       color = Color.new(c: 74, m: 58, y: 22, k: 3)
       expect(color.rgb).to eq(r: 64, g: 104, b: 193)
     end
+
+    it "should initialize color by xyz" do
+      color = Color.new(x: 45, y: 23, z: 64)
+      expect(color.rgb).to eq(r: 229, g: 41, b: 211)
+    end
   end
 
   describe ".==" do
