@@ -25,6 +25,9 @@ color = Color.new(h: 220, s: 75, b: 80)
 # from cmyk
 color = Color.new(c: 74, m: 58, y: 22, k: 3)
 
+# from xyz
+color = Color.new(x: 16, y: 44, z: 32)
+
 # from textual color
 color = Color.new("blue")
 
@@ -59,6 +62,9 @@ color.hsb
 
 color.cmyk
 => {:c=>61, :m=>28, :y=>0, :k=>29}
+
+color.xyz
+=> {:x=>33, :y=>21, :z=>54}
 
 color.hex
 => "#4682b4"
