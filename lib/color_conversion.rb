@@ -14,6 +14,7 @@ require 'color_conversion/converters/cmyk_converter'
 require 'color_conversion/converters/hsl_converter'
 require 'color_conversion/converters/hsv_converter'
 require 'color_conversion/converters/rgb_converter'
+require 'color_conversion/converters/xyz_converter'
 require 'color_conversion/converters/null_converter'
 
 module ColorConversion
