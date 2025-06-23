@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'forwardable'
 
 require 'color_conversion/version'
-require 'color_conversion/errors'
+
 require 'color_conversion/color'
 require 'color_conversion/color_converter'
 
@@ -17,5 +19,8 @@ require 'color_conversion/converters/rgb_converter'
 require 'color_conversion/converters/xyz_converter'
 require 'color_conversion/converters/null_converter'
 
-module ColorConversion
+module ColorNamerRuby
+  class Error < StandardError; end
+  class InvalidColorError < Error; end
+  # Your code goes here...
 end

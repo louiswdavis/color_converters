@@ -3,8 +3,7 @@ module ColorConversion
     def self.matches?(color)
       return false unless color.is_a?(Hash)
 
-      color.include?(:c) && color.include?(:m) &&
-        color.include?(:y) && color.include?(:k)
+      color.include?(:c) && color.include?(:m) && color.include?(:y) && color.include?(:k)
     end
 
     private
