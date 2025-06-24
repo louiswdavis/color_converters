@@ -1,6 +1,11 @@
+require 'active_support/core_ext/object/blank'
+
 module ColorConversion
   class ColorConverter
-    attr_reader :rgba
+    IMPORT_DP = 2
+    OUTPUT_DP = 2
+
+    attr_reader :original_value, :rgba
 
     # keep track of subclasses for factory
     class << self
@@ -20,12 +25,13 @@ module ColorConversion
       converter.new(color) if converter
     end
 
-    def initialize(color)
-      @rgba = to_rgba(color)
+    def initialize(color_input)
+      @original_value = color_input
+      @rgba = self.input_to_rgba(color_input) # method is defined in each convertor
     end
 
     def rgb
-      { r: @rgba[:r], g: @rgba[:g], b: @rgba[:b] }
+      { r: @rgba[:r].round(OUTPUT_DP), g: @rgba[:g].round(OUTPUT_DP), b: @rgba[:b].round(OUTPUT_DP) }
     end
 
     def hex
@@ -33,42 +39,46 @@ module ColorConversion
     end
 
     def hsl
-      @r, @g, @b = rgb_array_frac
+      @r, @g, @b = self.rgb_array_frac
 
-      { h: hue, s: hsl_saturation, l: hsl_lightness }
+      { h: hue.round(OUTPUT_DP), s: hsl_saturation.round(OUTPUT_DP), l: hsl_lightness.round(OUTPUT_DP) }
     end
 
     def hsv
-      @r, @g, @b = rgb_array
+      @r, @g, @b = self.rgb_array
 
-      { h: hue, s: hsv_saturation, v: hsv_value }
+      { h: hue.round(OUTPUT_DP), s: hsv_saturation.round(OUTPUT_DP), v: hsv_value.round(OUTPUT_DP) }
     end
 
     def hsb
-      hsb = hsv
-      hsb[:b] = hsb.delete(:v)
-      hsb
+      hsb_hash = self.hsv
+      hsb_hash[:b] = hsb_hash.delete(:v)
+      hsb_hash
     end
 
     def cmyk
-      @r, @g, @b = rgb_array_frac
+      @r, @g, @b = self.rgb_array_frac
 
-      k = [1.0 - @r, 1.0 - @g, 1.0 - @b].min
-      c = (1.0 - @r - k) / (1.0 - k)
-      m = (1.0 - @g - k) / (1.0 - k)
-      y = (1.0 - @b - k) / (1.0 - k)
+      k = (1.0 - [@r, @g, @b].max)
+      k_frac = k == 1.0 ? 1.0 : 1.0 - k
 
-      { c: (c * 100).round,
-        m: (m * 100).round,
-        y: (y * 100).round,
-        k: (k * 100).round }
+      c = (1.0 - @r - k) / k_frac
+      m = (1.0 - @g - k) / k_frac
+      y = (1.0 - @b - k) / k_frac
+
+      c *= 100
+      m *= 100
+      y *= 100
+      k *= 100
+
+      { c: c.round(OUTPUT_DP), m: m.round(OUTPUT_DP), y: y.round(OUTPUT_DP), k: k.round(OUTPUT_DP) }
     end
 
     # http://www.brucelindbloom.com/index.html?Eqn_RGB_to_XYZ.html
     def xyz
       x, y, z = to_xyz
 
-      { x: x.round(2), y: y.round(2), z: z.round(2) }
+      { x: x.round(OUTPUT_DP), y: y.round(OUTPUT_DP), z: z.round(OUTPUT_DP) }
     end
 
     def alpha
@@ -89,61 +99,63 @@ module ColorConversion
       [@rgba[:r] / 255.0, @rgba[:g] / 255.0, @rgba[:b] / 255.0]
     end
 
-    def min
+    def rgb_min
       [@r, @g, @b].min
     end
 
-    def max
+    def rgb_max
       [@r, @g, @b].max
     end
 
-    def delta
-      max - min
+    def rgb_delta
+      rgb_max - rgb_min
     end
 
     def hue
-      h = if max == min
-            0
-          elsif @r == max
-            (@g - @b) / delta
-          elsif @g == max
-            2 + (@b - @r) / delta
-          elsif @b == max
-            4 + (@r - @g) / delta
-          end
+      h = 0
+
+      case true
+      when rgb_max == rgb_min
+        h = 0
+      when @r == rgb_max
+        h = (@g - @b) / rgb_delta
+      when @g == rgb_max
+        h = 2 + (@b - @r) / rgb_delta
+      when @b == rgb_max
+        h = 4 + (@r - @g) / rgb_delta
+      end
 
       h = [h * 60, 360].min
-      h += 360 if h < 0
-      h.round
+      h % 360
     end
 
     # hsv
     def hsv_saturation
-      sat = max.zero? ? 0 : (delta / max * 1000) / 10.0
-      sat.round
+      rgb_max.zero? ? 0 : ((rgb_delta / rgb_max * 1000) / 10.0)
     end
 
     def hsv_value
-      val = ((max / 255.0) * 1000) / 10.0
-      val.round
+      ((rgb_max / 255.0) * 1000) / 10.0
     end
 
     # hsl
     def hsl_saturation
-      s = if max == min
-            0
-          elsif hsl_lightness / 100.0 <= 0.5
-            delta / (max + min)
-          else
-            delta / (2.0 - max - min)
-          end
+      s = 0
 
-      (s * 100).round
+      case true
+      when rgb_max == rgb_min
+        s = 0
+      when (hsl_lightness / 100.0) <= 0.5
+        s = rgb_delta / (rgb_max + rgb_min)
+      else
+        s = rgb_delta / (2.0 - rgb_max - rgb_min)
+      end
+
+      s * 100
     end
 
     def hsl_lightness
-      light = (min + max) / 2.0 * 100
-      light.round
+      (rgb_min + rgb_max) / 2.0 * 100
     end
 
     def to_xyz

@@ -1,18 +1,21 @@
 module ColorConversion
   class HslConverter < ColorConverter
-    def self.matches?(color)
-      return false unless color.is_a?(Hash)
+    def self.matches?(color_input)
+      return false unless color_input.is_a?(Hash)
 
-      color.include?(:h) && color.include?(:s) && color.include?(:l)
+      color_input.keys - [:h, :s, :l] == [] || color_input.keys - [:h, :s, :l, :a] == []
+    end
+
+    def rgb_to_hsl
     end
 
     private
 
-    def to_rgba(hsl)
-      h = hsl[:h].to_s.gsub(/[^0-9.]/, '').to_f / 360.0
-      s = hsl[:s].to_s.gsub(/[^0-9.]/, '').to_f / 100.0
-      l = hsl[:l].to_s.gsub(/[^0-9.]/, '').to_f / 100.0
-      a = hsl[:a] ? hsl[:a].to_s.gsub(/[^0-9.]/, '').to_f : 1.0
+    def input_to_rgba(color_input)
+      h = color_input[:h].to_s.gsub(/[^0-9.]/, '').to_f / 360.0
+      s = color_input[:s].to_s.gsub(/[^0-9.]/, '').to_f / 100.0
+      l = color_input[:l].to_s.gsub(/[^0-9.]/, '').to_f / 100.0
+      a = color_input[:a] ? color_input[:a].to_s.gsub(/[^0-9.]/, '').to_f : 1.0
 
       return greyscale(l, a) if s.zero?
 
@@ -41,14 +44,14 @@ module ColorConversion
                 t1
               end
 
-        rgb[i] = (val * 255).round
+        rgb[i] = (val * 255).round(IMPORT_DP)
       end
 
       { r: rgb[0], g: rgb[1], b: rgb[2], a: a }
     end
 
     def greyscale(luminosity, alpha)
-      rgb_equal_value = (luminosity * 255).round
+      rgb_equal_value = (luminosity * 255).round(IMPORT_DP)
       { r: rgb_equal_value, g: rgb_equal_value, b: rgb_equal_value, a: alpha }
     end
   end

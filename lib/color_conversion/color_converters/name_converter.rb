@@ -1,25 +1,33 @@
 module ColorConversion
   class NameConverter < ColorConverter
-    def self.matches?(color)
-      return false unless color.is_a?(String)
+    def self.matches?(color_input)
+      return false unless color_input.is_a?(String)
 
-      color_names.include?(color.downcase.to_sym)
+      self.color_names.include?(color_input.downcase.to_sym)
     end
 
-    def self.name_for_rgb(rgb)
-      name = color_names.find { |_k, v| v == [rgb[:r], rgb[:g], rgb[:b]] }
+    def self.name_for_rgb(rgb_hash)
+      r = rgb_hash[:r].round
+      g = rgb_hash[:g].round
+      b = rgb_hash[:b].round
+
+      name = self.color_names.find { |_k, v| v == [r, g, b] }
       name[0].to_s if name
     end
 
     private
 
-    def to_rgba(name)
-      rgb = self.class.color_names[name.downcase.to_sym]
-      { r: rgb[0], g: rgb[1], b: rgb[2], a: 1.0 }
+    def input_to_rgba(color_input)
+      found_colour = self.class.color_names[color_input.downcase.to_sym]
+      raise InvalidColorError unless found_colour.present?
+
+      r, g, b = found_colour
+      { r: r, g: g, b: b, a: 1.0 }
     end
 
     def self.color_names
-      { aliceblue: [240, 248, 255],
+      {
+        aliceblue: [240, 248, 255],
         antiquewhite: [250, 235, 215],
         aqua: [0, 255, 255],
         aquamarine: [127, 255, 212],
@@ -165,7 +173,8 @@ module ColorConversion
         white: [255, 255, 255],
         whitesmoke: [245, 245, 245],
         yellow: [255, 255, 0],
-        yellowgreen: [154, 205, 50] }
+        yellowgreen: [154, 205, 50]
+      }
     end
   end
 end

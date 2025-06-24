@@ -6,7 +6,7 @@ module ColorConversion
 
     private
 
-    def to_rgba(_color)
+    def input_to_rgba(_color)
       raise InvalidColorError
     end
   end
