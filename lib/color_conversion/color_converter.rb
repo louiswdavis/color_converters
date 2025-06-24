@@ -19,9 +19,7 @@ module ColorConversion
     end
 
     def self.factory(color)
-      converter = ColorConverter.converters.find do |klass|
-        klass.matches?(color)
-      end
+      converter = ColorConverter.converters.find { |klass| klass.matches?(color) }
       converter.new(color) if converter
     end
 
@@ -35,19 +33,15 @@ module ColorConversion
     end
 
     def hex
-      "##{'%02x' % @rgba[:r] + '%02x' % @rgba[:g] + '%02x' % @rgba[:b]}"
+      self.rgb_to_hex
     end
 
     def hsl
-      @r, @g, @b = self.rgb_array_frac
-
-      { h: hue.round(OUTPUT_DP), s: hsl_saturation.round(OUTPUT_DP), l: hsl_lightness.round(OUTPUT_DP) }
+      self.rgb_to_hsl
     end
 
     def hsv
-      @r, @g, @b = self.rgb_array
-
-      { h: hue.round(OUTPUT_DP), s: hsv_saturation.round(OUTPUT_DP), v: hsv_value.round(OUTPUT_DP) }
+      self.rgb_to_hsv
     end
 
     def hsb
@@ -57,28 +51,11 @@ module ColorConversion
     end
 
     def cmyk
-      @r, @g, @b = self.rgb_array_frac
-
-      k = (1.0 - [@r, @g, @b].max)
-      k_frac = k == 1.0 ? 1.0 : 1.0 - k
-
-      c = (1.0 - @r - k) / k_frac
-      m = (1.0 - @g - k) / k_frac
-      y = (1.0 - @b - k) / k_frac
-
-      c *= 100
-      m *= 100
-      y *= 100
-      k *= 100
-
-      { c: c.round(OUTPUT_DP), m: m.round(OUTPUT_DP), y: y.round(OUTPUT_DP), k: k.round(OUTPUT_DP) }
+      self.rgb_to_cmyk
     end
 
-    # http://www.brucelindbloom.com/index.html?Eqn_RGB_to_XYZ.html
     def xyz
-      x, y, z = to_xyz
-
-      { x: x.round(OUTPUT_DP), y: y.round(OUTPUT_DP), z: z.round(OUTPUT_DP) }
+      self.rgb_to_xyz
     end
 
     def alpha
@@ -86,7 +63,7 @@ module ColorConversion
     end
 
     def name
-      NameConverter.name_for_rgb(rgb)
+      self.rgb_to_name
     end
 
     protected
@@ -108,100 +85,84 @@ module ColorConversion
     end
 
     def rgb_delta
-      rgb_max - rgb_min
+      self.rgb_max - self.rgb_min
     end
 
     def hue
       h = 0
 
       case true
-      when rgb_max == rgb_min
+      when self.rgb_max == self.rgb_min
         h = 0
-      when @r == rgb_max
-        h = (@g - @b) / rgb_delta
-      when @g == rgb_max
-        h = 2 + (@b - @r) / rgb_delta
-      when @b == rgb_max
-        h = 4 + (@r - @g) / rgb_delta
+      when self.rgb_max == @r
+        h = (@g - @b) / self.rgb_delta
+      when self.rgb_max == @g
+        h = 2 + (@b - @r) / self.rgb_delta
+      when self.rgb_max == @b
+        h = 4 + (@r - @g) / self.rgb_delta
       end
 
       h = [h * 60, 360].min
       h % 360
     end
 
-    # hsv
-    def hsv_saturation
-      rgb_max.zero? ? 0 : ((rgb_delta / rgb_max * 1000) / 10.0)
-    end
-
-    def hsv_value
-      ((rgb_max / 255.0) * 1000) / 10.0
-    end
-
-    # hsl
     def hsl_saturation
       s = 0
 
       case true
-      when rgb_max == rgb_min
+      when self.rgb_max == self.rgb_min
         s = 0
-      when (hsl_lightness / 100.0) <= 0.5
-        s = rgb_delta / (rgb_max + rgb_min)
+      when (self.hsl_lightness / 100.0) <= 0.5
+        s = self.rgb_delta / (self.rgb_max + self.rgb_min)
       else
-        s = rgb_delta / (2.0 - rgb_max - rgb_min)
+        s = self.rgb_delta / (2.0 - self.rgb_max - self.rgb_min)
       end
 
       s * 100
     end
 
     def hsl_lightness
-      (rgb_min + rgb_max) / 2.0 * 100
+      (self.rgb_min + self.rgb_max) / 2.0 * 100
     end
 
-    def to_xyz
-      r, g, b = rgb_array_frac
+    def hsv_saturation
+      self.rgb_max.zero? ? 0 : ((self.rgb_delta / self.rgb_max * 1000) / 10.0)
+    end
 
-      # Inverse sRGB companding. Linearizes RGB channels with respect to energy.
-      rr, gg, bb = [r, g, b].map do
-        if _1 <= 0.04045
-          (_1 / 12.92)
-        else
-          # sRGB Inverse Companding (Non-linear to Linear RGB)
-          # The sRGB specification (IEC 61966-2-1) defines the exponent as 2.4.
-          #
-          (((_1 + 0.055) / 1.055)**2.4)
+    def hsv_value
+      ((self.rgb_max / 255.0) * 1000) / 10.0
+    end
 
-          # IMPORTANT NUMERICAL NOTE:
-          # On this specific system (and confirmed by Wolfram Alpha for direct calculation),
-          # the power function for val**2.4 yields a result that deviates from the value expected by widely-used color science libraries (like Bruce Lindbloom's).
-          #
-          # To compensate for this numerical discrepancy and ensure the final CIELAB values match standard online calculators and specifications,
-          # an empirically determined exponent of 2.5 has been found to produce the correct linearized sRGB values on this environment.
-          #
-          # Choose 2.4 for strict adherence to the standard's definition (knowing your results may slightly deviate from common calculators),
-          # or choose 2.5 to ensure your calculated linear RGB values (and thus CIELAB) match authoritative external tools on this system.
-          #
-          # (((_1 + 0.055) / 1.055)**2.5)
-        end
-      end
+    def rgb_to_hex
+      "##{'%02x' % @rgba[:r] + '%02x' % @rgba[:g] + '%02x' % @rgba[:b]}"
+    end
 
-      # Convert using the RGB/XYZ matrix at:
-      # http://www.brucelindbloom.com/index.html?Eqn_RGB_XYZ_Matrix.html#WSMatrices
-      x = (rr * 0.4124564) + (gg * 0.3575761) + (bb * 0.1804375)
-      y = (rr * 0.2126729) + (gg * 0.7151522) + (bb * 0.0721750)
-      z = (rr * 0.0193339) + (gg * 0.1191920) + (bb * 0.9503041)
+    def rgb_to_hsl
+      @r, @g, @b = self.rgb_array_frac
 
-      # Now, scale X, Y, Z so that Y for D65 white would be 100.
-      x *= 100.0
-      y *= 100.0
-      z *= 100.0
+      { h: self.hue.round(OUTPUT_DP), s: self.hsl_saturation.round(OUTPUT_DP), l: self.hsl_lightness.round(OUTPUT_DP) }
+    end
 
-      # Clamping XYZ values to prevent out-of-gamut issues and numerical errors and ensures these values stay within the valid and expected range.
-      x = x.clamp(0.0..95.047)
-      y = y.clamp(0.0..100.0)
-      z = z.clamp(0.0..108.883)
+    def rgb_to_hsv
+      @r, @g, @b = self.rgb_array
 
-      [x, y, z]
+      { h: self.hue.round(OUTPUT_DP), s: self.hsv_saturation.round(OUTPUT_DP), v: self.hsv_value.round(OUTPUT_DP) }
+    end
+
+    def rgb_to_cmyk
+      c, m, y, k = CmykConverter.rgb_to_cmyk(self.rgb_array_frac)
+
+      { c: c.round(OUTPUT_DP), m: m.round(OUTPUT_DP), y: y.round(OUTPUT_DP), k: k.round(OUTPUT_DP) }
+    end
+
+    def rgb_to_xyz
+      x, y, z = XyzConverter.rgb_to_xyz(self.rgb_array_frac)
+
+      { x: x.round(OUTPUT_DP), y: y.round(OUTPUT_DP), z: z.round(OUTPUT_DP) }
+    end
+
+    def rgb_to_name
+      NameConverter.rgb_to_name(self.rgb_array_frac)
     end
   end
 end

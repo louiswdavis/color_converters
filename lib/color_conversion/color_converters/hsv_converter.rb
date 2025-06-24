@@ -6,9 +6,6 @@ module ColorConversion
       color_input.keys - [:h, :s, :v] == [] || color_input.keys - [:h, :s, :b] == []
     end
 
-    def rgb_to_hsv
-    end
-
     private
 
     def input_to_rgba(color_input)
@@ -46,9 +43,6 @@ module ColorConversion
       when 5
         { r: v, g: p, b: q, a: 1.0 }
       end
-    end
-
-    def hsv_to_rgba
     end
   end
 end

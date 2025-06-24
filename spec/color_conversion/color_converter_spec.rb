@@ -10,9 +10,9 @@ RSpec.describe ColorConversion::ColorConverter do
       expect(color.alpha).to eq 0.8
       expect(color.rgb).to eq({ r: 51, g: 102, b: 204 })
       expect(color.hex).to eq('#3366cc')
-      expect(color.hsl).to eq({ h: 220, s: 60, l: 50 })
-      expect(color.hsv).to eq({ h: 220, s: 75, v: 80 })
-      expect(color.hsb).to eq({ h: 220, s: 75, b: 80 })
+      expect(color.hsl).to eq({ h: 220.0, s: 60, l: 50 })
+      expect(color.hsv).to eq({ h: 220.0, s: 75, v: 80 })
+      expect(color.hsb).to eq({ h: 220.0, s: 75, b: 80 })
       expect(color.cmyk).to eq({ c: 75, m: 50, y: 0, k: 20 })
 
       color = ColorConversion::Color.new(r: 64, g: 104, b: 193)

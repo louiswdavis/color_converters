@@ -6,9 +6,6 @@ module ColorConversion
       color_input.keys - [:c, :m, :y, :k] == []
     end
 
-    def rgb_to_cmyk
-    end
-
     private
 
     def input_to_rgba(color_input)
@@ -27,6 +24,24 @@ module ColorConversion
       b = (255 * (1.0 - [1.0, y * (1.0 - k) + k].min)).round(IMPORT_DP)
 
       { r: r, g: g, b: b, a: 1.0 }
+    end
+
+    def self.rgb_to_cmyk(rgb_array_frac)
+      r, g, b = rgb_array_frac
+
+      k = (1.0 - [r, g, b].max)
+      k_frac = k == 1.0 ? 1.0 : 1.0 - k
+
+      c = (1.0 - r - k) / k_frac
+      m = (1.0 - g - k) / k_frac
+      y = (1.0 - b - k) / k_frac
+
+      c *= 100
+      m *= 100
+      y *= 100
+      k *= 100
+
+      [c, m, y, k]
     end
   end
 end

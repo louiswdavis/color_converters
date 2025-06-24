@@ -6,9 +6,6 @@ module ColorConversion
       color.include?('#') && [4, 7, 9].include?(color.length)
     end
 
-    def rgb_to_hex
-    end
-
     private
 
     def input_to_rgba(color_input)

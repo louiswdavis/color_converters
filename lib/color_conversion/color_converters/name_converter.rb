@@ -6,13 +6,11 @@ module ColorConversion
       self.color_names.include?(color_input.downcase.to_sym)
     end
 
-    def self.name_for_rgb(rgb_hash)
-      r = rgb_hash[:r].round
-      g = rgb_hash[:g].round
-      b = rgb_hash[:b].round
+    def self.rgb_to_name(rgb_array_frac)
+      r, g, b = rgb_array_frac
 
       name = self.color_names.find { |_k, v| v == [r, g, b] }
-      name[0].to_s if name
+      name.present? ? name[0].to_s : nil
     end
 
     private
