@@ -10,6 +10,13 @@ RSpec.describe ColorConversion::CmykConverter do
       expect(described_class.matches?('#ffffff')).to be false
     end
 
+    it '.validate_input' do
+      expect { described_class.new(c: 187, m: 69, y: 13, k: 41) }.to raise_error(ColorConversion::InvalidColorError)
+      expect { described_class.new(c: 87, m: -69, y: 13, k: 41) }.to raise_error(ColorConversion::InvalidColorError)
+      expect { described_class.new(c: 87, m: 69, y: 213, k: 41) }.to raise_error(ColorConversion::InvalidColorError)
+      expect { described_class.new(c: 87, m: 69, y: 13, k: 141) }.to raise_error(ColorConversion::InvalidColorError)
+    end
+
     it '.input_to_rgba' do
       expect(described_class.new(c: 74, m: 58, y: 22, k: 3).rgba).to eq({ r: 64.31, g: 103.89, b: 192.93, a: 1.0 })
       expect(described_class.new(c: '74', m: '58', y: '22', k: '3').rgba).to eq({ r: 64.31, g: 103.89, b: 192.93, a: 1.0 })

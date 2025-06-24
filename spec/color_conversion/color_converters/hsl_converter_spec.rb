@@ -11,6 +11,12 @@ RSpec.describe ColorConversion::HslConverter do
       expect(described_class.matches?('#ffffff')).to be false
     end
 
+    it '.validate_input' do
+      expect { described_class.new(h: 374, s: 35, l: 37) }.to raise_error(ColorConversion::InvalidColorError)
+      expect { described_class.new(h: 74, s: 135, l: 37) }.to raise_error(ColorConversion::InvalidColorError)
+      expect { described_class.new(h: 74, s: 35, l: 137) }.to raise_error(ColorConversion::InvalidColorError)
+    end
+
     it '.input_to_rgba' do
       expect(described_class.new(h: 225, s: 73, l: 57).rgba).to eq({ r: 65.31, g: 105.33, b: 225.39, a: 1.0 })
       expect(described_class.new(h: 225, s: 73, l: 57, a: 0.5).rgba).to eq({ r: 65.31, g: 105.33, b: 225.39, a: 0.5 })

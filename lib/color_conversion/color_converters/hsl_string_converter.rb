@@ -8,6 +8,11 @@ module ColorConversion
 
     private
 
+    def validate_input(color_input)
+      true
+      # color_input[:l].between?(0.0, 100.0) && color_input[:a].between?(-128.0, 127.0) && color_input[:b].between?(-128.0, 127.0)
+    end
+
     def input_to_rgba(color_input)
       matches = color_input.match(/hsla?\(([0-9.,%\s]+)\)/)
       raise InvalidColorError unless matches

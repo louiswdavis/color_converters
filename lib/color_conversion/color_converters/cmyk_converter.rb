@@ -6,7 +6,16 @@ module ColorConversion
       color_input.keys - [:c, :m, :y, :k] == []
     end
 
+    def self.bounds
+      { c: [0.0, 100.0], m: [0.0, 100.0], y: [0.0, 100.0], k: [0.0, 100.0] }
+    end
+
     private
+
+    def validate_input(color_input)
+      bounds = CmykConverter.bounds
+      color_input[:c].to_f.between?(*bounds[:c]) && color_input[:m].to_f.between?(*bounds[:m]) && color_input[:y].to_f.between?(*bounds[:y]) && color_input[:k].to_f.between?(*bounds[:k])
+    end
 
     def input_to_rgba(color_input)
       c = color_input[:c].to_f

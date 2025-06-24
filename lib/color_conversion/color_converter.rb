@@ -23,9 +23,14 @@ module ColorConversion
       converter.new(color) if converter
     end
 
-    def initialize(color_input)
+    def initialize(color_input, limit_override = false)
       @original_value = color_input
-      @rgba = self.input_to_rgba(color_input) # method is defined in each convertor
+
+      if limit_override == false && !self.validate_input(color_input)
+        raise InvalidColorError # validation method is defined in each convertor
+      end
+
+      @rgba = self.input_to_rgba(color_input) # conversion method is defined in each convertor
     end
 
     def rgb
@@ -33,15 +38,19 @@ module ColorConversion
     end
 
     def hex
-      self.rgb_to_hex
+      "##{'%02x' % @rgba[:r] + '%02x' % @rgba[:g] + '%02x' % @rgba[:b]}"
     end
 
     def hsl
-      self.rgb_to_hsl
+      @r, @g, @b = self.rgb_array_frac
+
+      { h: self.hue.round(OUTPUT_DP), s: self.hsl_saturation.round(OUTPUT_DP), l: self.hsl_lightness.round(OUTPUT_DP) }
     end
 
     def hsv
-      self.rgb_to_hsv
+      @r, @g, @b = self.rgb_array
+
+      { h: self.hue.round(OUTPUT_DP), s: self.hsv_saturation.round(OUTPUT_DP), v: self.hsv_value.round(OUTPUT_DP) }
     end
 
     def hsb
@@ -51,11 +60,21 @@ module ColorConversion
     end
 
     def cmyk
-      self.rgb_to_cmyk
+      c, m, y, k = CmykConverter.rgb_to_cmyk(self.rgb_array_frac)
+
+      { c: c.round(OUTPUT_DP), m: m.round(OUTPUT_DP), y: y.round(OUTPUT_DP), k: k.round(OUTPUT_DP) }
     end
 
     def xyz
-      self.rgb_to_xyz
+      x, y, z = XyzConverter.rgb_to_xyz(self.rgb_array_frac)
+
+      { x: x.round(OUTPUT_DP), y: y.round(OUTPUT_DP), z: z.round(OUTPUT_DP) }
+    end
+
+    def cielab
+      l, a, b = CielabConverter.xyz_to_lab(XyzConverter.rgb_to_xyz(self.rgb_array_frac))
+
+      { l: l.round(OUTPUT_DP), a: a.round(OUTPUT_DP), b: b.round(OUTPUT_DP) }
     end
 
     def alpha
@@ -63,7 +82,7 @@ module ColorConversion
     end
 
     def name
-      self.rgb_to_name
+      NameConverter.rgb_to_name(self.rgb_array_frac)
     end
 
     protected
@@ -131,38 +150,6 @@ module ColorConversion
 
     def hsv_value
       ((self.rgb_max / 255.0) * 1000) / 10.0
-    end
-
-    def rgb_to_hex
-      "##{'%02x' % @rgba[:r] + '%02x' % @rgba[:g] + '%02x' % @rgba[:b]}"
-    end
-
-    def rgb_to_hsl
-      @r, @g, @b = self.rgb_array_frac
-
-      { h: self.hue.round(OUTPUT_DP), s: self.hsl_saturation.round(OUTPUT_DP), l: self.hsl_lightness.round(OUTPUT_DP) }
-    end
-
-    def rgb_to_hsv
-      @r, @g, @b = self.rgb_array
-
-      { h: self.hue.round(OUTPUT_DP), s: self.hsv_saturation.round(OUTPUT_DP), v: self.hsv_value.round(OUTPUT_DP) }
-    end
-
-    def rgb_to_cmyk
-      c, m, y, k = CmykConverter.rgb_to_cmyk(self.rgb_array_frac)
-
-      { c: c.round(OUTPUT_DP), m: m.round(OUTPUT_DP), y: y.round(OUTPUT_DP), k: k.round(OUTPUT_DP) }
-    end
-
-    def rgb_to_xyz
-      x, y, z = XyzConverter.rgb_to_xyz(self.rgb_array_frac)
-
-      { x: x.round(OUTPUT_DP), y: y.round(OUTPUT_DP), z: z.round(OUTPUT_DP) }
-    end
-
-    def rgb_to_name
-      NameConverter.rgb_to_name(self.rgb_array_frac)
     end
   end
 end

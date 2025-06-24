@@ -15,6 +15,11 @@ module ColorConversion
 
     private
 
+    def validate_input(color_input)
+      true
+      # color_input[:l].between?(0.0, 100.0) && color_input[:a].between?(-128.0, 127.0) && color_input[:b].between?(-128.0, 127.0)
+    end
+
     def input_to_rgba(color_input)
       found_colour = self.class.color_names[color_input.downcase.to_sym]
       raise InvalidColorError unless found_colour.present?

@@ -8,6 +8,11 @@ module ColorConversion
 
     private
 
+    def validate_input(color_input)
+      true
+      # color_input[:l].to_f.between?(0.0, 100.0) && color_input[:a].between?(-128.0, 127.0) && color_input[:b].between?(-128.0, 127.0)
+    end
+
     def input_to_rgba(color_input)
       color_input = self.normalize_hex(color_input)
 

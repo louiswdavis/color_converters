@@ -6,7 +6,16 @@ module ColorConversion
       color_input.keys - [:x, :y, :z] == []
     end
 
+    def self.bounds
+      { x: [0.0, 95.047], y: [0.0, 100.0], z: [0.0, 108.883] }
+    end
+
     private
+
+    def validate_input(color_input)
+      bounds = XyzConverter.bounds
+      color_input[:x].to_f.between?(*bounds[:x]) && color_input[:y].to_f.between?(*bounds[:y]) && color_input[:z].to_f.between?(*bounds[:z])
+    end
 
     def input_to_rgba(color_input)
       r, g, b = xyz_to_rgb(color_input)

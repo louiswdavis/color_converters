@@ -6,7 +6,16 @@ module ColorConversion
       color_input.keys - [:h, :s, :l] == [] || color_input.keys - [:h, :s, :l, :a] == []
     end
 
+    def self.bounds
+      { h: [0.0, 360.0], s: [0.0, 100.0], l: [0.0, 100.0] }
+    end
+
     private
+
+    def validate_input(color_input)
+      bounds = HslConverter.bounds
+      color_input[:h].to_f.between?(*bounds[:h]) && color_input[:s].to_f.between?(*bounds[:s]) && color_input[:l].to_f.between?(*bounds[:l])
+    end
 
     def input_to_rgba(color_input)
       h = color_input[:h].to_s.gsub(/[^0-9.]/, '').to_f / 360.0
