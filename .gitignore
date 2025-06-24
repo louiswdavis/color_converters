@@ -1,20 +1,16 @@
+/.bundle/
+/.yardoc
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/tmp/
+
 *.gem
-*.rbc
-.rvmrc
-.bundle
-.config
-.yardoc
-.rspec
-Gemfile.lock
-InstalledFiles
-_yardoc
-coverage
-doc/
-lib/bundler/man
-pkg
-rdoc
-spec/reports
-test/tmp
-test/version_tmp
-tmp
-bin
+
+# Ignore Byebug command history file.
+.byebug_history
+
+# rspec failure tracking
+.rspec_status
