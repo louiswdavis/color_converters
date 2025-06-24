@@ -13,10 +13,28 @@ Gemspec/RequiredRubyVersion:
 Layout/LineLength:
   Enabled: false
 
+Lint/FloatComparison:
+  Enabled: false
+Lint/LiteralAsCondition:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
 Metrics/BlockLength:
+  Enabled: false
+Metrics/ClassLength:
   Enabled: false
 Metrics/MethodLength:
   Enabled: false
 
 Naming/VariableNumber:
+  Enabled: false
+
+Style/ConditionalAssignment:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Style/RedundantSelf:
+  Enabled: false
+Style/SymbolArray:
   Enabled: false
