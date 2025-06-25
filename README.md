@@ -35,55 +35,62 @@ If bundler is not being used to manage dependencies, install the gem by executin
 gem install color_converters
 ```
 
+You may need to require the gem when needed:
+**From this point onwards any code references to the gem are the singular version of the name (drop the s)**
+
+```bash
+require 'color_converter'
+```
+
 ## Usage
 
 Initialize a color:
 
 ```ruby
 # from hex
-color = Color.new("#3366cc")
-color = Color.new("#36c")
+color = ColorConverter::Color.new("#3366cc")
+color = ColorConverter::Color.new("#36c")
 
 # from rgb(a)
-color = Color.new(r: 51, g: 102, b: 204)
-color = Color.new(r: 51, g: 102, b: 204, a: 0.5)
+color = ColorConverter::Color.new(r: 51, g: 102, b: 204)
+color = ColorConverter::Color.new(r: 51, g: 102, b: 204, a: 0.5)
 
 # from hsl(a)
-color = Color.new(h: 225, s: 73, l: 57)
-color = Color.new(h: 225, s: 73, l: 57, a: 0.5)
+color = ColorConverter::Color.new(h: 225, s: 73, l: 57)
+color = ColorConverter::Color.new(h: 225, s: 73, l: 57, a: 0.5)
 
 # from hsv/hsb
-color = Color.new(h: 220, s: 75, v: 80)
-color = Color.new(h: 220, s: 75, b: 80)
+color = ColorConverter::Color.new(h: 220, s: 75, v: 80)
+color = ColorConverter::Color.new(h: 220, s: 75, b: 80)
 
 # from cmyk
-color = Color.new(c: 74, m: 58, y: 22, k: 3)
+color = ColorConverter::Color.new(c: 74, m: 58, y: 22, k: 3)
 
 # from xyz
-color = Color.new(x: 16, y: 44, z: 32)
+color = ColorConverter::Color.new(x: 16, y: 44, z: 32)
 
 # from cielab
-color = Color.new(l: 16, a: 44, b: 32)
+color = ColorConverter::Color.new(l: 16, a: 44, b: 32)
 
 # from oklch
-color = Color.new(l: 16, c: 44, h: 32)
+color = ColorConverter::Color.new(l: 16, c: 44, h: 32)
 
 # from textual color
-color = Color.new("blue")
+color = ColorConverter::Color.new("blue")
 
 # from a css rgb(a) string
-color = Color.new("rgb(51, 102, 204)")
-color = Color.new("rgba(51, 102, 204, 0.5)")
+color = ColorConverter::Color.new("rgb(51, 102, 204)")
+color = ColorConverter::Color.new("rgba(51, 102, 204, 0.5)")
 
 # from a css hsl(a) string
-color = Color.new("hsl(225, 73%, 57%)")
-color = Color.new("hsl(225, 73%, 57%, 0.5)")
+color = ColorConverter::Color.new("hsl(225, 73%, 57%)")
+color = ColorConverter::Color.new("hsl(225, 73%, 57%, 0.5)")
 ```
 
 Converters
 
 ```ruby
-color = Color.new(r: 70, g: 130, b: 180, a: 0.5)
+color = ColorConverter::Color.new(r: 70, g: 130, b: 180, a: 0.5)
 
 color.alpha
 => 0.5
