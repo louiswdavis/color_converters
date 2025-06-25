@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'color_converter'
+require 'color_converters'
 require 'byebug'
 
 RSpec.configure do |config|

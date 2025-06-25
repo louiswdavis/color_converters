@@ -35,62 +35,55 @@ If bundler is not being used to manage dependencies, install the gem by executin
 gem install color_converters
 ```
 
-You may need to require the gem when needed:
-**From this point onwards any code references to the gem are the singular version of the name (drop the s)**
-
-```bash
-require 'color_converter'
-```
-
 ## Usage
 
 Initialize a color:
 
 ```ruby
 # from hex
-color = ColorConverter::Color.new("#3366cc")
-color = ColorConverter::Color.new("#36c")
+color = ColorConverters::Color.new("#3366cc")
+color = ColorConverters::Color.new("#36c")
 
 # from rgb(a)
-color = ColorConverter::Color.new(r: 51, g: 102, b: 204)
-color = ColorConverter::Color.new(r: 51, g: 102, b: 204, a: 0.5)
+color = ColorConverters::Color.new(r: 51, g: 102, b: 204)
+color = ColorConverters::Color.new(r: 51, g: 102, b: 204, a: 0.5)
 
 # from hsl(a)
-color = ColorConverter::Color.new(h: 225, s: 73, l: 57)
-color = ColorConverter::Color.new(h: 225, s: 73, l: 57, a: 0.5)
+color = ColorConverters::Color.new(h: 225, s: 73, l: 57)
+color = ColorConverters::Color.new(h: 225, s: 73, l: 57, a: 0.5)
 
 # from hsv/hsb
-color = ColorConverter::Color.new(h: 220, s: 75, v: 80)
-color = ColorConverter::Color.new(h: 220, s: 75, b: 80)
+color = ColorConverters::Color.new(h: 220, s: 75, v: 80)
+color = ColorConverters::Color.new(h: 220, s: 75, b: 80)
 
 # from cmyk
-color = ColorConverter::Color.new(c: 74, m: 58, y: 22, k: 3)
+color = ColorConverters::Color.new(c: 74, m: 58, y: 22, k: 3)
 
 # from xyz
-color = ColorConverter::Color.new(x: 16, y: 44, z: 32)
+color = ColorConverters::Color.new(x: 16, y: 44, z: 32)
 
 # from cielab
-color = ColorConverter::Color.new(l: 16, a: 44, b: 32)
+color = ColorConverters::Color.new(l: 16, a: 44, b: 32)
 
 # from oklch
-color = ColorConverter::Color.new(l: 16, c: 44, h: 32)
+color = ColorConverters::Color.new(l: 16, c: 44, h: 32)
 
 # from textual color
-color = ColorConverter::Color.new("blue")
+color = ColorConverters::Color.new("blue")
 
 # from a css rgb(a) string
-color = ColorConverter::Color.new("rgb(51, 102, 204)")
-color = ColorConverter::Color.new("rgba(51, 102, 204, 0.5)")
+color = ColorConverters::Color.new("rgb(51, 102, 204)")
+color = ColorConverters::Color.new("rgba(51, 102, 204, 0.5)")
 
 # from a css hsl(a) string
-color = ColorConverter::Color.new("hsl(225, 73%, 57%)")
-color = ColorConverter::Color.new("hsl(225, 73%, 57%, 0.5)")
+color = ColorConverters::Color.new("hsl(225, 73%, 57%)")
+color = ColorConverters::Color.new("hsl(225, 73%, 57%, 0.5)")
 ```
 
 Converters
 
 ```ruby
-color = ColorConverter::Color.new(r: 70, g: 130, b: 180, a: 0.5)
+color = ColorConverters::Color.new(r: 70, g: 130, b: 180, a: 0.5)
 
 color.alpha
 => 0.5
@@ -134,7 +127,7 @@ By default all values are checked to be within the expected number ranges, i.e.;
 This parameter allows you to ignore those ranges and submit any values you want.
 
 ```ruby
-ColorConverter::Color.new(r: 270, g: 1300, b: 380, a: 0.5, limit_override: true)
+ColorConverters::Color.new(r: 270, g: 1300, b: 380, a: 0.5, limit_override: true)
 ```
 
 ## Development

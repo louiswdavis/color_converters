@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative 'lib/color_converter/version'
+require_relative 'lib/color_converters/version'
 
 Gem::Specification.new do |spec|
   spec.name = 'color_converters'
-  spec.version = ColorConverter::VERSION
+  spec.version = ColorConverters::VERSION
   spec.authors = ['Louis Davis']
   spec.email = ['LouisWilliamDavis@gmail.com']
 
