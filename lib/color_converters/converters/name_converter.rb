@@ -15,9 +15,9 @@ module ColorConverters
 
     private
 
-    def validate_input(color_input)
+    def validate_input(color_input) #
+      # TODO: validate against list of keys?
       true
-      # color_input[:l].between?(0.0, 100.0) && color_input[:a].between?(-128.0, 127.0) && color_input[:b].between?(-128.0, 127.0)
     end
 
     def input_to_rgba(color_input)
