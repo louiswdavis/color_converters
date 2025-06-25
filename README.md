@@ -1,8 +1,41 @@
-## Color Conversion
+# Color Converter
 
-This gem provides conversions for colors to and from Hex, RGB, and HSL.
+> Give me a color and I'll convert it.
 
-## Examples
+Color Converter is an ruby gem package for use in ruby or other projects that provides conversions for colors to other color spaces.
+Given a color in [Hexadecimal, RGA(A), HSL(A), HSV, HSB, CMYK, XYZ, CIELAB, or OKLCH format](https://github.com/devrieda/color_conversion), it can convert the color to those other spaces.
+
+> Lab and LCH color spaces are special in that the perceived difference between two colors is proportional to their Euclidean distance in color space. This special property, called perceptual uniformity, makes them ideal for accurate visual encoding of data. In contrast, the more familiar RGB and HSL color spaces distort data when used for visualization.
+
+## Conversions
+
+The color names are derived from several lists:
+
+- hex
+- rgb(a)
+- hsl(a)
+- hsv/hsb
+- cmyk
+- xyz
+- cielab
+- oklch
+- name
+
+## Installation
+
+Install the gem and add to the application's Gemfile by executing:
+
+```bash
+bundle add color_converter
+```
+
+If bundler is not being used to manage dependencies, install the gem by executing:
+
+```bash
+gem install color_converter
+```
+
+## Usage
 
 Initialize a color:
 
@@ -28,6 +61,12 @@ color = Color.new(c: 74, m: 58, y: 22, k: 3)
 
 # from xyz
 color = Color.new(x: 16, y: 44, z: 32)
+
+# from cielab
+color = Color.new(l: 16, a: 44, b: 32)
+
+# from oklch
+color = Color.new(l: 16, c: 44, h: 32)
 
 # from textual color
 color = Color.new("blue")
@@ -67,6 +106,12 @@ color.cmyk
 color.xyz
 => {:x=>33, :y=>21, :z=>54}
 
+color.cielab
+=> {:l=>52.47, :a=>-4.08, :b=>-32.19}
+
+color.oklch
+=> {:l=>52.47, :c=>32.45, :h=>262.78}
+
 color.hex
 => "#4682b4"
 
@@ -74,58 +119,20 @@ color.name
 => "steelblue"
 ```
 
-## Installation
+## Options
 
-To install ColorConversion, add the gem to your Gemfile:
+### limit_override
+
+By default all values are checked to be within the expected number ranges, i.e.; rgb between 0-255 each.
+This parameter allows you to ignore those ranges and submit any values you want.
 
 ```ruby
-gem "color_conversion"
-```
-
-## LICENSE
-
-Copyright (c) 2013 Derek DeVries
-
-Released under the [MIT License](http://www.opensource.org/licenses/MIT)
-
-# UtilityPalettesRails
-
-TODO: Delete this and the text below, and describe your gem
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/color_conversion_rails`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-## Installation
-
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
-
-Install the gem and add to the application's Gemfile by executing:
-
-```bash
-bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
-```
-
-If bundler is not being used to manage dependencies, install the gem by executing:
-
-```bash
-gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
-```
-
-## Usage
-
-to get the config
-
-```bash
-rails generate color_conversion:config
-```
-
-to generate the palettes
-
-```bash
-rails generate color_conversion:config
-rails generate color_conversion:generate
+Color.new(r: 270, g: 1300, b: 380, a: 0.5, limit_override: true)
 ```
 
 ## Development
+
+[Converting Colors](https://convertingcolors.com/) can be usef to help verify results. Different calculators use different exponents and standards so there can be discrepency across them (like this calculator for LCH).
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
@@ -133,7 +140,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at <https://github.com/louiswdavis/color_conversion_rails>. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/louiswdavis/color_conversion_rails/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at <https://github.com/louiswdavis/color_converter>. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/louiswdavis/color_converter/blob/master/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -142,4 +149,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the UtilityPalettesRails project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/louiswdavis/color_conversion_rails/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the UtilityPalettesRails project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/louiswdavis/color_converter_rails/blob/master/CODE_OF_CONDUCT.md).
