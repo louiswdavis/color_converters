@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    color_converter (0.1.0)
+    color_converters (0.1.0)
       activesupport
 
 GEM
@@ -135,7 +135,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   capybara
-  color_converter!
+  color_converters!
   rake (~> 13.0)
   rspec (~> 3.0)
   rubocop-airbnb

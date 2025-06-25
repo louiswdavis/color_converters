@@ -3,7 +3,7 @@
 require_relative 'lib/color_converter/version'
 
 Gem::Specification.new do |spec|
-  spec.name = 'color_converter'
+  spec.name = 'color_converters'
   spec.version = ColorConverter::VERSION
   spec.authors = ['Louis Davis']
   spec.email = ['LouisWilliamDavis@gmail.com']
