@@ -77,6 +77,12 @@ module ColorConversion
       { l: l.round(OUTPUT_DP), a: a.round(OUTPUT_DP), b: b.round(OUTPUT_DP) }
     end
 
+    def oklch
+      l, c, h = OklchConverter.lab_to_lch(CielabConverter.xyz_to_lab(XyzConverter.rgb_to_xyz(self.rgb_array_frac)))
+
+      { l: l.round(OUTPUT_DP), c: c.round(OUTPUT_DP), h: h.round(OUTPUT_DP) }
+    end
+
     def alpha
       @rgba[:a]
     end
