@@ -18,6 +18,9 @@ RSpec.describe ColorConversion::CmykConverter do
     end
 
     it '.input_to_rgba' do
+      expect(described_class.new(c: 75, m: 50, y: 0, k: 20).rgba).to eq({ r: 51, g: 102, b: 204, a: 1.0 })
+      expect(described_class.new(c: '75', m: '50', y: '0', k: '20').rgba).to eq({ r: 51, g: 102, b: 204, a: 1.0 })
+
       expect(described_class.new(c: 74, m: 58, y: 22, k: 3).rgba).to eq({ r: 64.31, g: 103.89, b: 192.93, a: 1.0 })
       expect(described_class.new(c: '74', m: '58', y: '22', k: '3').rgba).to eq({ r: 64.31, g: 103.89, b: 192.93, a: 1.0 })
     end

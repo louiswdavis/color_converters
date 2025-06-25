@@ -18,6 +18,9 @@ RSpec.describe ColorConversion::XyzConverter do
     end
 
     it '.input_to_rgba' do
+      expect(described_class.new(x: 17.01, y: 14.56, z: 59.03).rgba).to eq({ r: 51.0, g: 101.98, b: 204.0, a: 1.0 })
+      expect(described_class.new(x: '17.01', y: '14.56', z: '59.03').rgba).to eq({ r: 51.0, g: 101.98, b: 204.0, a: 1.0 })
+
       expect(described_class.new(x: 24, y: 15, z: 57).rgba).to eq({ r: 140.18, g: 76.1, b: 201.2, a: 1.0 })
       expect(described_class.new(x: '24', y: '15', z: '57').rgba).to eq({ r: 140.18, g: 76.1, b: 201.2, a: 1.0 })
     end
