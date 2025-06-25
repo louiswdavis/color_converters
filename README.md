@@ -1,15 +1,15 @@
-# Color Converter
+# Color Converters
 
 > Give me a color and I'll convert it.
 
-Color Converter is an ruby gem package for use in ruby or other projects that provides conversions for colors to other color spaces.
+Color Converters is an ruby gem package for use in ruby or other projects that provides conversions for colors to other color spaces.
 Given a color in [Hexadecimal, RGA(A), HSL(A), HSV, HSB, CMYK, XYZ, CIELAB, or OKLCH format](https://github.com/devrieda/color_conversion), it can convert the color to those other spaces.
 
 > Lab and LCH color spaces are special in that the perceived difference between two colors is proportional to their Euclidean distance in color space. This special property, called perceptual uniformity, makes them ideal for accurate visual encoding of data. In contrast, the more familiar RGB and HSL color spaces distort data when used for visualization.
 
-## Conversions
+## Converters
 
-The color names are derived from several lists:
+Colors can be converted between the following spaces:
 
 - hex
 - rgb(a)
@@ -26,13 +26,13 @@ The color names are derived from several lists:
 Install the gem and add to the application's Gemfile by executing:
 
 ```bash
-bundle add color_converter
+bundle add color_converters
 ```
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
 ```bash
-gem install color_converter
+gem install color_converters
 ```
 
 ## Usage
@@ -80,7 +80,7 @@ color = Color.new("hsl(225, 73%, 57%)")
 color = Color.new("hsl(225, 73%, 57%, 0.5)")
 ```
 
-Conversions
+Converters
 
 ```ruby
 color = Color.new(r: 70, g: 130, b: 180, a: 0.5)
@@ -140,7 +140,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at <https://github.com/louiswdavis/color_converter>. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/louiswdavis/color_converter/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at <https://github.com/louiswdavis/color_converters>. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/louiswdavis/color_converters/blob/master/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -149,4 +149,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the UtilityPalettesRails project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/louiswdavis/color_converter_rails/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the ColorConverters project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/louiswdavis/color_converters/blob/master/CODE_OF_CONDUCT.md).
