@@ -134,7 +134,7 @@ By default all values are checked to be within the expected number ranges, i.e.;
 This parameter allows you to ignore those ranges and submit any values you want.
 
 ```ruby
-Color.new(r: 270, g: 1300, b: 380, a: 0.5, limit_override: true)
+ColorConverter::Color.new(r: 270, g: 1300, b: 380, a: 0.5, limit_override: true)
 ```
 
 ## Development
