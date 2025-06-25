@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     color_converters (0.1.0)
-      activesupport
+      activesupport (~> 8.0.2)
 
 GEM
   remote: https://rubygems.org/
