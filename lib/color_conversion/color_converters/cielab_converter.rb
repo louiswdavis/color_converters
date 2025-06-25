@@ -18,7 +18,8 @@ module ColorConversion
     end
 
     def input_to_rgba(color_input)
-      XyzConverter.new(CielabConverter.lab_to_xyz(color_input), limit_override: true).rgba
+      xyz_hash = CielabConverter.lab_to_xyz(color_input)
+      XyzConverter.new(xyz_hash, limit_override: true).rgba
     end
 
     def self.lab_to_xyz(color_input)
