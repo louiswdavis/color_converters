@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors = ['Louis Davis']
   spec.email = ['LouisWilliamDavis@gmail.com']
 
-  spec.summary = 'Convert colors to hex/rgb/hsv/cmyk/hsl.'
-  spec.description = 'Convert colors to hex/rgb/hsv/cmyk/hsl.'
+  spec.summary = 'Convert colors to hex/rgb/hsv/cmyk/hsl/xyz/cielab/oklch'
+  spec.description = 'Convert colors to hex/rgb/hsv/cmyk/hsl/xyz/cielab/oklch'
   spec.homepage = 'https://github.com/louiswdavis/color_converter'
   spec.license = 'MIT'
   spec.required_ruby_version = '>= 1.9.3'
