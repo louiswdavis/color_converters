@@ -3,7 +3,7 @@ module ColorConverters
     def self.matches?(color_input)
       return false unless color_input.is_a?(Hash)
 
-      color_input.keys - [:l, :a, :b] == []
+      color_input.keys - [:l, :a, :b, :space] == [] && color_input[:space].to_s == 'cie'
     end
 
     def self.bounds
@@ -18,11 +18,11 @@ module ColorConverters
     end
 
     def input_to_rgba(color_input)
-      xyz_hash = CielabConverter.lab_to_xyz(color_input)
+      xyz_hash = CielabConverter.cielab_to_xyz(color_input)
       XyzConverter.new(xyz_hash, limit_override: true).rgba
     end
 
-    def self.lab_to_xyz(color_input)
+    def self.cielab_to_xyz(color_input)
       l = color_input[:l].to_f
       a = color_input[:a].to_f
       b = color_input[:b].to_f
@@ -48,7 +48,7 @@ module ColorConverters
       { x: x, y: y, z: z }
     end
 
-    def self.xyz_to_lab(xyz_array)
+    def self.xyz_to_cielab(xyz_array)
       x, y, z = xyz_array
 
       # The D65 standard illuminant white point

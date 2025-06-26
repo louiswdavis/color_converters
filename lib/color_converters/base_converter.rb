@@ -26,6 +26,8 @@ module ColorConverters
     def initialize(color_input, limit_override = false)
       @original_value = color_input
 
+      # self.clamp_input(color_input) if limit_clamp == true
+
       if limit_override == false && !self.validate_input(color_input)
         raise InvalidColorError # validation method is defined in each convertor
       end
@@ -72,13 +74,13 @@ module ColorConverters
     end
 
     def cielab
-      l, a, b = CielabConverter.xyz_to_lab(XyzConverter.rgb_to_xyz(self.rgb_array_frac))
+      l, a, b = CielabConverter.xyz_to_cielab(XyzConverter.rgb_to_xyz(self.rgb_array_frac))
 
       { l: l.round(OUTPUT_DP), a: a.round(OUTPUT_DP), b: b.round(OUTPUT_DP) }
     end
 
-    def oklch
-      l, c, h = OklchConverter.lab_to_lch(CielabConverter.xyz_to_lab(XyzConverter.rgb_to_xyz(self.rgb_array_frac)))
+    def cielch
+      l, c, h = CielchConverter.cielab_to_cielch(CielabConverter.xyz_to_cielab(XyzConverter.rgb_to_xyz(self.rgb_array_frac)))
 
       { l: l.round(OUTPUT_DP), c: c.round(OUTPUT_DP), h: h.round(OUTPUT_DP) }
     end

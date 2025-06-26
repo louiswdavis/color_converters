@@ -16,7 +16,7 @@ RSpec.describe ColorConverters::BaseConverter do
       expect(color.cmyk).to eq({ c: 75, m: 50, y: 0, k: 20 })
       expect(color.xyz).to eq({ x: 17.01, y: 14.56, z: 59.03 })
       expect(color.cielab).to eq({ l: 45.03, a: 18.71, b: -57.85 })
-      expect(color.oklch).to eq({ l: 45.03, c: 60.80, h: 287.92 })
+      expect(color.cielch).to eq({ l: 45.03, c: 60.80, h: 287.92 })
 
       color = ColorConverters::Color.new(r: 64, g: 104, b: 193)
       expect(color.cmyk).to eq({ c: 66.84, m: 46.11, y: 0.0, k: 24.31 })

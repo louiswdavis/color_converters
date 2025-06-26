@@ -63,10 +63,10 @@ color = ColorConverters::Color.new(c: 74, m: 58, y: 22, k: 3)
 color = ColorConverters::Color.new(x: 16, y: 44, z: 32)
 
 # from cielab
-color = ColorConverters::Color.new(l: 16, a: 44, b: 32)
+color = ColorConverters::Color.new(l: 16, a: 44, b: 32, space: :cie)
 
-# from oklch
-color = ColorConverters::Color.new(l: 16, c: 44, h: 32)
+# from cielch
+color = ColorConverters::Color.new(l: 16, c: 44, h: 32, space: :cie)
 
 # from textual color
 color = ColorConverters::Color.new("blue")
@@ -109,7 +109,7 @@ color.xyz
 color.cielab
 => {:l=>52.47, :a=>-4.08, :b=>-32.19}
 
-color.oklch
+color.cielch
 => {:l=>52.47, :c=>32.45, :h=>262.78}
 
 color.hex
@@ -120,6 +120,15 @@ color.name
 ```
 
 ## Options
+
+### space
+
+As there are certain color spaces that use the same letter keys, there needed to be a way to different between those space.
+The space parameter allows that, with examples in the usage code above
+
+```ruby
+ColorConverters::Color.new(l: 64, a: 28, b: -15, space: :cie)
+```
 
 ### limit_override
 

@@ -16,7 +16,7 @@ require 'color_converters/converters/hsv_converter'
 require 'color_converters/converters/cmyk_converter'
 require 'color_converters/converters/xyz_converter'
 require 'color_converters/converters/cielab_converter'
-require 'color_converters/converters/oklch_converter'
+require 'color_converters/converters/cielch_converter'
 
 require 'color_converters/converters/name_converter'
 require 'color_converters/converters/null_converter'
