@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    color_converters (0.1.1)
+    color_converters (0.1.2)
       activesupport (~> 8.0.2)
 
 GEM
