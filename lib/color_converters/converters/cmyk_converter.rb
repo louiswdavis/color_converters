@@ -28,11 +28,11 @@ module ColorConverters
       y /= 100.0
       k /= 100.0
 
-      r = (255 * (1.0 - [1.0, c * (1.0 - k) + k].min)).round(IMPORT_DP)
-      g = (255 * (1.0 - [1.0, m * (1.0 - k) + k].min)).round(IMPORT_DP)
-      b = (255 * (1.0 - [1.0, y * (1.0 - k) + k].min)).round(IMPORT_DP)
+      r = (255 * (1.0 - [1.0, c * (1.0 - k) + k].min))
+      g = (255 * (1.0 - [1.0, m * (1.0 - k) + k].min))
+      b = (255 * (1.0 - [1.0, y * (1.0 - k) + k].min))
 
-      { r: r, g: g, b: b, a: 1.0 }
+      { r: r.round(IMPORT_DP), g: g.round(IMPORT_DP), b: b.round(IMPORT_DP), a: 1.0 }
     end
 
     def self.rgb_to_cmyk(rgb_array_frac)

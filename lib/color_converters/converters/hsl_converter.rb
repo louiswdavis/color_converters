@@ -50,10 +50,10 @@ module ColorConverters
                 t1
               end
 
-        rgb[i] = (val * 255).round(IMPORT_DP)
+        rgb[i] = (val * 255)
       end
 
-      { r: rgb[0], g: rgb[1], b: rgb[2], a: a }
+      { r: rgb[0].round(IMPORT_DP), g: rgb[1].round(IMPORT_DP), b: rgb[2].round(IMPORT_DP), a: a }
     end
 
     def greyscale(luminosity, alpha)

@@ -21,12 +21,12 @@ module ColorConverters
 
       a ||= 1.0
 
-      r = r.to_f.round(IMPORT_DP)
-      g = g.to_f.round(IMPORT_DP)
-      b = b.to_f.round(IMPORT_DP)
-      a = a.to_f.round(IMPORT_DP)
+      r = r.to_f
+      g = g.to_f
+      b = b.to_f
+      a = a.to_f
 
-      { r: r, g: g, b: b, a: a }
+      { r: r.round(IMPORT_DP), g: g.round(IMPORT_DP), b: b.round(IMPORT_DP), a: a.round(IMPORT_DP) }
     end
   end
 end
