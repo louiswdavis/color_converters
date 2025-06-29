@@ -18,98 +18,52 @@ module ColorConverters
     end
 
     def input_to_rgba(color_input)
-      r, g, b = xyz_to_rgb(color_input)
+      r, g, b = XyzConverter.xyz_to_rgb(color_input)
 
       { r: r.round(IMPORT_DP), g: g.round(IMPORT_DP), b: b.round(IMPORT_DP), a: 1.0 }
     end
 
-    def xyz_to_rgb(xyz_hash)
+    def self.xyz_to_rgb(xyz_hash)
       # Convert XYZ (typically with Y=100 for white) to normalized XYZ (Y=1 for white).
       # The transformation matrix expects X, Y, Z values in the 0-1 range.
       x = xyz_hash[:x].to_f / 100.0
       y = xyz_hash[:y].to_f / 100.0
       z = xyz_hash[:z].to_f / 100.0
 
-      # Convert normalized XYZ to Linear sRGB values.
-      # This uses the inverse sRGB matrix for D65 illuminant.
-      # The resulting rr, gg, bb values are linear (gamma-uncorrected) and in the 0-1 range.
-      rr = (x * 3.2404542) + (y * -1.5371385) + (z * -0.4985314)
-      gg = (x * -0.9692660) + (y * 1.8760108) + (z * 0.0415560)
-      bb = (x * 0.0556434) + (y * -0.2040259) + (z * 1.0572252)
+      # Convert normalized XYZ to Linear sRGB values using sRGB's own white, D65 (no chromatic adaptation)
+      # https://www.w3.org/TR/css-color-4/#color-conversion-code
+      conversion_matrix = ::Matrix[
+        [3.2409699419045213, -1.5373831775700935, -0.4986107602930033],
+        [-0.9692436362808798, 1.8759675015077206, 0.04155505740717561],
+        [0.05563007969699361, -0.20397695888897657, 1.0569715142428786]
+      ]
 
-      # Apply sRGB Companding (gamma correction) to convert from Linear RGB to non-linear sRGB.
-      # This is defined by the sRGB specification (IEC 61966-2-1).
-      # The exponent for the non-linear segment is 1/2.4 (approximately 0.41666...).
-      r, g, b = [rr, gg, bb].map do
-        if _1 <= 0.0031308
-          # Linear portion of the sRGB curve
-          _1 * 12.92
-        else
-          # Non-linear (gamma-corrected) portion of the sRGB curve
-          # The sRGB specification uses an exponent of 1/2.4.
-          #
-          (1.055 * (_1**(1.0 / 2.4))) - 0.055
+      rgb_matrix = ::Matrix[[x, y, z]] * conversion_matrix
 
-          # IMPORTANT NUMERICAL NOTE:
-          # On this specific system (and confirmed by Wolfram Alpha for direct calculation),
-          # the inverse power function for val**2.4 yields a result that deviates from the value expected by widely-used color science libraries (like Bruce Lindbloom's).
-          #
-          # To compensate for this numerical discrepancy and ensure the final CIELAB values match standard online calculators and specifications,
-          # an empirically determined exponent of 2.5 has been found to produce the correct linearized sRGB values on this environment.
-          #
-          # Choose 1/2.4 for strict adherence to the standard's definition (knowing your results may slightly deviate from common calculators),
-          # or choose 1/2.5 to ensure your calculated linear RGB values (and thus CIELAB) match authoritative external tools on this system.
-          #
-          # (1.055 * (_1**(1.0 / 2.5))) - 0.055
-        end
-      end
+      rr = rgb_matrix[0, 0]
+      gg = rgb_matrix[0, 1]
+      bb = rgb_matrix[0, 2]
 
-      # Scale the 0-1 sRGB value to the 0-255 range for 8-bit color components.
-      r *= 255.0
-      g *= 255.0
-      b *= 255.0
-
-      # Clamping RGB values to prevent out-of-gamut issues and numerical errors and ensures these values stay within the valid and expected range.
-      r = r.clamp(0.0..255.0)
-      g = g.clamp(0.0..255.0)
-      b = b.clamp(0.0..255.0)
-
-      [r, g, b]
+      RgbConverter.lrgb_to_rgb([rr, gg, bb])
     end
 
     # http://www.brucelindbloom.com/index.html?Eqn_RGB_to_XYZ.html
-    def self.rgb_to_xyz(rgb_array_frac)
-      r, g, b = rgb_array_frac
+    def self.rgb_to_xyz(rgb_array)
+      rr, gg, bb = RgbConverter.rgb_to_lrgb(rgb_array)
 
-      # Inverse sRGB companding. Linearizes RGB channels with respect to energy.
-      rr, gg, bb = [r, g, b].map do
-        if _1 <= 0.04045
-          _1 / 12.92
-        else
-          # sRGB Inverse Companding (Non-linear to Linear RGB)
-          # The sRGB specification (IEC 61966-2-1) defines the exponent as 2.4.
-          #
-          (((_1 + 0.055) / 1.055)**2.4)
+      # Convert using the RGB/XYZ matrix and sRGB's own white, D65 (no chromatic adaptation)
+      # https://www.w3.org/TR/css-color-4/#color-conversion-code
+      conversion_matrix = ::Matrix[
+        [0.4123907992659595, 0.35758433938387796, 0.1804807884018343],
+        [0.21263900587151036, 0.7151686787677559, 0.07219231536073371],
+        [0.01933081871559185, 0.11919477979462599, 0.9505321522496606]
+      ]
 
-          # IMPORTANT NUMERICAL NOTE:
-          # On this specific system (and confirmed by Wolfram Alpha for direct calculation),
-          # the power function for val**2.4 yields a result that deviates from the value expected by widely-used color science libraries (like Bruce Lindbloom's).
-          #
-          # To compensate for this numerical discrepancy and ensure the final CIELAB values match standard online calculators and specifications,
-          # an empirically determined exponent of 2.5 has been found to produce the correct linearized sRGB values on this environment.
-          #
-          # Choose 2.4 for strict adherence to the standard's definition (knowing your results may slightly deviate from common calculators),
-          # or choose 2.5 to ensure your calculated linear RGB values (and thus CIELAB) match authoritative external tools on this system.
-          #
-          # ((_1 + 0.055) / 1.055)**2.5
-        end
-      end
+      xyz_matrix = ::Matrix[[rr, gg, bb]] * conversion_matrix
 
-      # Convert using the RGB/XYZ matrix at:
-      # http://www.brucelindbloom.com/index.html?Eqn_RGB_XYZ_Matrix.html#WSMatrices
-      x = (rr * 0.4124564) + (gg * 0.3575761) + (bb * 0.1804375)
-      y = (rr * 0.2126729) + (gg * 0.7151522) + (bb * 0.0721750)
-      z = (rr * 0.0193339) + (gg * 0.1191920) + (bb * 0.9503041)
+      x = xyz_matrix[0, 0]
+      y = xyz_matrix[0, 1]
+      z = xyz_matrix[0, 2]
 
       # Now, scale X, Y, Z so that Y for D65 white would be 100.
       x *= 100.0
@@ -122,6 +76,30 @@ module ColorConverters
       z = z.clamp(0.0..108.883)
 
       [x, y, z]
+    end
+
+    def self.d50_to_d65(xyz_array)
+      x, y, z = xyz_array
+
+      matrix = ::Matrix[
+        [0.955473421488075, -0.02309845494876471, 0.06325924320057072],
+        [-0.0283697093338637, 1.0099953980813041, 0.021041441191917323],
+        [0.012314014864481998, -0.020507649298898964, 1.330365926242124]
+      ]
+
+      ::Matrix[[x, y, z]] * matrix
+    end
+
+    def self.d65_to_d50(xyz_array)
+      x, y, z = xyz_array
+
+      matrix = ::Matrix[
+        [1.0479297925449969, 0.022946870601609652, -0.05019226628920524],
+        [0.02962780877005599, 0.9904344267538799, -0.017073799063418826],
+        [-0.009243040646204504, 0.015055191490298152, 0.7518742814281371]
+      ]
+
+      ::Matrix[[x, y, z]] * matrix
     end
   end
 end

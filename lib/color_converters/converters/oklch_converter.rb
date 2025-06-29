@@ -1,9 +1,9 @@
 module ColorConverters
-  class CielchConverter < BaseConverter
+  class OklchConverter < BaseConverter
     def self.matches?(color_input)
       return false unless color_input.is_a?(Hash)
 
-      color_input.keys - [:l, :c, :h, :space] == [] && color_input[:space].to_s == 'cie'
+      color_input.keys - [:l, :c, :h, :space] == [] && color_input[:space].to_s == 'ok'
     end
 
     def self.bounds
@@ -13,19 +13,18 @@ module ColorConverters
     private
 
     def validate_input(color_input)
-      bounds = CielchConverter.bounds
+      bounds = OklchConverter.bounds
       color_input[:l].to_f.between?(*bounds[:l]) && color_input[:c].to_f.between?(*bounds[:c]) && color_input[:h].to_f.between?(*bounds[:h])
     end
 
     def input_to_rgba(color_input)
-      l, a, b = CielchConverter.cielch_to_cielab(color_input)
-      x, y, z = CielabConverter.cielab_to_xyz({ l: l, a: a, b: b })
-      r, g, b = XyzConverter.xyz_to_rgb({ x: x, y: y, z: z })
+      l, a, b = OklchConverter.oklch_to_oklab(color_input)
+      r, g, b = OklabConverter.oklab_to_rgb({ l: l, a: a, b: b })
 
       { r: r.round(IMPORT_DP), g: g.round(IMPORT_DP), b: b.round(IMPORT_DP), a: 1.0 }
     end
 
-    def self.cielch_to_cielab(color_input)
+    def self.oklch_to_oklab(color_input)
       l = color_input[:l].to_f
       c = color_input[:c].to_f
       h = color_input[:h].to_f
@@ -38,7 +37,7 @@ module ColorConverters
       [l, a, b]
     end
 
-    def self.cielab_to_cielch(lab_array)
+    def self.oklab_to_oklch(lab_array)
       l, aa, bb = lab_array
 
       c = ((aa**2) + (bb**2))**0.5

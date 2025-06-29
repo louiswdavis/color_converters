@@ -1,7 +1,7 @@
 module ColorConverters
   class Color
     extend Forwardable
-    def_delegators :@converter, :rgb, :hex, :hsl, :hsv, :hsb, :cmyk, :xyz, :cielab, :cielch, :name, :alpha
+    def_delegators :@converter, :rgb, :hex, :hsl, :hsv, :hsb, :cmyk, :xyz, :cielab, :cielch, :oklab, :oklch, :name, :alpha
 
     def initialize(color)
       @converter = BaseConverter.factory(color)

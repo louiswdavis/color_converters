@@ -18,8 +18,10 @@ module ColorConverters
     end
 
     def input_to_rgba(color_input)
-      xyz_hash = CielabConverter.cielab_to_xyz(color_input)
-      XyzConverter.new(xyz_hash, limit_override: true).rgba
+      x, y, z = CielabConverter.cielab_to_xyz(color_input)
+      r, g, b = XyzConverter.xyz_to_rgb({ x: x, y: y, z: z })
+
+      { r: r.round(IMPORT_DP), g: g.round(IMPORT_DP), b: b.round(IMPORT_DP), a: 1.0 }
     end
 
     def self.cielab_to_xyz(color_input)
@@ -45,7 +47,7 @@ module ColorConverters
       y *= 100.0
       z *= 108.883
 
-      { x: x, y: y, z: z }
+      [x, y, z]
     end
 
     def self.xyz_to_cielab(xyz_array)
@@ -57,14 +59,25 @@ module ColorConverters
       zr = 108.883
 
       # Calculate the ratio of the XYZ values to the reference white.
-      # http://www.brucelindbloom.com/index.html?Equations.html
+      # http:#www.brucelindbloom.com/index.html?Equations.html
       rel = [x / xr, y / yr, z / zr]
+
+      # https://www.w3.org/TR/css-color-4/#color-conversion-code
+      # Assuming XYZ is relative to D50, convert to CIE Lab
+      # from CIE standard, which now defines these as a rational fraction
+      conversion_matrix = ::Matrix[
+        [1.0479297925449969, 0.022946870601609652, -0.05019226628920524],
+        [0.02962780877005599, 0.9904344267538799, -0.017073799063418826],
+        [-0.009243040646204504, 0.015055191490298152, 0.7518742814281371]
+      ]
+
+      rel = ::Matrix[[x, y, z]] * conversion_matrix
 
       e = 216.0 / 24_389.0
       k = 841.0 / 108.0
 
       # And now transform
-      # http://en.wikipedia.org/wiki/Lab_color_space#Forward_transformation
+      # http:#en.wikipedia.org/wiki/Lab_color_space#Forward_transformation
       # There is a brief explanation there as far as the nature of the calculations,
       # as well as a much nicer looking modeling of the algebra.
       xx, yy, zz = rel.map do

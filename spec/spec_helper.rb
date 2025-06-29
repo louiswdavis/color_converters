@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'color_converters'
+require 'matrix'
 require 'byebug'
 
 RSpec.configure do |config|

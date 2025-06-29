@@ -85,6 +85,18 @@ module ColorConverters
       { l: l.round(OUTPUT_DP), c: c.round(OUTPUT_DP), h: h.round(OUTPUT_DP) }
     end
 
+    def oklab
+      l, a, b = OklabConverter.rgb_to_oklab(self.rgb_array_frac)
+
+      { l: l.round(OUTPUT_DP), a: a.round(OUTPUT_DP), b: b.round(OUTPUT_DP) }
+    end
+
+    def oklch
+      l, c, h = OklchConverter.oklab_to_oklch(OklabConverter.rgb_to_oklab(self.rgb_array_frac))
+
+      { l: l.round(OUTPUT_DP), c: c.round(OUTPUT_DP), h: h.round(OUTPUT_DP) }
+    end
+
     def alpha
       @rgba[:a]
     end
