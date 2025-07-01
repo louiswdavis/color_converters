@@ -9,7 +9,7 @@ module ColorConverters
     def self.rgb_to_name(rgb_array)
       r, g, b = rgb_array
 
-      name = self.color_names.find { |_k, v| v == [r.to_i, g.to_i, b.to_i] }
+      name = self.color_names.find { |_k, v| v == [r.round, g.round, b.round] }
       name.present? ? name[0].to_s : nil
     end
 

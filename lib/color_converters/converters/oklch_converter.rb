@@ -7,7 +7,7 @@ module ColorConverters
     end
 
     def self.bounds
-      { l: [0.0, 100.0], c: [0.0, 100.0], h: [0.0, 360.0] }
+      { l: [0.0, 100.0], c: [0.0, 500.0], h: [0.0, 360.0] }
     end
 
     private
@@ -19,33 +19,38 @@ module ColorConverters
 
     def input_to_rgba(color_input)
       l, a, b = OklchConverter.oklch_to_oklab(color_input)
-      r, g, b = OklabConverter.oklab_to_rgb({ l: l, a: a, b: b })
+      x, y, z = OklabConverter.oklab_to_xyz({ l: l, a: a, b: b })
+      r, g, b = XyzConverter.xyz_to_rgb({ x: x, y: y, z: z })
 
       [r, g, b, 1.0]
     end
 
     def self.oklch_to_oklab(color_input)
-      l = color_input[:l].to_f
-      c = color_input[:c].to_f
-      h = color_input[:h].to_f
+      l = color_input[:l].to_d
+      c = color_input[:c].to_d
+      h = color_input[:h].to_d
 
-      h_rad = h * (Math::PI / 180.0)
+      h_rad = h * (Math::PI.to_d / 180.0.to_d)
 
-      a = c * Math.cos(h_rad)
-      b = c * Math.sin(h_rad)
+      a = c * Math.cos(h_rad).to_d
+      b = c * Math.sin(h_rad).to_d
 
       [l, a, b]
     end
 
     def self.oklab_to_oklch(lab_array)
-      l, aa, bb = lab_array
+      l, aa, bb = lab_array.map(&:to_d)
 
-      c = ((aa**2) + (bb**2))**0.5
+      e = 0.000015.to_d; # if chroma is smaller than this, set hue to 0 similar to CIELch
 
-      h_rad = Math.atan2(bb, aa)
-      h = h_rad * (180.0 / Math::PI)
+      c = ((aa**2.to_d) + (bb**2.to_d))**0.5.to_d
+
+      h_rad = Math.atan2(bb, aa).to_d
+      h = h_rad * (180.0.to_d / Math::PI.to_d)
 
       h %= 360
+
+      h = 0 if c < e
 
       [l, c, h]
     end

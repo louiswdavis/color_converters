@@ -7,7 +7,7 @@ module ColorConverters
     end
 
     def self.bounds
-      { l: [0.0, 100.0], a: [-100.0, 100.0], b: [-100.0, 100.0] }
+      { l: [0.0, 100.0], a: [-0.5, 0.5], b: [-0.5, 0.5] }
     end
 
     private
@@ -18,53 +18,77 @@ module ColorConverters
     end
 
     def input_to_rgba(color_input)
-      r, g, b = OklabConverter.oklab_to_rgb(color_input)
+      x, y, z = OklabConverter.oklab_to_xyz(color_input)
+      r, g, b = XyzConverter.xyz_to_rgb({ x: x, y: y, z: z })
 
       [r, g, b, 1.0]
     end
 
-    def self.oklab_to_rgb(color_input)
-      l = color_input[:l].to_f
-      a = color_input[:a].to_f
-      b = color_input[:b].to_f
+    def self.oklab_to_xyz(color_input)
+      l = color_input[:l].to_d
+      a = color_input[:a].to_d
+      b = color_input[:b].to_d
+
+      # Now, scale l to a decimal
+      l /= 100.0.to_d
 
       # Convert Oklab (L*a*b*) to LMS'
-      l_lms = (1.0000000000 * l) + (0.3963377774 * a) + (0.2158037573 * b)
-      m_lms = (1.0000000000 * l) + (-0.1055613458 * a) + (-0.0638541728 * b)
-      s_lms = (1.0000000000 * l) + (-0.0894841775 * a) + (-1.2914855480 * b)
+      lab_to_lms_matrix = ::Matrix[
+        [1.0000000000000000.to_d, 0.3963377773761749.to_d,  0.2158037573099136.to_d],
+        [1.0000000000000000.to_d, -0.1055613458156586.to_d, -0.0638541728258133.to_d],
+        [1.0000000000000000.to_d, -0.0894841775298119.to_d, -1.2914855480194092.to_d]
+      ]
 
-      l_lms **= 3
-      m_lms **= 3
-      s_lms **= 3
+      l_lms, m_lms, s_lms = (lab_to_lms_matrix * ::Matrix.column_vector([l, a, b])).to_a.flatten
 
-      # Convert LMS to linear RGB
-      rr = (4.0767416621 * l_lms) + (-3.3077115913 * m_lms) + (0.2309699292 * s_lms)
-      gg = (-1.2684380046 * l_lms) + (2.6097574011 * m_lms) + (-0.3413193965 * s_lms)
-      bb = (-0.0041960863 * l_lms) + (-0.7034186147 * m_lms) + (1.7076147010 * s_lms)
+      l_lms **= 3.to_d
+      m_lms **= 3.to_d
+      s_lms **= 3.to_d
 
-      RgbConverter.lrgb_to_rgb([rr, gg, bb])
+      lms_to_xyz_matrix = ::Matrix[
+        [1.2268798758459243.to_d, -0.5578149944602171.to_d, 0.2813910456659647.to_d],
+        [-0.0405757452148008.to_d, 1.1122868032803170.to_d, -0.0717110580655164.to_d],
+        [-0.0763729366746601.to_d, -0.4214933324022432.to_d, 1.5869240198367816.to_d]
+      ]
+
+      x, y, z = (lms_to_xyz_matrix * ::Matrix.column_vector([l_lms, m_lms, s_lms])).to_a.flatten
+
+      [x, y, z]
     end
 
-    def self.rgb_to_oklab(rgb_array)
-      rr, gg, bb = RgbConverter.rgb_to_lrgb(rgb_array)
+    def self.xyz_to_oklab(xyz_array)
+      x, y, z = xyz_array.map(&:to_d)
 
-      l_lms = (0.4122214708 * rr) + (0.5363325363 * gg) + (0.0514459929 * bb)
-      m_lms = (0.2119034982 * rr) + (0.6806995451 * gg) + (0.1073969566 * bb)
-      s_lms = (0.0883024619 * rr) + (0.2817188376 * gg) + (0.6299787005 * bb)
+      # The transformation matrix expects normalised X, Y, Z values.
+      x /= 100.0.to_d
+      y /= 100.0.to_d
+      z /= 100.0.to_d
 
-      l_lms **= (1.0 / 3.0)
-      m_lms **= (1.0 / 3.0)
-      s_lms **= (1.0 / 3.0)
+      # Given XYZ relative to D65, convert to OKLab
+      xyz_to_lms_matrix = ::Matrix[
+        [0.8190224379967030.to_d, 0.3619062600528904.to_d, -0.1288737815209879.to_d],
+        [0.0329836539323885.to_d, 0.9292868615863434.to_d, 0.0361446663506424.to_d],
+        [0.0481771893596242.to_d, 0.2642395317527308.to_d, 0.6335478284694309.to_d]
+      ]
 
-      # Convert LMS' to Oklab (L*a*b*)
-      l = (0.2104542553 * l_lms) + (0.7936177850 * m_lms) + (-0.0040720468 * s_lms)
-      a = (1.9779984951 * l_lms) + (-2.4285922050 * m_lms) + (0.4505937099 * s_lms)
-      b = (0.0259040371 * l_lms) + (-0.7827717662 * m_lms) + (-0.8086757660 * s_lms)
+      l_lms, m_lms, s_lms = (xyz_to_lms_matrix * ::Matrix.column_vector([x, y, z])).to_a.flatten
+
+      l_lms **= (1.0.to_d / 3.0.to_d)
+      m_lms **= (1.0.to_d / 3.0.to_d)
+      s_lms **= (1.0.to_d / 3.0.to_d)
+
+      lms_to_lab_matrix = ::Matrix[
+        [0.2104542683093140.to_d, 0.7936177747023054.to_d, -0.0040720430116193.to_d],
+        [1.9779985324311684.to_d, -2.4285922420485799.to_d, 0.4505937096174110.to_d],
+        [0.0259040424655478.to_d, 0.7827717124575296.to_d, -0.8086757549230774.to_d]
+      ]
+
+      l_lab, a_lab, b_lab = (lms_to_lab_matrix * ::Matrix.column_vector([l_lms, m_lms, s_lms])).to_a.flatten
 
       # Now, scale l to a percentage
-      l *= 100.0
+      l_lab *= 100.0.to_d
 
-      [l, a, b]
+      [l_lab, a_lab, b_lab]
     end
   end
 end
