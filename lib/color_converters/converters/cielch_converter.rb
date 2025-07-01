@@ -41,12 +41,16 @@ module ColorConverters
     def self.cielab_to_cielch(lab_array)
       l, aa, bb = lab_array
 
+      e = 0.0015; # if chroma is smaller than this, set hue to 0 [https://www.w3.org/TR/css-color-4/#color-conversion-code]
+
       c = ((aa**2) + (bb**2))**0.5
 
       h_rad = Math.atan2(bb, aa)
       h = h_rad * (180.0 / Math::PI)
 
       h %= 360
+
+      h = 0 if c < e
 
       [l, c, h]
     end

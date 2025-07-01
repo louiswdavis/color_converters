@@ -33,10 +33,10 @@ module ColorConverters
       xx = (a / 500.0) + yy
       zz = yy - (b / 200.0)
 
-      ratio = 6.0 / 29.0
+      e = 216.0 / 24_389.0
 
       x, y, z = [xx, yy, zz].map do
-        if _1 <= ratio
+        if _1**3 <= e
           (3.0 * (6.0 / 29.0) * (6.0 / 29.0) * (_1 - (4.0 / 29.0)))
         else
           _1**3
@@ -53,25 +53,16 @@ module ColorConverters
     def self.xyz_to_cielab(xyz_array)
       x, y, z = xyz_array
 
-      # The D65 standard illuminant white point
-      xr = 95.047
-      yr = 100.0
-      zr = 108.883
-
-      # Calculate the ratio of the XYZ values to the reference white.
-      # http:#www.brucelindbloom.com/index.html?Equations.html
-      rel = [x / xr, y / yr, z / zr]
-
       # https://www.w3.org/TR/css-color-4/#color-conversion-code
-      # Assuming XYZ is relative to D50, convert to CIE Lab
-      # from CIE standard, which now defines these as a rational fraction
-      conversion_matrix = ::Matrix[
-        [1.0479297925449969, 0.022946870601609652, -0.05019226628920524],
-        [0.02962780877005599, 0.9904344267538799, -0.017073799063418826],
-        [-0.009243040646204504, 0.015055191490298152, 0.7518742814281371]
-      ]
+      # # The D50 & D65 standard illuminant white point
+      # wp_rel = [0.3457 / 0.3585, 1.0, (1.0 - 0.3457 - 0.3585) / 0.3585]
+      wp_rel = [0.3127 / 0.3290, 1.0, (1.0 - 0.3127 - 0.3290) / 0.3290].map { _1 * 100.0 }
 
-      rel = ::Matrix[[x, y, z]] * conversion_matrix
+      xr, yr, zr = wp_rel
+
+      # # Calculate the ratio of the XYZ values to the reference white.
+      # # http://www.brucelindbloom.com/index.html?Equations.html
+      rel = [x / xr, y / yr, z / zr]
 
       e = 216.0 / 24_389.0
       k = 841.0 / 108.0

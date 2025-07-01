@@ -19,10 +19,10 @@ RSpec.describe ColorConverters::Color do
       expect(described_class.new(h: 220, s: 75, b: 80).rgb).to eq({ r: 51, g: 102, b: 204 })
       expect(described_class.new(c: 74, m: 58, y: 22, k: 3).rgb).to eq({ r: 64.31, g: 103.89, b: 192.93 })
 
-      expect(described_class.new(x: 45, y: 23, z: 64).rgb).to eq({ r: 229.27, g: 40.72, b: 211.48 })
+      expect(described_class.new(x: 45, y: 23, z: 64).rgb).to eq({ r: 229.28, g: 40.72, b: 211.46 })
 
-      expect(described_class.new(l: 74, a: 58, b: -22, space: :cie).rgb).to eq({ r: 255.0, g: 137.98, b: 223.61 })
-      expect(described_class.new(l: 74, c: 58, h: 122, space: :cie).rgb).to eq({ r: 154.24, g: 195.21, b: 87.0 })
+      expect(described_class.new(l: 74, a: 58, b: -22, space: :cie).rgb).to eq({ r: 255.0, g: 137.98, b: 223.59 })
+      expect(described_class.new(l: 74, c: 58, h: 122, space: :cie).rgb).to eq({ r: 154.25, g: 195.20, b: 86.99 })
 
       expect(described_class.new(l: 74, a: 58, b: -22, space: :ok).rgb).to eq({ r: 255.0, g: 137.98, b: 223.61 })
       expect(described_class.new(l: 74, c: 58, h: 122, space: :ok).rgb).to eq({ r: 154.24, g: 195.21, b: 87.0 })

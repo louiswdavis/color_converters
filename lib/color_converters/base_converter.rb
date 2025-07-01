@@ -1,4 +1,6 @@
 require 'active_support/core_ext/object/blank'
+require 'bigdecimal'
+require 'bigdecimal/util'
 
 module ColorConverters
   class BaseConverter
@@ -36,7 +38,7 @@ module ColorConverters
     end
 
     def rgb
-      { r: @rgba[:r].round(OUTPUT_DP), g: @rgba[:g].round(OUTPUT_DP), b: @rgba[:b].round(OUTPUT_DP) }
+      { r: @rgba[:r].to_f.round(OUTPUT_DP), g: @rgba[:g].to_f.round(OUTPUT_DP), b: @rgba[:b].to_f.round(OUTPUT_DP) }
     end
 
     def hex
@@ -46,13 +48,13 @@ module ColorConverters
     def hsl
       @r, @g, @b = self.rgb_array_frac
 
-      { h: self.hue.round(OUTPUT_DP), s: self.hsl_saturation.round(OUTPUT_DP), l: self.hsl_lightness.round(OUTPUT_DP) }
+      { h: self.hue.to_f.round(OUTPUT_DP), s: self.hsl_saturation.to_f.round(OUTPUT_DP), l: self.hsl_lightness.to_f.round(OUTPUT_DP) }
     end
 
     def hsv
       @r, @g, @b = self.rgb_array
 
-      { h: self.hue.round(OUTPUT_DP), s: self.hsv_saturation.round(OUTPUT_DP), v: self.hsv_value.round(OUTPUT_DP) }
+      { h: self.hue.to_f.round(OUTPUT_DP), s: self.hsv_saturation.to_f.round(OUTPUT_DP), v: self.hsv_value.to_f.round(OUTPUT_DP) }
     end
 
     def hsb
@@ -64,37 +66,37 @@ module ColorConverters
     def cmyk
       c, m, y, k = CmykConverter.rgb_to_cmyk(self.rgb_array_frac)
 
-      { c: c.round(OUTPUT_DP), m: m.round(OUTPUT_DP), y: y.round(OUTPUT_DP), k: k.round(OUTPUT_DP) }
+      { c: c.to_f.round(OUTPUT_DP), m: m.to_f.round(OUTPUT_DP), y: y.to_f.round(OUTPUT_DP), k: k.to_f.round(OUTPUT_DP) }
     end
 
     def xyz
       x, y, z = XyzConverter.rgb_to_xyz(self.rgb_array_frac)
 
-      { x: x.round(OUTPUT_DP), y: y.round(OUTPUT_DP), z: z.round(OUTPUT_DP) }
+      { x: x.to_f.round(OUTPUT_DP), y: y.to_f.round(OUTPUT_DP), z: z.to_f.round(OUTPUT_DP) }
     end
 
     def cielab
       l, a, b = CielabConverter.xyz_to_cielab(XyzConverter.rgb_to_xyz(self.rgb_array_frac))
 
-      { l: l.round(OUTPUT_DP), a: a.round(OUTPUT_DP), b: b.round(OUTPUT_DP) }
+      { l: l.to_f.round(OUTPUT_DP), a: a.to_f.round(OUTPUT_DP), b: b.to_f.round(OUTPUT_DP) }
     end
 
     def cielch
       l, c, h = CielchConverter.cielab_to_cielch(CielabConverter.xyz_to_cielab(XyzConverter.rgb_to_xyz(self.rgb_array_frac)))
 
-      { l: l.round(OUTPUT_DP), c: c.round(OUTPUT_DP), h: h.round(OUTPUT_DP) }
+      { l: l.to_f.round(OUTPUT_DP), c: c.to_f.round(OUTPUT_DP), h: h.to_f.round(OUTPUT_DP) }
     end
 
     def oklab
-      l, a, b = OklabConverter.rgb_to_oklab(self.rgb_array_frac)
+      l, a, b = OklabConverter.xyz_to_oklab(XyzConverter.rgb_to_xyz(self.rgb_array_frac))
 
-      { l: l.round(OUTPUT_DP), a: a.round(OUTPUT_DP), b: b.round(OUTPUT_DP) }
+      { l: l.to_f.round(OUTPUT_DP), a: a.to_f.round(OUTPUT_DP), b: b.to_f.round(OUTPUT_DP) }
     end
 
     def oklch
-      l, c, h = OklchConverter.oklab_to_oklch(OklabConverter.rgb_to_oklab(self.rgb_array_frac))
+      l, c, h = OklchConverter.oklab_to_oklch(OklabConverter.xyz_to_oklab(XyzConverter.rgb_to_xyz(self.rgb_array_frac)))
 
-      { l: l.round(OUTPUT_DP), c: c.round(OUTPUT_DP), h: h.round(OUTPUT_DP) }
+      { l: l.to_f.round(OUTPUT_DP), c: c.to_f.round(OUTPUT_DP), h: h.to_f.round(OUTPUT_DP) }
     end
 
     def alpha
