@@ -106,7 +106,7 @@ module ColorConverters
     end
 
     def name
-      NameConverter.rgb_to_name(self.rgb_array_frac)
+      NameConverter.rgb_to_name(self.rgb_array)
     end
 
     protected
