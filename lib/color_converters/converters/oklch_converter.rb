@@ -21,7 +21,7 @@ module ColorConverters
       l, a, b = OklchConverter.oklch_to_oklab(color_input)
       r, g, b = OklabConverter.oklab_to_rgb({ l: l, a: a, b: b })
 
-      { r: r.round(IMPORT_DP), g: g.round(IMPORT_DP), b: b.round(IMPORT_DP), a: 1.0 }
+      [r, g, b, 1.0]
     end
 
     def self.oklch_to_oklab(color_input)

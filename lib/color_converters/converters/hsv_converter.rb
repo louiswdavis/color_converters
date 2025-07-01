@@ -41,17 +41,17 @@ module ColorConverters
 
       case i % 6
       when 0
-        { r: v, g: t, b: p, a: 1.0 }
+        [v, t, p, 1.0]
       when 1
-        { r: q, g: v, b: p, a: 1.0 }
+        [q, v, p, 1.0]
       when 2
-        { r: p, g: v, b: t, a: 1.0 }
+        [p, v, t, 1.0]
       when 3
-        { r: p, g: q, b: v, a: 1.0 }
+        [p, q, v, 1.0]
       when 4
-        { r: t, g: p, b: v, a: 1.0 }
+        [t, p, v, 1.0]
       when 5
-        { r: v, g: p, b: q, a: 1.0 }
+        [v, p, q, 1.0]
       end
     end
   end

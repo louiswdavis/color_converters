@@ -26,7 +26,7 @@ module ColorConverters
       b = b.to_f
       a = a.to_f
 
-      { r: r.round(IMPORT_DP), g: g.round(IMPORT_DP), b: b.round(IMPORT_DP), a: a.round(IMPORT_DP) }
+      [r, g, b, a]
     end
   end
 end

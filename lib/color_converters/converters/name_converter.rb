@@ -25,7 +25,8 @@ module ColorConverters
       raise InvalidColorError unless found_colour.present?
 
       r, g, b = found_colour
-      { r: r.round(IMPORT_DP), g: g.round(IMPORT_DP), b: b.round(IMPORT_DP), a: 1.0 }
+
+      [r, g, b, 1.0]
     end
 
     def self.color_names

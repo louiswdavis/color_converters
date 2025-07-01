@@ -23,7 +23,7 @@ module ColorConverters
       b = color_input[:b].to_f
       a = (color_input[:a] || 1.0).to_f
 
-      { r: r.round(IMPORT_DP), g: g.round(IMPORT_DP), b: b.round(IMPORT_DP), a: a.round(IMPORT_DP) }
+      [r, g, b, a]
     end
 
     def self.rgb_to_lrgb(rgb_array_frac)

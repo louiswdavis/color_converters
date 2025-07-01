@@ -53,12 +53,13 @@ module ColorConverters
         rgb[i] = (val * 255)
       end
 
-      { r: rgb[0].round(IMPORT_DP), g: rgb[1].round(IMPORT_DP), b: rgb[2].round(IMPORT_DP), a: a }
+      [rgb[0], rgb[1], rgb[2], a]
     end
 
     def greyscale(luminosity, alpha)
       rgb_equal_value = (luminosity * 255).round(IMPORT_DP)
-      { r: rgb_equal_value, g: rgb_equal_value, b: rgb_equal_value, a: alpha }
+
+      [rgb_equal_value, rgb_equal_value, rgb_equal_value, alpha]
     end
   end
 end

@@ -22,7 +22,7 @@ module ColorConverters
       x, y, z = CielabConverter.cielab_to_xyz({ l: l, a: a, b: b })
       r, g, b = XyzConverter.xyz_to_rgb({ x: x, y: y, z: z })
 
-      { r: r.round(IMPORT_DP), g: g.round(IMPORT_DP), b: b.round(IMPORT_DP), a: 1.0 }
+      [r, g, b, 1.0]
     end
 
     def self.cielch_to_cielab(color_input)

@@ -34,7 +34,9 @@ module ColorConverters
         raise InvalidColorError # validation method is defined in each convertor
       end
 
-      @rgba = self.input_to_rgba(color_input) # conversion method is defined in each convertor
+      r, g, b, a = self.input_to_rgba(color_input) # conversion method is defined in each convertor
+
+      @rgba = { r: r.to_f.round(IMPORT_DP), g: g.to_f.round(IMPORT_DP), b: b.to_f.round(IMPORT_DP), a: a.to_f.round(IMPORT_DP) }
     end
 
     def rgb

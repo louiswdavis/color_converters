@@ -21,7 +21,7 @@ module ColorConverters
       b = color_input[4, 2].hex
       a = color_input.length == 8 ? hex[6, 2].hex : 1.0
 
-      { r: r.round(IMPORT_DP), g: g.round(IMPORT_DP), b: b.round(IMPORT_DP), a: a.round(IMPORT_DP) }
+      [r, g, b, a]
     end
 
     def normalize_hex(hex_input)

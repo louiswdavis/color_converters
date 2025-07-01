@@ -19,7 +19,9 @@ module ColorConverters
       h, s, l, a = matches[1].split(',').map(&:strip)
       raise InvalidColorError unless h.present? && s.present? && l.present?
 
-      HslConverter.new(h: h, s: s, l: l, a: a).rgba
+      rgba = HslConverter.new(h: h, s: s, l: l, a: a).rgba
+
+      [rgba[:r], rgba[:g], rgba[:b], rgba[:a]]
     end
   end
 end

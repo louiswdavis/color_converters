@@ -20,7 +20,7 @@ module ColorConverters
     def input_to_rgba(color_input)
       r, g, b = OklabConverter.oklab_to_rgb(color_input)
 
-      { r: r.round(IMPORT_DP), g: g.round(IMPORT_DP), b: b.round(IMPORT_DP), a: 1.0 }
+      [r, g, b, 1.0]
     end
 
     def self.oklab_to_rgb(color_input)
