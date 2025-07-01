@@ -32,13 +32,13 @@ module ColorConverters
       # Inverse sRGB companding. Linearizes RGB channels with respect to energy.
       # Assumption that r, g, b are always positive
       rr, gg, bb = [r, g, b].map do
-        if _1 <= 0.04045
-          _1 / 12.92
+        if _1.to_d <= 0.04045.to_d
+          _1.to_d / 12.92.to_d
         else
           # sRGB Inverse Companding (Non-linear to Linear RGB)
           # The sRGB specification (IEC 61966-2-1) defines the exponent as 2.4.
           #
-          (((_1 + 0.055) / 1.055)**2.4)
+          (((_1.to_d + 0.055.to_d) / 1.055.to_d)**2.4.to_d)
 
           # IMPORTANT NUMERICAL NOTE:
           # On this specific system (and confirmed by Wolfram Alpha for direct calculation),
@@ -65,14 +65,14 @@ module ColorConverters
       # The exponent for the non-linear segment is 1/2.4 (approximately 0.41666...).
       # Assumption that rr, gg, bb are always positive
       r, g, b = [rr, gg, bb].map do
-        if _1 <= 0.0031308
+        if _1.to_d <= 0.0031308.to_d
           # Linear portion of the sRGB curve
-          _1 * 12.92
+          _1.to_d * 12.92.to_d
         else
           # Non-linear (gamma-corrected) portion of the sRGB curve
           # The sRGB specification uses an exponent of 1/2.4.
           #
-          (1.055 * (_1**(1.0 / 2.4))) - 0.055
+          (1.055.to_d * (_1.to_d**(1.0.to_d / 2.4.to_d))) - 0.055.to_d
 
           # IMPORTANT NUMERICAL NOTE:
           # On this specific system (and confirmed by Wolfram Alpha for direct calculation),
@@ -89,9 +89,9 @@ module ColorConverters
       end
 
       # Scale the 0-1 sRGB value to the 0-255 range for 8-bit color components.
-      r *= 255.0
-      g *= 255.0
-      b *= 255.0
+      r *= 255.0.to_d
+      g *= 255.0.to_d
+      b *= 255.0.to_d
 
       # Clamping RGB values to prevent out-of-gamut issues and numerical errors and ensures these values stay within the valid and expected range.
       r = r.clamp(0.0..255.0)

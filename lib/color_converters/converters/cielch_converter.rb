@@ -26,27 +26,27 @@ module ColorConverters
     end
 
     def self.cielch_to_cielab(color_input)
-      l = color_input[:l].to_f
-      c = color_input[:c].to_f
-      h = color_input[:h].to_f
+      l = color_input[:l].to_d
+      c = color_input[:c].to_d
+      h = color_input[:h].to_d
 
-      h_rad = h * (Math::PI / 180.0)
+      h_rad = h * (Math::PI.to_d / 180.0.to_d)
 
-      a = c * Math.cos(h_rad)
-      b = c * Math.sin(h_rad)
+      a = c * Math.cos(h_rad).to_d
+      b = c * Math.sin(h_rad).to_d
 
       [l, a, b]
     end
 
     def self.cielab_to_cielch(lab_array)
-      l, aa, bb = lab_array
+      l, aa, bb = lab_array.map(&:to_d)
 
-      e = 0.0015; # if chroma is smaller than this, set hue to 0 [https://www.w3.org/TR/css-color-4/#color-conversion-code]
+      e = 0.0015.to_d; # if chroma is smaller than this, set hue to 0 [https://www.w3.org/TR/css-color-4/#color-conversion-code]
 
-      c = ((aa**2) + (bb**2))**0.5
+      c = ((aa**2.to_d) + (bb**2.to_d))**0.5.to_d
 
-      h_rad = Math.atan2(bb, aa)
-      h = h_rad * (180.0 / Math::PI)
+      h_rad = Math.atan2(bb, aa).to_d
+      h = h_rad * (180.0.to_d / Math::PI.to_d)
 
       h %= 360
 

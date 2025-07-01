@@ -25,38 +25,38 @@ module ColorConverters
     end
 
     def self.cielab_to_xyz(color_input)
-      l = color_input[:l].to_f
-      a = color_input[:a].to_f
-      b = color_input[:b].to_f
+      l = color_input[:l].to_d
+      a = color_input[:a].to_d
+      b = color_input[:b].to_d
 
-      yy = (l + 16.0) / 116.0
-      xx = (a / 500.0) + yy
-      zz = yy - (b / 200.0)
+      yy = (l + 16.0.to_d) / 116.0.to_d
+      xx = (a / 500.0.to_d) + yy
+      zz = yy - (b / 200.0.to_d)
 
-      e = 216.0 / 24_389.0
+      e = 216.0.to_d / 24_389.0.to_d
 
       x, y, z = [xx, yy, zz].map do
-        if _1**3 <= e
-          (3.0 * (6.0 / 29.0) * (6.0 / 29.0) * (_1 - (4.0 / 29.0)))
+        if _1**3.to_d <= e
+          (3.0.to_d * (6.0.to_d / 29.0.to_d) * (6.0.to_d / 29.0.to_d) * (_1 - (4.0.to_d / 29.0.to_d)))
         else
-          _1**3
+          _1**3.to_d
         end
       end
 
-      x *= 95.047
-      y *= 100.0
-      z *= 108.883
+      x *= 95.047.to_d
+      y *= 100.0.to_d
+      z *= 108.883.to_d
 
       [x, y, z]
     end
 
     def self.xyz_to_cielab(xyz_array)
-      x, y, z = xyz_array
+      x, y, z = xyz_array.map(&:to_d)
 
       # https://www.w3.org/TR/css-color-4/#color-conversion-code
       # # The D50 & D65 standard illuminant white point
       # wp_rel = [0.3457 / 0.3585, 1.0, (1.0 - 0.3457 - 0.3585) / 0.3585]
-      wp_rel = [0.3127 / 0.3290, 1.0, (1.0 - 0.3127 - 0.3290) / 0.3290].map { _1 * 100.0 }
+      wp_rel = [0.3127.to_d / 0.3290.to_d, 1.0.to_d, (1.0.to_d - 0.3127.to_d - 0.3290.to_d) / 0.3290.to_d].map { _1 * 100.0.to_d }
 
       xr, yr, zr = wp_rel
 
@@ -64,8 +64,8 @@ module ColorConverters
       # # http://www.brucelindbloom.com/index.html?Equations.html
       rel = [x / xr, y / yr, z / zr]
 
-      e = 216.0 / 24_389.0
-      k = 841.0 / 108.0
+      e = 216.0.to_d / 24_389.0.to_d
+      k = 841.0.to_d / 108.0.to_d
 
       # And now transform
       # http:#en.wikipedia.org/wiki/Lab_color_space#Forward_transformation
@@ -73,18 +73,18 @@ module ColorConverters
       # as well as a much nicer looking modeling of the algebra.
       xx, yy, zz = rel.map do
         if _1 > e
-          _1**(1.0 / 3.0)
+          _1**(1.0.to_d / 3.0.to_d)
         else
-          (k * _1) + (4.0 / 29.0)
+          (k * _1) + (4.0.to_d / 29.0.to_d)
           # The 4/29 here is for when t = 0 (black). 4/29 * 116 = 16, and 16 -
           # 16 = 0, which is the correct value for L* with black.
           # ((1.0/3)*((29.0/6)**2) * t) + (4.0/29)
         end
       end
 
-      l = ((116.0 * yy) - 16.0)
-      a = (500.0 * (xx - yy))
-      b = (200.0 * (yy - zz))
+      l = ((116.0.to_d * yy) - 16.0.to_d)
+      a = (500.0.to_d * (xx - yy))
+      b = (200.0.to_d * (yy - zz))
 
       [l, a, b]
     end
