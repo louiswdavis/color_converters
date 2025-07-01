@@ -26,18 +26,6 @@ RSpec.describe ColorConverters::CielchConverter do
     end
 
     it '.input_to_rgba and back' do
-      cielch = { l: 73.53, c: 33.59, h: 36.34 }
-      rgba = { r: 239.07, g: 161.17, b: 145.60, a: 1.0 }
-      color = described_class.new(**cielch)
-      expect(color.cielch).to eq({ l: 73.53, c: 33.59, h: 36.35 }) # rounding on h
-      expect(color.rgba).to eq rgba
-
-      cielch = { l: 44.65, c: 6.92, h: 41.51 }
-      rgba = { r: 117.47, g: 102.46, b: 98.19, a: 1.0 }
-      color = described_class.new(**cielch)
-      expect(color.cielch).to eq({ l: 44.65, c: 6.93, h: 41.58 }) # rounding on h
-      expect(color.rgba).to eq rgba
-
       cielch = { l: 100.0, c: 0.0, h: 0.0 }
       rgba = { r: 255, g: 255, b: 254.97, a: 1.0 }
       color = described_class.new(**cielch)
@@ -48,6 +36,18 @@ RSpec.describe ColorConverters::CielchConverter do
       rgba = { r: 0, g: 0, b: 0, a: 1.0 }
       color = described_class.new(**cielch)
       expect(color.cielch).to eq cielch
+      expect(color.rgba).to eq rgba
+
+      cielch = { l: 73.53, c: 33.59, h: 36.34 }
+      rgba = { r: 239.07, g: 161.17, b: 145.60, a: 1.0 }
+      color = described_class.new(**cielch)
+      expect(color.cielch).to eq({ l: 73.53, c: 33.59, h: 36.35 }) # rounding on h
+      expect(color.rgba).to eq rgba
+
+      cielch = { l: 44.65, c: 6.92, h: 41.51 }
+      rgba = { r: 117.47, g: 102.46, b: 98.19, a: 1.0 }
+      color = described_class.new(**cielch)
+      expect(color.cielch).to eq({ l: 44.65, c: 6.93, h: 41.58 }) # rounding on h
       expect(color.rgba).to eq rgba
 
       cielch = { l: 45.02, c: 60.79, h: 287.93 }

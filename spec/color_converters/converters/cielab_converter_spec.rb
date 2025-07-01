@@ -23,18 +23,6 @@ RSpec.describe ColorConverters::CielabConverter do
     end
 
     it '.input_to_rgba and back' do
-      cielab = { l: 73.53, a: 33.54, b: 36.33 }
-      rgba = { r: 255.00, g: 155.03, b: 115.80, a: 1.0 }
-      color = described_class.new(**cielab, space: 'cie')
-      expect(color.cielab).to eq cielab
-      expect(color.rgba).to eq rgba
-
-      cielab = { l: 44.65, a: 6.92, b: -41.48 }
-      rgba = { r: 59.90, g: 105.73, b: 174.72, a: 1.0 }
-      color = described_class.new(**cielab, space: 'cie')
-      expect(color.cielab).to eq({ l: 44.65, a: 6.92, b: -41.47 }) # rounding on b
-      expect(color.rgba).to eq rgba
-
       cielab = { l: 100.0, a: 0.0, b: 0.0 }
       rgba = { r: 255, g: 255, b: 254.97, a: 1.0 }
       color = described_class.new(**cielab, space: 'cie')
@@ -45,6 +33,18 @@ RSpec.describe ColorConverters::CielabConverter do
       rgba = { r: 0, g: 0, b: 0, a: 1.0 }
       color = described_class.new(**cielab, space: 'cie')
       expect(color.cielab).to eq cielab
+      expect(color.rgba).to eq rgba
+
+      cielab = { l: 73.53, a: 33.54, b: 36.33 }
+      rgba = { r: 255.00, g: 155.03, b: 115.80, a: 1.0 }
+      color = described_class.new(**cielab, space: 'cie')
+      expect(color.cielab).to eq cielab
+      expect(color.rgba).to eq rgba
+
+      cielab = { l: 44.65, a: 6.92, b: -41.48 }
+      rgba = { r: 59.90, g: 105.73, b: 174.72, a: 1.0 }
+      color = described_class.new(**cielab, space: 'cie')
+      expect(color.cielab).to eq({ l: 44.65, a: 6.92, b: -41.47 }) # rounding on b
       expect(color.rgba).to eq rgba
 
       cielab = { l: 45.02, a: 36.11, b: -44.37 }

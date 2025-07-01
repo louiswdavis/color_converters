@@ -13,7 +13,7 @@ RSpec.describe ColorConverters::OklchConverter do
 
     it '.validate_input' do
       expect { described_class.new(l: 174, c: 35, h: 37, space: :ok) }.to raise_error(ColorConverters::InvalidColorError)
-      expect { described_class.new(l: 74, c: 135, h: 37, space: :ok) }.to raise_error(ColorConverters::InvalidColorError)
+      expect { described_class.new(l: 74, c: -135, h: 37, space: :ok) }.to raise_error(ColorConverters::InvalidColorError)
       expect { described_class.new(l: 74, c: 35, h: 437, space: :ok) }.to raise_error(ColorConverters::InvalidColorError)
     end
 
