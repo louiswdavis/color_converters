@@ -6,8 +6,12 @@ module ColorConverters
       color_input.keys - [:x, :y, :z] == []
     end
 
+    def self.d65
+      { x: 95.047, y: 100.0, z: 108.883 }
+    end
+
     def self.bounds
-      { x: [0.0, 95.047], y: [0.0, 100.0], z: [0.0, 108.883] }
+      { x: [0.0, XyzConverter.d65[:x]], y: [0.0, XyzConverter.d65[:y]], z: [0.0, XyzConverter.d65[:z]] }
     end
 
     private
@@ -24,11 +28,16 @@ module ColorConverters
     end
 
     def self.xyz_to_rgb(xyz_hash)
+      # [0, 100]
+      x = xyz_hash[:x].to_d
+      y = xyz_hash[:y].to_d
+      z = xyz_hash[:z].to_d
+
       # Convert XYZ (typically with Y=100 for white) to normalized XYZ (Y=1 for white).
       # The transformation matrix expects X, Y, Z values in the 0-1 range.
-      x = xyz_hash[:x].to_f / 100.0
-      y = xyz_hash[:y].to_f / 100.0
-      z = xyz_hash[:z].to_f / 100.0
+      x /= 100.0.to_d
+      y /= 100.0.to_d
+      z /= 100.0.to_d
 
       # Convert normalized XYZ to Linear sRGB values using sRGB's own white, D65 (no chromatic adaptation)
       # https://www.w3.org/TR/css-color-4/#color-conversion-code
@@ -40,6 +49,7 @@ module ColorConverters
 
       rr, gg, bb = (conversion_matrix * ::Matrix.column_vector([x, y, z])).to_a.flatten
 
+      # [0, 1]
       RgbConverter.lrgb_to_rgb([rr, gg, bb])
     end
 

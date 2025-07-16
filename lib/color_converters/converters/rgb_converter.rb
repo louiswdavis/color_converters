@@ -27,6 +27,7 @@ module ColorConverters
     end
 
     def self.rgb_to_lrgb(rgb_array_frac)
+      # [0, 1]
       r, g, b = rgb_array_frac
 
       # Inverse sRGB companding. Linearizes RGB channels with respect to energy.
@@ -54,6 +55,7 @@ module ColorConverters
         end
       end
 
+      # [0, 1]
       [rr, gg, bb]
     end
 
