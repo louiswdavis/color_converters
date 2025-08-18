@@ -11,7 +11,7 @@ module ColorConverters
     end
 
     def self.bounds
-      { x: [0.0, XyzConverter.d65[:x]], y: [0.0, XyzConverter.d65[:y]], z: [0.0, XyzConverter.d65[:z]] }
+      { x: [0.0, 100.0], y: [0.0, 100.0], z: [0.0, 110.0] }
     end
 
     private
