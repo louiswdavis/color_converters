@@ -18,7 +18,7 @@ module ClassicColorConversionsHelper
       converted_rgb = ColorConverters::Color.new(**fixture_color).rgb
     end
 
-    expect(converted_rgb.transform_values(&:round)).to eq expected_rgb
+    expect(converted_rgb.transform_values { |v| v.round.to_f }).to eq expected_rgb
   end
 end
 

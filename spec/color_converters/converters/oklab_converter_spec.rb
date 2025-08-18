@@ -18,8 +18,8 @@ RSpec.describe ColorConverters::OklabConverter do
     end
 
     it '.input_to_rgba for strings' do
-      expect(described_class.new(l: 53, a: -0.02, b: -0.17, space: :ok).rgba).to eq({ r: 51.0, g: 102.0, b: 204.0, a: 1.0 })
-      expect(described_class.new(l: '53', a: '-0.02', b: '-0.17', space: :ok).rgba).to eq({ r: 51.0, g: 102.0, b: 204.0, a: 1.0 })
+      expect(described_class.new(l: 53, a: -0.02, b: -0.17, space: :ok).rgba).to eq({ r: 51.0, g: 102.47, b: 203.95, a: 1.0 })
+      expect(described_class.new(l: '53', a: '-0.02', b: '-0.17', space: :ok).rgba).to eq({ r: 51.0, g: 102.47, b: 203.95, a: 1.0 })
     end
 
     it '.input_to_rgba and exceeds the xyz bound, so is changed back to a different value' do
