@@ -17,15 +17,27 @@ RSpec.describe ColorConverters::HslConverter do
       expect { described_class.new(h: 74, s: 35, l: 137) }.to raise_error(ColorConverters::InvalidColorError)
     end
 
-    it '.input_to_rgba' do
+    it '.input_to_rgba for strings' do
       expect(described_class.new(h: 220.0, s: 60, l: 50).rgba).to eq({ r: 51.0, g: 102.0, b: 204.0, a: 1.0 })
       expect(described_class.new(h: '220.0', s: '60', l: '50').rgba).to eq({ r: 51.0, g: 102.0, b: 204.0, a: 1.0 })
+    end
+  end
 
-      expect(described_class.new(h: 225, s: 73, l: 57).rgba).to eq({ r: 65.31, g: 105.33, b: 225.39, a: 1.0 })
-      expect(described_class.new(h: 225, s: 73, l: 57, a: 0.5).rgba).to eq({ r: 65.31, g: 105.33, b: 225.39, a: 0.5 })
+  context 'shared_examples for .input_to_rgba and back' do
+    it_behaves_like 'classic_color_conversions' do
+      let(:converter) { described_class }
+      let(:color_space) { :hsl }
 
-      expect(described_class.new(h: '225', s: '73%', l: '57%', a: '0.5').rgba).to eq({ r: 65.31, g: 105.33, b: 225.39, a: 0.5 })
-      expect(described_class.new(h: '225', s: '0%', l: '20%', a: '0.5').rgba).to eq({ r: 51.0, g: 51.0, b: 51.0, a: 0.5 })
+      let(:black)   { get_classic_color_value('black', 'HSL') }
+      let(:white)   { get_classic_color_value('white', 'HSL') }
+
+      let(:red)     { get_classic_color_value('red', 'HSL') }
+      let(:orange)  { get_classic_color_value('orange', 'HSL') }
+      let(:yellow)  { get_classic_color_value('yellow', 'HSL') }
+      let(:green)   { get_classic_color_value('green', 'HSL') }
+      let(:blue)    { get_classic_color_value('blue', 'HSL') }
+      let(:indigo)  { get_classic_color_value('indigo', 'HSL') }
+      let(:violet)  { get_classic_color_value('violet', 'HSL') }
     end
   end
 end

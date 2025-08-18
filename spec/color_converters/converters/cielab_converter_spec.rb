@@ -18,23 +18,11 @@ RSpec.describe ColorConverters::CielabConverter do
     end
 
     it '.input_to_rgba' do
-      expect(described_class.new(l: 33.673, a: 15.512, b: -47.284, space: :cie).rgba).to eq({ r: 36.70, g: 75.53, b: 154.83, a: 1.0 })
-      expect(described_class.new(l: '33.673', a: '15.512', b: '-47.284', space: 'cie').rgba).to eq({ r: 36.70, g: 75.53, b: 154.83, a: 1.0 })
+      expect(described_class.new(l: 45.03, a: 18.72, b: -57.86, space: :cie).rgba).to eq({ r: 51.01, g: 101.99, b: 203.99, a: 1.0 })
+      expect(described_class.new(l: '45.03', a: '18.72', b: '-57.86', space: 'cie').rgba).to eq({ r: 51.01, g: 101.99, b: 203.99, a: 1.0 })
     end
 
     it '.input_to_rgba and back' do
-      cielab = { l: 100.0, a: 0.0, b: 0.0 }
-      rgba = { r: 255, g: 255, b: 254.97, a: 1.0 }
-      color = described_class.new(**cielab, space: 'cie')
-      expect(color.cielab).to eq({ l: 100.0, a: -0.01, b: 0.01 }) # rounding
-      expect(color.rgba).to eq rgba
-
-      cielab = { l: 0.0, a: 0.0, b: 0.0 }
-      rgba = { r: 0, g: 0, b: 0, a: 1.0 }
-      color = described_class.new(**cielab, space: 'cie')
-      expect(color.cielab).to eq cielab
-      expect(color.rgba).to eq rgba
-
       cielab = { l: 73.53, a: 33.54, b: 36.33 }
       rgba = { r: 255.00, g: 155.03, b: 115.80, a: 1.0 }
       color = described_class.new(**cielab, space: 'cie')
@@ -71,6 +59,24 @@ RSpec.describe ColorConverters::CielabConverter do
       expect(color.cielab).to eq({ l: 86.67, a: 28.98, b: -19.79 }) # rounding on b
       expect(color.xyz.transform_values(&:round)).to eq xyz
       expect(color.rgba.transform_values(&:round)).to eq rgba
+    end
+  end
+
+  context 'shared_examples for .input_to_rgba and back' do
+    it_behaves_like 'classic_color_conversions' do
+      let(:converter) { described_class }
+      let(:color_space) { :cielab }
+
+      let(:black)   { get_classic_color_value('black', 'CIELab').merge({ space: 'cie' }) }
+      let(:white)   { get_classic_color_value('white', 'CIELab').merge({ space: 'cie' }) }
+
+      let(:red)     { get_classic_color_value('red', 'CIELab').merge({ space: 'cie' }) }
+      let(:orange)  { get_classic_color_value('orange', 'CIELab').merge({ space: 'cie' }) }
+      let(:yellow)  { get_classic_color_value('yellow', 'CIELab').merge({ space: 'cie' }) }
+      let(:green)   { get_classic_color_value('green', 'CIELab').merge({ space: 'cie' }) }
+      let(:blue)    { get_classic_color_value('blue', 'CIELab').merge({ space: 'cie' }) }
+      let(:indigo)  { get_classic_color_value('indigo', 'CIELab').merge({ space: 'cie' }) }
+      let(:violet)  { get_classic_color_value('violet', 'CIELab').merge({ space: 'cie' }) }
     end
   end
 end

@@ -17,12 +17,27 @@ RSpec.describe ColorConverters::CmykConverter do
       expect { described_class.new(c: 87, m: 69, y: 13, k: 141) }.to raise_error(ColorConverters::InvalidColorError)
     end
 
-    it '.input_to_rgba' do
-      expect(described_class.new(c: 75, m: 50, y: 0, k: 20).rgba).to eq({ r: 51, g: 102, b: 204, a: 1.0 })
-      expect(described_class.new(c: '75', m: '50', y: '0', k: '20').rgba).to eq({ r: 51, g: 102, b: 204, a: 1.0 })
+    it '.input_to_rgba for strings' do
+      expect(described_class.new(c: 75, m: 50, y: 0, k: 20).rgba).to eq({ r: 51.0, g: 102.0, b: 204.0, a: 1.0 })
+      expect(described_class.new(c: '75', m: '50', y: '0', k: '20').rgba).to eq({ r: 51.0, g: 102.0, b: 204.0, a: 1.0 })
+    end
+  end
 
-      expect(described_class.new(c: 74, m: 58, y: 22, k: 3).rgba).to eq({ r: 64.31, g: 103.89, b: 192.93, a: 1.0 })
-      expect(described_class.new(c: '74', m: '58', y: '22', k: '3').rgba).to eq({ r: 64.31, g: 103.89, b: 192.93, a: 1.0 })
+  context 'shared_examples for .input_to_rgba and back' do
+    it_behaves_like 'classic_color_conversions' do
+      let(:converter) { described_class }
+      let(:color_space) { :cmyk }
+
+      let(:black)   { get_classic_color_value('black', 'CMYK') }
+      let(:white)   { get_classic_color_value('white', 'CMYK') }
+
+      let(:red)     { get_classic_color_value('red', 'CMYK') }
+      let(:orange)  { get_classic_color_value('orange', 'CMYK') }
+      let(:yellow)  { get_classic_color_value('yellow', 'CMYK') }
+      let(:green)   { get_classic_color_value('green', 'CMYK') }
+      let(:blue)    { get_classic_color_value('blue', 'CMYK') }
+      let(:indigo)  { get_classic_color_value('indigo', 'CMYK') }
+      let(:violet)  { get_classic_color_value('violet', 'CMYK') }
     end
   end
 end
