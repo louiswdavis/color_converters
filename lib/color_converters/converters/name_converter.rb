@@ -15,7 +15,7 @@ module ColorConverters
 
     private
 
-    def validate_input(color_input)
+    def validate_input(_color_input)
       # TODO: validate against list of keys?
       true
     end
@@ -29,6 +29,7 @@ module ColorConverters
       [r, g, b, 1.0]
     end
 
+    # TODO: use color_namer_ruby gem instead, but that gem also uses this gem
     def self.color_names
       {
         aliceblue: [240, 248, 255],

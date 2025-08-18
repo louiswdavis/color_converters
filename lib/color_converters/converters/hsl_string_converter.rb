@@ -8,7 +8,7 @@ module ColorConverters
 
     private
 
-    def validate_input(color_input)
+    def validate_input(_color_input)
       true
     end
 
