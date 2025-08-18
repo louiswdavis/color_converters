@@ -7,7 +7,7 @@ module ColorConverters
     end
 
     def self.bounds
-      { l: [0.0, 100.0], c: [0.0, 100.0], h: [0.0, 360.0] }
+      { l: [0.0, 100.0], c: [0.0, 150.0], h: [0.0, 360.0] }
     end
 
     private
