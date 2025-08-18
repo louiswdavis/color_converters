@@ -44,5 +44,7 @@ Style/FloatDivision:
   Enabled: false
 Style/RedundantSelf:
   Enabled: false
+Style/SingleArgumentDig:
+  Enabled: false
 Style/SymbolArray:
   Enabled: false

@@ -24,4 +24,22 @@ RSpec.describe ColorConverters::HexConverter do
       expect(described_class.new('#36c').rgba).to eq({ r: 51, g: 102, b: 204, a: 1.0 })
     end
   end
+
+  context 'shared_examples for .input_to_rgba and back' do
+    it_behaves_like 'classic_color_conversions' do
+      let(:converter) { described_class }
+      let(:color_space) { :hex }
+
+      let(:black)   { get_classic_color_value('black', 'Hex') }
+      let(:white)   { get_classic_color_value('white', 'Hex') }
+
+      let(:red)     { get_classic_color_value('red', 'Hex') }
+      let(:orange)  { get_classic_color_value('orange', 'Hex') }
+      let(:yellow)  { get_classic_color_value('yellow', 'Hex') }
+      let(:green)   { get_classic_color_value('green', 'Hex') }
+      let(:blue)    { get_classic_color_value('blue', 'Hex') }
+      let(:indigo)  { get_classic_color_value('indigo', 'Hex') }
+      let(:violet)  { get_classic_color_value('violet', 'Hex') }
+    end
+  end
 end

@@ -17,12 +17,9 @@ RSpec.describe ColorConverters::XyzConverter do
       expect { described_class.new(x: 74, y: 35, z: 137) }.to raise_error(ColorConverters::InvalidColorError)
     end
 
-    it '.input_to_rgba' do
-      expect(described_class.new(x: 17.01, y: 14.56, z: 59.03).rgba).to eq({ r: 51.01, g: 101.98, b: 203.98, a: 1.0 })
-      expect(described_class.new(x: '17.01', y: '14.56', z: '59.03').rgba).to eq({ r: 51.01, g: 101.98, b: 203.98, a: 1.0 })
-
-      expect(described_class.new(x: 24, y: 15, z: 57).rgba).to eq({ r: 140.19, g: 76.1, b: 201.18, a: 1.0 })
-      expect(described_class.new(x: '24', y: '15', z: '57').rgba).to eq({ r: 140.19, g: 76.1, b: 201.18, a: 1.0 })
+    it '.input_to_rgba for strings' do
+      expect(described_class.new(x: 17.0157, y: 14.5662, z: 59.0415).rgba).to eq({ r: 51.04, g: 102.0, b: 204.0, a: 1.0 })
+      expect(described_class.new(x: '17.0157', y: '14.5662', z: '59.0415').rgba).to eq({ r: 51.04, g: 102.0, b: 204.0, a: 1.0 })
     end
 
     it '.input_to_rgba and back' do
@@ -49,6 +46,24 @@ RSpec.describe ColorConverters::XyzConverter do
       color = described_class.new(**xyz)
       expect(color.xyz).to eq xyz
       expect(color.rgba).to eq rgba
+    end
+  end
+
+  context 'shared_examples for .input_to_rgba and back' do
+    it_behaves_like 'classic_color_conversions' do
+      let(:converter) { described_class }
+      let(:color_space) { :xyz }
+
+      let(:black)   { get_classic_color_value('black', 'XYZ') }
+      let(:white)   { get_classic_color_value('white', 'XYZ') }
+
+      let(:red)     { get_classic_color_value('red', 'XYZ') }
+      let(:orange)  { get_classic_color_value('orange', 'XYZ') }
+      let(:yellow)  { get_classic_color_value('yellow', 'XYZ') }
+      let(:green)   { get_classic_color_value('green', 'XYZ') }
+      let(:blue)    { get_classic_color_value('blue', 'XYZ') }
+      let(:indigo)  { get_classic_color_value('indigo', 'XYZ') }
+      let(:violet)  { get_classic_color_value('violet', 'XYZ') }
     end
   end
 end

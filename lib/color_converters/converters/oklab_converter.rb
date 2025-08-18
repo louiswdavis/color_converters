@@ -53,6 +53,10 @@ module ColorConverters
 
       x, y, z = (lms_to_xyz_matrix * ::Matrix.column_vector([l_lms, m_lms, s_lms])).to_a.flatten
 
+      x *= 100.0.to_d
+      y *= 100.0.to_d
+      z *= 100.0.to_d
+
       [x, y, z]
     end
 

@@ -18,7 +18,9 @@ Colors can be converted between the following spaces:
 - cmyk
 - xyz
 - cielab
-- oklch
+- cielch
+- oklab (not always reliable)
+- oklch (not always reliable)
 - name
 
 ## Installation
@@ -68,6 +70,12 @@ color = ColorConverters::Color.new(l: 16, a: 44, b: 32, space: :cie)
 # from cielch
 color = ColorConverters::Color.new(l: 16, c: 44, h: 32, space: :cie)
 
+# from oklab
+color = ColorConverters::Color.new(l: 16, a: 44, b: 32, space: :ok)
+
+# from oklch
+color = ColorConverters::Color.new(l: 16, c: 44, h: 32, space: :ok)
+
 # from textual color
 color = ColorConverters::Color.new("blue")
 
@@ -112,6 +120,12 @@ color.cielab
 color.cielch
 => {:l=>52.47, :c=>32.45, :h=>262.78}
 
+color.oklab # not always accurate
+=> {:l=>52.47, :a=>-4.08, :b=>-32.19}
+
+color.oklch # not always accurate
+=> {:l=>52.47, :c=>32.45, :h=>262.78}
+
 color.hex
 => "#4682b4"
 
@@ -128,6 +142,7 @@ The space parameter allows that, with examples in the usage code above
 
 ```ruby
 ColorConverters::Color.new(l: 64, a: 28, b: -15, space: :cie)
+ColorConverters::Color.new(l: 64, a: 28, b: -15, space: :ok)
 ```
 
 ### limit_override
@@ -141,7 +156,7 @@ ColorConverters::Color.new(r: 270, g: 1300, b: 380, a: 0.5, limit_override: true
 
 ## Development
 
-[Converting Colors](https://convertingcolors.com/) can be usef to help verify results. Different calculators use different exponents and standards so there can be discrepency across them (like this calculator for LCH).
+[Converting Colors](https://convertingcolors.com/) and [Colorffy](https://colorffy.com/) can be usef to help verify results. Different calculators use different exponents and standards so there can be discrepency across them (like this calculator for LCH).
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 

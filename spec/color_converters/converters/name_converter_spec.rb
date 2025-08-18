@@ -11,15 +11,12 @@ RSpec.describe ColorConverters::NameConverter do
       expect(described_class.matches?('#ffffff')).to be false
     end
 
-    # it '.validate_input' do
-    #   expect { described_class.new(l: 74, a: 35, b: 37) }.to raise_error(ColorConverters::InvalidColorError)
-    #   expect { described_class.new(l: 74, a: 35, b: 37) }.to raise_error(ColorConverters::InvalidColorError)
-    #   expect { described_class.new(l: 74, a: 35, b: 37) }.to raise_error(ColorConverters::InvalidColorError)
-    # end
+    it '.validate_input' do
+      expect { described_class.new('bluee') }.to raise_error(ColorConverters::InvalidColorError)
+    end
 
     it '.input_to_rgba' do
       expect(described_class.new('blue').rgba).to eq({ r: 0, g: 0, b: 255, a: 1.0 })
-      expect { described_class.new('bluee') }.to raise_error(ColorConverters::InvalidColorError)
     end
 
     it '.rgb_to_name' do
@@ -28,7 +25,26 @@ RSpec.describe ColorConverters::NameConverter do
       expect(described_class.rgb_to_name([255, 0, 255])).to eq 'fuchsia'
       expect(described_class.rgb_to_name([255, 255, 0])).to eq 'yellow'
       expect(described_class.rgb_to_name([0, 0, 0])).to eq 'black'
+      expect(described_class.rgb_to_name([0.1, 0.1, 0.1])).to eq 'black'
       expect(described_class.rgb_to_name([175.8, 196.4, 222.1])).to eq 'lightsteelblue'
+    end
+  end
+
+  context 'shared_examples for .input_to_rgba and back' do
+    it_behaves_like 'classic_color_conversions' do
+      let(:converter) { described_class }
+      let(:color_space) { :name }
+
+      let(:black)   { get_classic_color_value('black', 'Name') }
+      let(:white)   { get_classic_color_value('white', 'Name') }
+
+      let(:red)     { get_classic_color_value('red', 'Name') }
+      let(:orange)  { get_classic_color_value('orange', 'Name') }
+      let(:yellow)  { get_classic_color_value('yellow', 'Name') }
+      let(:green)   { get_classic_color_value('green', 'Name') }
+      let(:blue)    { get_classic_color_value('blue', 'Name') }
+      let(:indigo)  { get_classic_color_value('indigo', 'Name') }
+      let(:violet)  { get_classic_color_value('violet', 'Name') }
     end
   end
 end
