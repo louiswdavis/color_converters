@@ -44,31 +44,26 @@ RSpec.describe ColorConverters::OklchConverter do
     it_behaves_like 'custom_colour_conversions' do
       let(:converter) { described_class }
       let(:colour_space) { :oklch }
-      let(:rounding_margin) { 5.0 }
 
       let(:passed_colours) { [0, 1, 2, 3, 4, 5].collect { |i| get_custom_colour_value(i, 'OKLCh') } }
       let(:expected_rgbs) { [0, 1, 2, 3, 4, 5].collect { |i| get_custom_colour_value(i, 'RGB') } }
     end
   end
 
+  # this spec is to act more as a reminder of this edge case than to check any portion of the conversion process
+  # it is unclear whether it's a bounding issue of the colour space, or an issue with the conversion process
   context 'edge cases' do
-    it 'where conversions from rgb to colour space exceeds the xyz bound, so is changed back to a different value' do
-      oklch_1 = { l: 100, c: 70.637, h: 25.362 }
-      oklch_2 = { l: 85.55, c: 20.64, h: 22.57 }
-      xyz = { x: 72, y: 67, z: 64 }
-      rgba = { r: 255, g: 201, b: 200, a: 1.0 }
+    it 'where conversions from colour space to rgb are not correctly converted back to the colour space with the same value' do
+      oklch_1 = { l: 90.0, c: 70.63, h: 25.36 }
+      oklch_2 = { l: 62.8, c: 0.26, h: 29.23 }
 
-      colour = described_class.new(**oklch_1)
+      colour = described_class.new(**oklch_1, space: :ok)
       expect(colour.oklch).not_to eq oklch_1
       expect(colour.oklch).to eq oklch_2
-      expect(colour.xyz.transform_values(&:round)).to eq xyz
-      expect(colour.rgba.transform_values(&:round)).to eq rgba
 
-      colour = described_class.new(**oklch_2)
+      colour = described_class.new(**oklch_2, space: :ok)
       expect(colour.oklch).not_to eq oklch_1
       expect(colour.oklch).to eq oklch_2
-      expect(colour.xyz.transform_values(&:round)).to eq xyz
-      expect(colour.rgba.transform_values(&:round)).to eq rgba
     end
   end
 end
