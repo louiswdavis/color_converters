@@ -24,7 +24,7 @@ RSpec.describe ColorConverters::OklchConverter do
   end
 
   # TODO: improve the converter as these can be off anywhere from 1 unit to 10 units
-  context 'shared_examples for .input_to_rgba and back' do
+  context 'shared_examples for' do
     it_behaves_like 'classic_colour_conversions' do
       let(:converter) { described_class }
       let(:colour_space) { :oklch }
@@ -52,7 +52,7 @@ RSpec.describe ColorConverters::OklchConverter do
   end
 
   context 'edge cases' do
-    it '.input_to_rgba and exceeds the xyz bound, so is changed back to a different value' do
+    it 'where conversions from rgb to colour space exceeds the xyz bound, so is changed back to a different value' do
       oklch_1 = { l: 100, c: 70.637, h: 25.362 }
       oklch_2 = { l: 85.55, c: 20.64, h: 22.57 }
       xyz = { x: 72, y: 67, z: 64 }

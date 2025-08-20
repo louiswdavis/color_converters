@@ -8,77 +8,97 @@ RSpec.shared_examples 'classic_colour_conversions' do
   # should really never be passed except maybe for OK space conversions
   let(:rounding_margin) { 0.0 } unless method_defined?(:rounding_margin)
 
-  describe 'two-way conversions' do
-    it 'converts black and back' do
-      passed_colour = black
-      expected_rgb = { r: 0.0, g: 0.0, b: 0.0 }
+  # the expected_rgb values are all hard-coded here to keep them independent from the fixture file value
 
-      check_rgb_converted_to_colour(colour_space, passed_colour, expected_rgb)
-      check_colour_converted_to_rgb(colour_space, passed_colour, expected_rgb)
+  describe 'and' do
+    context 'converts black' do
+      it 'from rgb to colour space' do
+        check_rgb_converted_to_colour(colour_space, black, { r: 0.0, g: 0.0, b: 0.0 })
+      end
+
+      it 'from colour space to rgb' do
+        check_colour_converted_to_rgb(colour_space, black, { r: 0.0, g: 0.0, b: 0.0 })
+      end
     end
 
-    it 'converts white and back' do
-      passed_colour = white
-      expected_rgb = { r: 255.0, g: 255.0, b: 255.0 }
+    context 'converts white' do
+      it 'from rgb to colour space' do
+        check_rgb_converted_to_colour(colour_space, white, { r: 255.0, g: 255.0, b: 255.0 })
+      end
 
-      check_rgb_converted_to_colour(colour_space, passed_colour, expected_rgb)
-      check_colour_converted_to_rgb(colour_space, passed_colour, expected_rgb)
+      it 'from colour space to rgb' do
+        check_colour_converted_to_rgb(colour_space, white, { r: 255.0, g: 255.0, b: 255.0 })
+      end
     end
 
-    it 'converts red and back' do
-      passed_colour = red
-      expected_rgb = { r: 255.0, g: 0.0, b: 0.0 }
+    context 'converts black' do
+      it 'from rgb to colour space' do
+        check_rgb_converted_to_colour(colour_space, red, { r: 255.0, g: 0.0, b: 0.0 })
+      end
 
-      check_rgb_converted_to_colour(colour_space, passed_colour, expected_rgb)
-      check_colour_converted_to_rgb(colour_space, passed_colour, expected_rgb)
+      it 'from colour space to rgb' do
+        check_colour_converted_to_rgb(colour_space, red, { r: 255.0, g: 0.0, b: 0.0 })
+      end
     end
 
-    it 'converts orange and back' do
-      passed_colour = orange
-      expected_rgb = { r: 255.0, g: 127.0, b: 0.0 }
+    context 'converts orange' do
+      it 'from rgb to colour space' do
+        check_rgb_converted_to_colour(colour_space, orange, { r: 255.0, g: 127.0, b: 0.0 })
+      end
 
-      check_rgb_converted_to_colour(colour_space, passed_colour, expected_rgb)
-      check_colour_converted_to_rgb(colour_space, passed_colour, expected_rgb)
+      it 'from colour space to rgb' do
+        check_colour_converted_to_rgb(colour_space, orange, { r: 255.0, g: 127.0, b: 0.0 })
+      end
     end
 
-    it 'converts yellow and back' do
-      passed_colour = yellow
-      expected_rgb = { r: 255.0, g: 255.0, b: 0.0 }
+    context 'converts yellow' do
+      it 'from rgb to colour space' do
+        check_rgb_converted_to_colour(colour_space, yellow, { r: 255.0, g: 255.0, b: 0.0 })
+      end
 
-      check_rgb_converted_to_colour(colour_space, passed_colour, expected_rgb)
-      check_colour_converted_to_rgb(colour_space, passed_colour, expected_rgb)
+      it 'from colour space to rgb' do
+        check_colour_converted_to_rgb(colour_space, yellow, { r: 255.0, g: 255.0, b: 0.0 })
+      end
     end
 
-    it 'converts green and back' do
-      passed_colour = green
-      expected_rgb = { r: 0.0, g: 255.0, b: 0.0 }
+    context 'converts green' do
+      it 'from rgb to colour space' do
+        check_rgb_converted_to_colour(colour_space, green, { r: 0.0, g: 255.0, b: 0.0 })
+      end
 
-      check_rgb_converted_to_colour(colour_space, passed_colour, expected_rgb)
-      check_colour_converted_to_rgb(colour_space, passed_colour, expected_rgb)
+      it 'from colour space to rgb' do
+        check_colour_converted_to_rgb(colour_space, green, { r: 0.0, g: 255.0, b: 0.0 })
+      end
     end
 
-    it 'converts blue and back' do
-      passed_colour = blue
-      expected_rgb = { r: 0.0, g: 0.0, b: 255.0 }
+    context 'converts blue' do
+      it 'from rgb to colour space' do
+        check_rgb_converted_to_colour(colour_space, blue, { r: 0.0, g: 0.0, b: 255.0 })
+      end
 
-      check_rgb_converted_to_colour(colour_space, passed_colour, expected_rgb)
-      check_colour_converted_to_rgb(colour_space, passed_colour, expected_rgb)
+      it 'from colour space to rgb' do
+        check_colour_converted_to_rgb(colour_space, blue, { r: 0.0, g: 0.0, b: 255.0 })
+      end
     end
 
-    it 'converts indigo and back' do
-      passed_colour = indigo
-      expected_rgb = { r: 75.0, g: 0.0, b: 130.0 }
+    context 'converts indigo' do
+      it 'from rgb to colour space' do
+        check_rgb_converted_to_colour(colour_space, indigo, { r: 75.0, g: 0.0, b: 130.0 })
+      end
 
-      check_rgb_converted_to_colour(colour_space, passed_colour, expected_rgb)
-      check_colour_converted_to_rgb(colour_space, passed_colour, expected_rgb)
+      it 'from colour space to rgb' do
+        check_colour_converted_to_rgb(colour_space, indigo, { r: 75.0, g: 0.0, b: 130.0 })
+      end
     end
 
-    it 'converts violet and back' do
-      passed_colour = violet
-      expected_rgb = { r: 148.0, g: 0.0, b: 211.0 }
+    context 'converts violet' do
+      it 'from rgb to colour space' do
+        check_rgb_converted_to_colour(colour_space, violet, { r: 148.0, g: 0.0, b: 211.0 })
+      end
 
-      check_rgb_converted_to_colour(colour_space, passed_colour, expected_rgb)
-      check_colour_converted_to_rgb(colour_space, passed_colour, expected_rgb)
+      it 'from colour space to rgb' do
+        check_colour_converted_to_rgb(colour_space, violet, { r: 148.0, g: 0.0, b: 211.0 })
+      end
     end
   end
 end

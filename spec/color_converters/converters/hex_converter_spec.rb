@@ -25,7 +25,7 @@ RSpec.describe ColorConverters::HexConverter do
     end
   end
 
-  context 'shared_examples for .input_to_rgba and back' do
+  context 'shared_examples for' do
     it_behaves_like 'classic_colour_conversions' do
       let(:converter) { described_class }
       let(:colour_space) { :hex }
