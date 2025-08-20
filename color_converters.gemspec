@@ -39,7 +39,8 @@ Gem::Specification.new do |spec|
 
   # Uncomment to register a new dependency of your gem
   # spec.add_dependency "example-gem", "~> 1.0"
-  spec.add_dependency 'activesupport', '~> 8.0.2'
+  spec.add_dependency 'activesupport', '>= 6.1.3'
+  spec.add_dependency 'color_swatch_collection', '~> 0.1.0'
   spec.add_dependency 'matrix'
 
   # For more information and examples about making a new gem, check out our

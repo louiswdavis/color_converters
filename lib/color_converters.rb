@@ -24,14 +24,6 @@ require 'color_converters/converters/oklch_converter'
 require 'color_converters/converters/name_converter'
 require 'color_converters/converters/null_converter'
 
-# Palettes
-require 'color_converters/palettes/basic_palette'
-require 'color_converters/palettes/html_palette'
-require 'color_converters/palettes/ntc_palette'
-require 'color_converters/palettes/pantone_palette'
-require 'color_converters/palettes/roygbiv_palette'
-require 'color_converters/palettes/x11_palette'
-
 module ColorConverters
   class Error < StandardError; end
   class InvalidColorError < Error; end

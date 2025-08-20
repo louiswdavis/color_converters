@@ -16,18 +16,29 @@ module ColorConverters
     end
 
     def input_to_rgba(color_input)
-      color_input = self.normalize_hex(color_input)
+      HexConverter.hex_to_rgba(color_input)
+    end
 
-      r = color_input[0, 2].hex
-      g = color_input[2, 2].hex
-      b = color_input[4, 2].hex
-      a = color_input.length == 8 ? hex[6, 2].hex : 1.0
+    def self.hex_to_rgba(hex_input)
+      hex_input = self.normalize_hex(hex_input)
+
+      r = hex_input[0, 2].hex
+      g = hex_input[2, 2].hex
+      b = hex_input[4, 2].hex
+      a = hex_input.length == 8 ? hex[6, 2].hex : 1.0
 
       [r, g, b, a]
     end
 
-    def normalize_hex(hex_input)
+    def self.rgb_to_hex(rgb_array)
+      r, g, b = rgb_array
+
+      "##{'%02x' % r + '%02x' % g + '%02x' % b}"
+    end
+
+    def self.normalize_hex(hex_input)
       hex_input = hex_input.gsub('#', '')
+
       (hex_input.length == 3 ? hex_input[0, 1] * 2 + hex_input[1, 1] * 2 + hex_input[2, 1] * 2 : hex_input).downcase
     end
   end

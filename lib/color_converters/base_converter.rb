@@ -46,7 +46,7 @@ module ColorConverters
     end
 
     def hex
-      "##{'%02x' % @rgba[:r] + '%02x' % @rgba[:g] + '%02x' % @rgba[:b]}"
+      HexConverter.rgb_to_hex(self.rgb_array)
     end
 
     def hsl

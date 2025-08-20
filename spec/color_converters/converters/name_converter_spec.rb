@@ -21,12 +21,15 @@ RSpec.describe ColorConverters::NameConverter do
 
     it '.rgb_to_name' do
       expect(described_class.rgb_to_name([255, 255, 255])).to eq 'white'
-      expect(described_class.rgb_to_name([0, 255, 255])).to eq 'aqua'
+      expect(described_class.rgb_to_name([0, 255, 255])).to eq 'cyan'
       expect(described_class.rgb_to_name([255, 0, 255])).to eq 'fuchsia'
       expect(described_class.rgb_to_name([255, 255, 0])).to eq 'yellow'
       expect(described_class.rgb_to_name([0, 0, 0])).to eq 'black'
+      expect(described_class.rgb_to_name([176, 196, 222])).to eq 'lightsteelblue'
+
+      # sometimes the RGB values when converted to Hex values align with a/the named color
       expect(described_class.rgb_to_name([0.1, 0.1, 0.1])).to eq 'black'
-      expect(described_class.rgb_to_name([175.8, 196.4, 222.1])).to eq 'lightsteelblue'
+      expect(described_class.rgb_to_name([175.8, 196.4, 222.1])).to eq nil
     end
   end
 
