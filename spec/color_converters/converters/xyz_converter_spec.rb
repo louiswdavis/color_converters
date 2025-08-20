@@ -50,20 +50,20 @@ RSpec.describe ColorConverters::XyzConverter do
   end
 
   context 'shared_examples for .input_to_rgba and back' do
-    it_behaves_like 'classic_color_conversions' do
+    it_behaves_like 'classic_colour_conversions' do
       let(:converter) { described_class }
-      let(:color_space) { :xyz }
+      let(:colour_space) { :xyz }
 
-      let(:black)   { get_classic_color_value('black', 'XYZ') }
-      let(:white)   { get_classic_color_value('white', 'XYZ') }
+      let(:black)   { get_classic_colour_value('black', 'XYZ') }
+      let(:white)   { get_classic_colour_value('white', 'XYZ') }
 
-      let(:red)     { get_classic_color_value('red', 'XYZ') }
-      let(:orange)  { get_classic_color_value('orange', 'XYZ') }
-      let(:yellow)  { get_classic_color_value('yellow', 'XYZ') }
-      let(:green)   { get_classic_color_value('green', 'XYZ') }
-      let(:blue)    { get_classic_color_value('blue', 'XYZ') }
-      let(:indigo)  { get_classic_color_value('indigo', 'XYZ') }
-      let(:violet)  { get_classic_color_value('violet', 'XYZ') }
+      let(:red)     { get_classic_colour_value('red', 'XYZ') }
+      let(:orange)  { get_classic_colour_value('orange', 'XYZ') }
+      let(:yellow)  { get_classic_colour_value('yellow', 'XYZ') }
+      let(:green)   { get_classic_colour_value('green', 'XYZ') }
+      let(:blue)    { get_classic_colour_value('blue', 'XYZ') }
+      let(:indigo)  { get_classic_colour_value('indigo', 'XYZ') }
+      let(:violet)  { get_classic_colour_value('violet', 'XYZ') }
     end
   end
 end

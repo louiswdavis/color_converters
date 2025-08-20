@@ -8,18 +8,18 @@ module ColorConverters
 
     private
 
-    def validate_input(_color_input)
+    def validate_input(_colour_input)
       # TODO
       true
     end
 
-    def input_to_rgba(color_input)
-      color_input = self.normalize_hex(color_input)
+    def input_to_rgba(colour_input)
+      colour_input = self.normalize_hex(colour_input)
 
-      r = color_input[0, 2].hex
-      g = color_input[2, 2].hex
-      b = color_input[4, 2].hex
-      a = color_input.length == 8 ? hex[6, 2].hex : 1.0
+      r = colour_input[0, 2].hex
+      g = colour_input[2, 2].hex
+      b = colour_input[4, 2].hex
+      a = colour_input.length == 8 ? hex[6, 2].hex : 1.0
 
       [r, g, b, a]
     end

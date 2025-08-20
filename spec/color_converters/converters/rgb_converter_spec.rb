@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-# require_relative '../../support/shared_examples/classic_color_shared_examples'
+# require_relative '../../support/shared_examples/classic_colour_shared_examples'
 
 RSpec.describe ColorConverters::RgbConverter do
   context 'methods' do
@@ -25,25 +25,25 @@ RSpec.describe ColorConverters::RgbConverter do
   end
 
   context 'shared_examples for .input_to_rgba and back' do
-    it_behaves_like 'classic_color_conversions' do
+    it_behaves_like 'classic_colour_conversions' do
       let(:converter) { described_class }
-      let(:color_space) { :rgb }
+      let(:colour_space) { :rgb }
 
-      let(:black)   { get_classic_color_value('black', 'RGB') }
-      let(:white)   { get_classic_color_value('white', 'RGB') }
+      let(:black)   { get_classic_colour_value('black', 'RGB') }
+      let(:white)   { get_classic_colour_value('white', 'RGB') }
 
-      let(:red)     { get_classic_color_value('red', 'RGB') }
-      let(:orange)  { get_classic_color_value('orange', 'RGB') }
-      let(:yellow)  { get_classic_color_value('yellow', 'RGB') }
-      let(:green)   { get_classic_color_value('green', 'RGB') }
-      let(:blue)    { get_classic_color_value('blue', 'RGB') }
-      let(:indigo)  { get_classic_color_value('indigo', 'RGB') }
-      let(:violet)  { get_classic_color_value('violet', 'RGB') }
+      let(:red)     { get_classic_colour_value('red', 'RGB') }
+      let(:orange)  { get_classic_colour_value('orange', 'RGB') }
+      let(:yellow)  { get_classic_colour_value('yellow', 'RGB') }
+      let(:green)   { get_classic_colour_value('green', 'RGB') }
+      let(:blue)    { get_classic_colour_value('blue', 'RGB') }
+      let(:indigo)  { get_classic_colour_value('indigo', 'RGB') }
+      let(:violet)  { get_classic_colour_value('violet', 'RGB') }
     end
 
-    it_behaves_like 'custom_color_conversions' do
+    it_behaves_like 'custom_colour_conversions' do
       let(:converter) { described_class }
-      let(:color_space) { :rgb }
+      let(:colour_space) { :rgb }
 
       let(:sample_colors) do
         [

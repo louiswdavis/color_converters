@@ -1,9 +1,9 @@
 module ColorConverters
   class CielabConverter < BaseConverter
-    def self.matches?(color_input)
-      return false unless color_input.is_a?(Hash)
+    def self.matches?(colour_input)
+      return false unless colour_input.is_a?(Hash)
 
-      color_input.keys - [:l, :a, :b, :space] == [] && color_input[:space].to_s == 'cie'
+      colour_input.keys - [:l, :a, :b, :space] == [] && colour_input[:space].to_s == 'cie'
     end
 
     def self.bounds
@@ -12,22 +12,22 @@ module ColorConverters
 
     private
 
-    def validate_input(color_input)
+    def validate_input(colour_input)
       bounds = CielabConverter.bounds
-      color_input[:l].to_f.between?(*bounds[:l]) && color_input[:a].to_f.between?(*bounds[:a]) && color_input[:b].to_f.between?(*bounds[:b])
+      colour_input[:l].to_f.between?(*bounds[:l]) && colour_input[:a].to_f.between?(*bounds[:a]) && colour_input[:b].to_f.between?(*bounds[:b])
     end
 
-    def input_to_rgba(color_input)
-      x, y, z = CielabConverter.cielab_to_xyz(color_input)
+    def input_to_rgba(colour_input)
+      x, y, z = CielabConverter.cielab_to_xyz(colour_input)
       r, g, b = XyzConverter.xyz_to_rgb({ x: x, y: y, z: z })
 
       [r, g, b, 1.0]
     end
 
-    def self.cielab_to_xyz(color_input)
-      l = color_input[:l].to_d
-      a = color_input[:a].to_d
-      b = color_input[:b].to_d
+    def self.cielab_to_xyz(colour_input)
+      l = colour_input[:l].to_d
+      a = colour_input[:a].to_d
+      b = colour_input[:b].to_d
 
       yy = (l + 16.0.to_d) / 116.0.to_d
       xx = (a / 500.0.to_d) + yy

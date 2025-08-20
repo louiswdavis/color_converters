@@ -43,20 +43,20 @@ RSpec.describe ColorConverters::OklchConverter do
   end
 
   context 'shared_examples for .input_to_rgba and back' do
-    it_behaves_like 'classic_color_conversions' do
+    it_behaves_like 'classic_colour_conversions' do
       let(:converter) { described_class }
-      let(:color_space) { :oklch }
+      let(:colour_space) { :oklch }
 
-      let(:black)   { get_classic_color_value('black', 'OKLCh').merge({ space: 'ok' }) }
-      let(:white)   { get_classic_color_value('white', 'OKLCh').merge({ space: 'ok' }) }
+      let(:black)   { get_classic_colour_value('black', 'OKLCh').merge({ space: 'ok' }) }
+      let(:white)   { get_classic_colour_value('white', 'OKLCh').merge({ space: 'ok' }) }
 
-      let(:red)     { get_classic_color_value('red', 'OKLCh').merge({ space: 'ok' }) }
-      let(:orange)  { get_classic_color_value('orange', 'OKLCh').merge({ space: 'ok' }) }
-      let(:yellow)  { get_classic_color_value('yellow', 'OKLCh').merge({ space: 'ok' }) }
-      let(:green)   { get_classic_color_value('green', 'OKLCh').merge({ space: 'ok' }) }
-      let(:blue)    { get_classic_color_value('blue', 'OKLCh').merge({ space: 'ok' }) }
-      let(:indigo)  { get_classic_color_value('indigo', 'OKLCh').merge({ space: 'ok' }) }
-      let(:violet)  { get_classic_color_value('violet', 'OKLCh').merge({ space: 'ok' }) }
+      let(:red)     { get_classic_colour_value('red', 'OKLCh').merge({ space: 'ok' }) }
+      let(:orange)  { get_classic_colour_value('orange', 'OKLCh').merge({ space: 'ok' }) }
+      let(:yellow)  { get_classic_colour_value('yellow', 'OKLCh').merge({ space: 'ok' }) }
+      let(:green)   { get_classic_colour_value('green', 'OKLCh').merge({ space: 'ok' }) }
+      let(:blue)    { get_classic_colour_value('blue', 'OKLCh').merge({ space: 'ok' }) }
+      let(:indigo)  { get_classic_colour_value('indigo', 'OKLCh').merge({ space: 'ok' }) }
+      let(:violet)  { get_classic_colour_value('violet', 'OKLCh').merge({ space: 'ok' }) }
     end
   end
 end

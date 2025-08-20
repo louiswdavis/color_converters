@@ -22,25 +22,25 @@ RSpec.describe ColorConverters::HsvConverter do
 
     it '.input_to_rgba' do
       expect(described_class.new(h: 220, s: 75, v: 80).rgba).to eq({ r: 51.0, g: 102.0, b: 204.0, a: 1.0 })
-      expect(described_class.new(h: '220', s: '75', v: '80').rgba).to eq({ r: 51.0, g: 102.0, b: 204.0, a: 1.0 })     
+      expect(described_class.new(h: '220', s: '75', v: '80').rgba).to eq({ r: 51.0, g: 102.0, b: 204.0, a: 1.0 })
     end
   end
 
   context 'shared_examples for .input_to_rgba and back' do
-    it_behaves_like 'classic_color_conversions' do
+    it_behaves_like 'classic_colour_conversions' do
       let(:converter) { described_class }
-      let(:color_space) { :hsv }
+      let(:colour_space) { :hsv }
 
-      let(:black)   { get_classic_color_value('black', 'HSV') }
-      let(:white)   { get_classic_color_value('white', 'HSV') }
+      let(:black)   { get_classic_colour_value('black', 'HSV') }
+      let(:white)   { get_classic_colour_value('white', 'HSV') }
 
-      let(:red)     { get_classic_color_value('red', 'HSV') }
-      let(:orange)  { get_classic_color_value('orange', 'HSV') }
-      let(:yellow)  { get_classic_color_value('yellow', 'HSV') }
-      let(:green)   { get_classic_color_value('green', 'HSV') }
-      let(:blue)    { get_classic_color_value('blue', 'HSV') }
-      let(:indigo)  { get_classic_color_value('indigo', 'HSV') }
-      let(:violet)  { get_classic_color_value('violet', 'HSV') }
+      let(:red)     { get_classic_colour_value('red', 'HSV') }
+      let(:orange)  { get_classic_colour_value('orange', 'HSV') }
+      let(:yellow)  { get_classic_colour_value('yellow', 'HSV') }
+      let(:green)   { get_classic_colour_value('green', 'HSV') }
+      let(:blue)    { get_classic_colour_value('blue', 'HSV') }
+      let(:indigo)  { get_classic_colour_value('indigo', 'HSV') }
+      let(:violet)  { get_classic_colour_value('violet', 'HSV') }
     end
   end
 end

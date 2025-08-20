@@ -1,18 +1,18 @@
 require 'json'
 
 module JsonFixtureHelpers
-  def get_classic_color_value(color_name, format_name)
+  def get_classic_colour_value(colour_name, format_name)
     # Get the path relative to the current working directory
-    color_data = JSON.parse(File.read(File.join(Dir.pwd, 'spec', 'fixtures', 'classic_colors', "#{color_name}.json")))
+    colour_data = JSON.parse(File.read(File.join(Dir.pwd, 'spec', 'fixtures', 'classic_colours', "#{colour_name}.json")))
 
     # Convert string values to appropriate hash formats where applicable
-    convert_value_to_hash(format_name, color_data[color_name][format_name])
+    convert_value_to_hash(format_name, colour_data[colour_name][format_name])
   rescue JSON::ParserError => e
-    raise "Failed to parse JSON fixture for #{color_name}: #{e.message}"
+    raise "Failed to parse JSON fixture for #{colour_name}: #{e.message}"
   rescue Errno::ENOENT => e
-    raise "Fixture file not found for #{color_name}: #{e.message}"
+    raise "Fixture file not found for #{colour_name}: #{e.message}"
   rescue KeyError
-    raise "Format '#{format_name}' not found for color '#{color_name}'"
+    raise "Format '#{format_name}' not found for color '#{colour_name}'"
   end
 
   private

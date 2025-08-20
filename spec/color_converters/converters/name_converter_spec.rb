@@ -31,20 +31,20 @@ RSpec.describe ColorConverters::NameConverter do
   end
 
   context 'shared_examples for .input_to_rgba and back' do
-    it_behaves_like 'classic_color_conversions' do
+    it_behaves_like 'classic_colour_conversions' do
       let(:converter) { described_class }
-      let(:color_space) { :name }
+      let(:colour_space) { :name }
 
-      let(:black)   { get_classic_color_value('black', 'Name') }
-      let(:white)   { get_classic_color_value('white', 'Name') }
+      let(:black)   { get_classic_colour_value('black', 'Name') }
+      let(:white)   { get_classic_colour_value('white', 'Name') }
 
-      let(:red)     { get_classic_color_value('red', 'Name') }
-      let(:orange)  { get_classic_color_value('orange', 'Name') }
-      let(:yellow)  { get_classic_color_value('yellow', 'Name') }
-      let(:green)   { get_classic_color_value('green', 'Name') }
-      let(:blue)    { get_classic_color_value('blue', 'Name') }
-      let(:indigo)  { get_classic_color_value('indigo', 'Name') }
-      let(:violet)  { get_classic_color_value('violet', 'Name') }
+      let(:red)     { get_classic_colour_value('red', 'Name') }
+      let(:orange)  { get_classic_colour_value('orange', 'Name') }
+      let(:yellow)  { get_classic_colour_value('yellow', 'Name') }
+      let(:green)   { get_classic_colour_value('green', 'Name') }
+      let(:blue)    { get_classic_colour_value('blue', 'Name') }
+      let(:indigo)  { get_classic_colour_value('indigo', 'Name') }
+      let(:violet)  { get_classic_colour_value('violet', 'Name') }
     end
   end
 end

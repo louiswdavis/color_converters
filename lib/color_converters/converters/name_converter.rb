@@ -1,27 +1,27 @@
 module ColorConverters
   class NameConverter < BaseConverter
-    def self.matches?(color_input)
-      return false unless color_input.is_a?(String)
+    def self.matches?(colour_input)
+      return false unless colour_input.is_a?(String)
 
-      self.color_names.include?(color_input.downcase.to_sym)
+      self.colour_names.include?(colour_input.downcase.to_sym)
     end
 
     def self.rgb_to_name(rgb_array)
       r, g, b = rgb_array
 
-      name = self.color_names.find { |_k, v| v == [r.round, g.round, b.round] }
+      name = self.colour_names.find { |_k, v| v == [r.round, g.round, b.round] }
       name.present? ? name[0].to_s : nil
     end
 
     private
 
-    def validate_input(_color_input)
+    def validate_input(_colour_input)
       # TODO: validate against list of keys?
       true
     end
 
-    def input_to_rgba(color_input)
-      found_colour = self.class.color_names[color_input.downcase.to_sym]
+    def input_to_rgba(colour_input)
+      found_colour = self.class.colour_names[colour_input.downcase.to_sym]
       raise InvalidColorError unless found_colour.present?
 
       r, g, b = found_colour
@@ -30,7 +30,7 @@ module ColorConverters
     end
 
     # TODO: use color_namer_ruby gem instead, but that gem also uses this gem
-    def self.color_names
+    def self.colour_names
       {
         aliceblue: [240, 248, 255],
         antiquewhite: [250, 235, 215],

@@ -63,20 +63,20 @@ RSpec.describe ColorConverters::CielchConverter do
   end
 
   context 'shared_examples for .input_to_rgba and back' do
-    it_behaves_like 'classic_color_conversions' do
+    it_behaves_like 'classic_colour_conversions' do
       let(:converter) { described_class }
-      let(:color_space) { :cielch }
+      let(:colour_space) { :cielch }
 
-      let(:black)   { get_classic_color_value('black', 'CIELCh').merge({ space: 'cie' }) }
-      let(:white)   { get_classic_color_value('white', 'CIELCh').merge({ space: 'cie' }) }
+      let(:black)   { get_classic_colour_value('black', 'CIELCh').merge({ space: 'cie' }) }
+      let(:white)   { get_classic_colour_value('white', 'CIELCh').merge({ space: 'cie' }) }
 
-      let(:red)     { get_classic_color_value('red', 'CIELCh').merge({ space: 'cie' }) }
-      let(:orange)  { get_classic_color_value('orange', 'CIELCh').merge({ space: 'cie' }) }
-      let(:yellow)  { get_classic_color_value('yellow', 'CIELCh').merge({ space: 'cie' }) }
-      let(:green)   { get_classic_color_value('green', 'CIELCh').merge({ space: 'cie' }) }
-      let(:blue)    { get_classic_color_value('blue', 'CIELCh').merge({ space: 'cie' }) }
-      let(:indigo)  { get_classic_color_value('indigo', 'CIELCh').merge({ space: 'cie' }) }
-      let(:violet)  { get_classic_color_value('violet', 'CIELCh').merge({ space: 'cie' }) }
+      let(:red)     { get_classic_colour_value('red', 'CIELCh').merge({ space: 'cie' }) }
+      let(:orange)  { get_classic_colour_value('orange', 'CIELCh').merge({ space: 'cie' }) }
+      let(:yellow)  { get_classic_colour_value('yellow', 'CIELCh').merge({ space: 'cie' }) }
+      let(:green)   { get_classic_colour_value('green', 'CIELCh').merge({ space: 'cie' }) }
+      let(:blue)    { get_classic_colour_value('blue', 'CIELCh').merge({ space: 'cie' }) }
+      let(:indigo)  { get_classic_colour_value('indigo', 'CIELCh').merge({ space: 'cie' }) }
+      let(:violet)  { get_classic_colour_value('violet', 'CIELCh').merge({ space: 'cie' }) }
     end
   end
 end

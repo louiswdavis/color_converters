@@ -43,20 +43,20 @@ RSpec.describe ColorConverters::OklabConverter do
   end
 
   context 'shared_examples for .input_to_rgba and back' do
-    it_behaves_like 'classic_color_conversions' do
+    it_behaves_like 'classic_colour_conversions' do
       let(:converter) { described_class }
-      let(:color_space) { :oklab }
+      let(:colour_space) { :oklab }
 
-      let(:black)   { get_classic_color_value('black', 'OKLab').merge({ space: 'ok' }) }
-      let(:white)   { get_classic_color_value('white', 'OKLab').merge({ space: 'ok' }) }
+      let(:black)   { get_classic_colour_value('black', 'OKLab').merge({ space: 'ok' }) }
+      let(:white)   { get_classic_colour_value('white', 'OKLab').merge({ space: 'ok' }) }
 
-      let(:red)     { get_classic_color_value('red', 'OKLab').merge({ space: 'ok' }) }
-      let(:orange)  { get_classic_color_value('orange', 'OKLab').merge({ space: 'ok' }) }
-      let(:yellow)  { get_classic_color_value('yellow', 'OKLab').merge({ space: 'ok' }) }
-      let(:green)   { get_classic_color_value('green', 'OKLab').merge({ space: 'ok' }) }
-      let(:blue)    { get_classic_color_value('blue', 'OKLab').merge({ space: 'ok' }) }
-      let(:indigo)  { get_classic_color_value('indigo', 'OKLab').merge({ space: 'ok' }) }
-      let(:violet)  { get_classic_color_value('violet', 'OKLab').merge({ space: 'ok' }) }
+      let(:red)     { get_classic_colour_value('red', 'OKLab').merge({ space: 'ok' }) }
+      let(:orange)  { get_classic_colour_value('orange', 'OKLab').merge({ space: 'ok' }) }
+      let(:yellow)  { get_classic_colour_value('yellow', 'OKLab').merge({ space: 'ok' }) }
+      let(:green)   { get_classic_colour_value('green', 'OKLab').merge({ space: 'ok' }) }
+      let(:blue)    { get_classic_colour_value('blue', 'OKLab').merge({ space: 'ok' }) }
+      let(:indigo)  { get_classic_colour_value('indigo', 'OKLab').merge({ space: 'ok' }) }
+      let(:violet)  { get_classic_colour_value('violet', 'OKLab').merge({ space: 'ok' }) }
     end
   end
 end

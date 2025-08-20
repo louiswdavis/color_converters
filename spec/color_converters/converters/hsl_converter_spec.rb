@@ -24,20 +24,20 @@ RSpec.describe ColorConverters::HslConverter do
   end
 
   context 'shared_examples for .input_to_rgba and back' do
-    it_behaves_like 'classic_color_conversions' do
+    it_behaves_like 'classic_colour_conversions' do
       let(:converter) { described_class }
-      let(:color_space) { :hsl }
+      let(:colour_space) { :hsl }
 
-      let(:black)   { get_classic_color_value('black', 'HSL') }
-      let(:white)   { get_classic_color_value('white', 'HSL') }
+      let(:black)   { get_classic_colour_value('black', 'HSL') }
+      let(:white)   { get_classic_colour_value('white', 'HSL') }
 
-      let(:red)     { get_classic_color_value('red', 'HSL') }
-      let(:orange)  { get_classic_color_value('orange', 'HSL') }
-      let(:yellow)  { get_classic_color_value('yellow', 'HSL') }
-      let(:green)   { get_classic_color_value('green', 'HSL') }
-      let(:blue)    { get_classic_color_value('blue', 'HSL') }
-      let(:indigo)  { get_classic_color_value('indigo', 'HSL') }
-      let(:violet)  { get_classic_color_value('violet', 'HSL') }
+      let(:red)     { get_classic_colour_value('red', 'HSL') }
+      let(:orange)  { get_classic_colour_value('orange', 'HSL') }
+      let(:yellow)  { get_classic_colour_value('yellow', 'HSL') }
+      let(:green)   { get_classic_colour_value('green', 'HSL') }
+      let(:blue)    { get_classic_colour_value('blue', 'HSL') }
+      let(:indigo)  { get_classic_colour_value('indigo', 'HSL') }
+      let(:violet)  { get_classic_colour_value('violet', 'HSL') }
     end
   end
 end

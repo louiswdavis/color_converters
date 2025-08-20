@@ -25,16 +25,16 @@ module ColorConverters
       converter.new(color) if converter
     end
 
-    def initialize(color_input, limit_override = false)
-      @original_value = color_input
+    def initialize(colour_input, limit_override = false)
+      @original_value = colour_input
 
-      # self.clamp_input(color_input) if limit_clamp == true
+      # self.clamp_input(colour_input) if limit_clamp == true
 
-      if limit_override == false && !self.validate_input(color_input)
+      if limit_override == false && !self.validate_input(colour_input)
         raise InvalidColorError # validation method is defined in each convertor
       end
 
-      r, g, b, a = self.input_to_rgba(color_input) # conversion method is defined in each convertor
+      r, g, b, a = self.input_to_rgba(colour_input) # conversion method is defined in each convertor
 
       @rgba = { r: r.to_f.round(IMPORT_DP), g: g.to_f.round(IMPORT_DP), b: b.to_f.round(IMPORT_DP), a: a.to_f.round(IMPORT_DP) }
     end

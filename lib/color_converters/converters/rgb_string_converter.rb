@@ -1,19 +1,19 @@
 module ColorConverters
   class RgbStringConverter < BaseConverter
-    def self.matches?(color_input)
-      return false unless color_input.is_a?(String)
+    def self.matches?(colour_input)
+      return false unless colour_input.is_a?(String)
 
-      color_input.include?('rgb(') || color_input.include?('rgba(')
+      colour_input.include?('rgb(') || colour_input.include?('rgba(')
     end
 
     private
 
-    def validate_input(_color_input)
+    def validate_input(_colour_input)
       true
     end
 
-    def input_to_rgba(color_input)
-      matches = color_input.match(/rgba?\(([0-9.,\s]+)\)/)
+    def input_to_rgba(colour_input)
+      matches = colour_input.match(/rgba?\(([0-9.,\s]+)\)/)
       raise InvalidColorError unless matches
 
       r, g, b, a = matches[1].split(',').map(&:strip)

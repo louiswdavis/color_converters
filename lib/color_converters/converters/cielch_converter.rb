@@ -1,9 +1,9 @@
 module ColorConverters
   class CielchConverter < BaseConverter
-    def self.matches?(color_input)
-      return false unless color_input.is_a?(Hash)
+    def self.matches?(colour_input)
+      return false unless colour_input.is_a?(Hash)
 
-      color_input.keys - [:l, :c, :h, :space] == [] && color_input[:space].to_s == 'cie'
+      colour_input.keys - [:l, :c, :h, :space] == [] && colour_input[:space].to_s == 'cie'
     end
 
     def self.bounds
@@ -12,23 +12,23 @@ module ColorConverters
 
     private
 
-    def validate_input(color_input)
+    def validate_input(colour_input)
       bounds = CielchConverter.bounds
-      color_input[:l].to_f.between?(*bounds[:l]) && color_input[:c].to_f.between?(*bounds[:c]) && color_input[:h].to_f.between?(*bounds[:h])
+      colour_input[:l].to_f.between?(*bounds[:l]) && colour_input[:c].to_f.between?(*bounds[:c]) && colour_input[:h].to_f.between?(*bounds[:h])
     end
 
-    def input_to_rgba(color_input)
-      l, a, b = CielchConverter.cielch_to_cielab(color_input)
+    def input_to_rgba(colour_input)
+      l, a, b = CielchConverter.cielch_to_cielab(colour_input)
       x, y, z = CielabConverter.cielab_to_xyz({ l: l, a: a, b: b })
       r, g, b = XyzConverter.xyz_to_rgb({ x: x, y: y, z: z })
 
       [r, g, b, 1.0]
     end
 
-    def self.cielch_to_cielab(color_input)
-      l = color_input[:l].to_d
-      c = color_input[:c].to_d
-      h = color_input[:h].to_d
+    def self.cielch_to_cielab(colour_input)
+      l = colour_input[:l].to_d
+      c = colour_input[:c].to_d
+      h = colour_input[:h].to_d
 
       h_rad = h * (Math::PI.to_d / 180.0.to_d)
 
