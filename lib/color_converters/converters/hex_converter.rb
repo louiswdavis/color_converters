@@ -4,16 +4,12 @@ module ColorConverters
   class HexConverter < BaseConverter
     def self.matches?(colour)
       return false unless colour.is_a?(String)
-    def self.matches?(colour)
-      return false unless colour.is_a?(String)
 
-      colour.include?('#') && [4, 7, 9].include?(colour.length)
       colour.include?('#') && [4, 7, 9].include?(colour.length)
     end
 
     private
 
-    def validate_input(_colour_input)
     def validate_input(_colour_input)
       # TODO
       true
