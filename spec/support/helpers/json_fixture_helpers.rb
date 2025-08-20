@@ -17,6 +17,20 @@ module JsonFixtureHelpers
     raise "Format '#{format_name}' not found for colour '#{colour_name}'"
   end
 
+  def get_custom_colour_value(colour_item, format_name)
+    # Get the path relative to the current working directory
+    colour_data = JSON.parse(File.read(File.join(Dir.pwd, 'spec', 'fixtures', 'custom_colours.json')))
+
+    # Convert string values to appropriate hash formats where applicable
+    convert_value_to_hash(format_name, colour_data['custom_colours'][colour_item][format_name])
+  rescue JSON::ParserError => e
+    raise "Failed to parse JSON fixture for #{colour_name}: #{e.message}"
+  rescue Errno::ENOENT => e
+    raise "Fixture file not found for #{colour_name}: #{e.message}"
+  rescue KeyError
+    raise "Format '#{format_name}' not found for colour '#{colour_name}'"
+  end
+
   private
 
   def convert_value_to_hash(format_name, value)
@@ -40,13 +54,13 @@ module JsonFixtureHelpers
     when 'RYB'
       { r: values[0], y: values[1], b: values[2] }
     when 'CIELab'
-      { l: values[0], a: values[1], b: values[2] }
+      { l: values[0], a: values[1], b: values[2], space: :cie }
     when 'CIELCh'
-      { l: values[0], c: values[1], h: values[2] }
+      { l: values[0], c: values[1], h: values[2], space: :cie }
     when 'OKLab'
-      { l: values[0], a: values[1], b: values[2] }
+      { l: values[0], a: values[1], b: values[2], space: :ok }
     when 'OKLCh'
-      { l: values[0], c: values[1], h: values[2] }
+      { l: values[0], c: values[1], h: values[2], space: :ok }
     when 'Yxy'
       { y: values[0], x: values[1], y2: values[2] }
     when 'YUV'
