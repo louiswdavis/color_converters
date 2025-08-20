@@ -15,7 +15,7 @@ RSpec.describe ColorConverters::NameConverter do
       expect { described_class.new('bluee') }.to raise_error(ColorConverters::InvalidColorError)
     end
 
-    it '.input_to_rgba' do
+    it '.input_to_rgba for strings' do
       expect(described_class.new('blue').rgba).to eq({ r: 0, g: 0, b: 255, a: 1.0 })
     end
 

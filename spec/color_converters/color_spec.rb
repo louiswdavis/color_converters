@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe ColorConverters::Color do
   context 'methods' do
-    it '.initialize' do
+    it '.initialize from colour spaces' do
       expect(described_class.new(r: 51, g: 102, b: 204).rgb).not_to eq nil
 
       expect(described_class.new(r: 51, g: 102, b: 204).rgb).to eq({ r: 51, g: 102, b: 204 })
@@ -40,7 +40,7 @@ RSpec.describe ColorConverters::Color do
       expect(described_class.new(l: 74, c: 58, h: 122, space: :cie).rgb).to eq({ r: 154.25, g: 195.2, b: 86.99 })
 
       expect(described_class.new(l: 79, a: 0.16, b: -0.06, space: :ok).rgb).to eq({ r: 255.0, g: 139.18, b: 221.68 })
-      expect(described_class.new(l: 76, c: 0.14, h: 130, space: :ok).rgb).to eq({ r: 154.24, g: 194.52, b: 87.0 })
+      expect(described_class.new(l: 76, c: 0.14, h: 130, space: :ok).rgb).to eq({ r: 154.24, g: 194.52, b: 87.0 }) # TODO: WIP
     end
 
     it '.==' do

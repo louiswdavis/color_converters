@@ -15,7 +15,7 @@ RSpec.describe ColorConverters::RgbStringConverter do
       expect { described_class.new('rgba(foo)').rgba }.to raise_error(ColorConverters::InvalidColorError)
     end
 
-    it '.input_to_rgba' do
+    it '.input_to_rgba for strings' do
       expect(described_class.new('rgb(51, 102, 204)').rgba).to eq({ r: 51, g: 102, b: 204, a: 1.0 })
       expect(described_class.new('rgba(51, 102, 204, 0.5)').rgba).to eq({ r: 51, g: 102, b: 204, a: 0.5 })
     end
