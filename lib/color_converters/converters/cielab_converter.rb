@@ -28,7 +28,7 @@ module ColorConverters
 
     def self.cielab_to_xyz(colour_input)
       l = colour_input[:l].to_d
-      a = colourr_input[:a].to_d
+      a = colour_input[:a].to_d
       b = colour_input[:b].to_d
 
       yy = (l + 16.0.to_d) / 116.0.to_d
