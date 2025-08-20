@@ -6,7 +6,7 @@ require 'bigdecimal/util'
 
 module ColorConverters
   class BaseConverter
-    IMPORT_DP = 2
+    IMPORT_DP = 8
     OUTPUT_DP = 2
 
     attr_reader :original_value, :rgba
