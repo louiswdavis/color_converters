@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ColorConverters
   class HslConverter < BaseConverter
     def self.matches?(color_input)
@@ -37,7 +39,7 @@ module ColorConverters
 
       (0..2).each do |i|
         t3 = h + 1 / 3.0 * - (i - 1)
-        t3 < 0 && t3 += 1
+        t3.negative? && t3 += 1
         t3 > 1 && t3 -= 1
 
         val = if 6 * t3 < 1

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ColorConverters
   class OklchConverter < BaseConverter
     def self.matches?(color_input)

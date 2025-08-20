@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.shared_examples 'classic_color_conversions' do
   # Define these in your spec via `let`:
   # - `converter`: The converter class (e.g., `ColorConverters::RgbConverter`)

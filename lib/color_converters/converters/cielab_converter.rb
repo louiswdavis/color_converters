@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ColorConverters
   class CielabConverter < BaseConverter
     def self.matches?(color_input)

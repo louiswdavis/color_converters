@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ColorConverters
   class RgbConverter < BaseConverter
     def self.matches?(color_input)

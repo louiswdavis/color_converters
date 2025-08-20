@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+require 'color_namer_ruby'
+
 module ColorConverters
   class NameConverter < BaseConverter
     def self.matches?(color_input)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ClassicColorConversionsHelper
   # check that when the known RGB value is converted to the color space using the Converter, that it matches the fixtured value (that is assumed to be correct)
   def check_rgb_converted_to_color(color_space, fixture_color, expected_rgb)

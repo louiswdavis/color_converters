@@ -22,7 +22,7 @@ RSpec.describe ColorConverters::HsvConverter do
 
     it '.input_to_rgba' do
       expect(described_class.new(h: 220, s: 75, v: 80).rgba).to eq({ r: 51.0, g: 102.0, b: 204.0, a: 1.0 })
-      expect(described_class.new(h: '220', s: '75', v: '80').rgba).to eq({ r: 51.0, g: 102.0, b: 204.0, a: 1.0 })     
+      expect(described_class.new(h: '220', s: '75', v: '80').rgba).to eq({ r: 51.0, g: 102.0, b: 204.0, a: 1.0 })
     end
   end
 

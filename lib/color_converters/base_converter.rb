@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'active_support/core_ext/object/blank'
 require 'bigdecimal'
 require 'bigdecimal/util'
@@ -22,7 +24,7 @@ module ColorConverters
 
     def self.factory(color)
       converter = BaseConverter.converters.find { |klass| klass.matches?(color) }
-      converter.new(color) if converter
+      converter&.new(color)
     end
 
     def initialize(color_input, limit_override = false)

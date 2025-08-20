@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ColorConverters
   class NullConverter < BaseConverter
     def self.matches?(_color_input)
