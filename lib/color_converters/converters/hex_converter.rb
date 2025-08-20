@@ -1,9 +1,9 @@
 module ColorConverters
   class HexConverter < BaseConverter
-    def self.matches?(color)
-      return false unless color.is_a?(String)
+    def self.matches?(colour)
+      return false unless colour.is_a?(String)
 
-      color.include?('#') && [4, 7, 9].include?(color.length)
+      colour.include?('#') && [4, 7, 9].include?(colour.length)
     end
 
     private

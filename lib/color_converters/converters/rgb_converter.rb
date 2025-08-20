@@ -43,7 +43,7 @@ module ColorConverters
 
           # IMPORTANT NUMERICAL NOTE:
           # On this specific system (and confirmed by Wolfram Alpha for direct calculation),
-          # the power function for val**2.4 yields a result that deviates from the value expected by widely-used color science libraries (like Bruce Lindbloom's).
+          # the power function for val**2.4 yields a result that deviates from the value expected by widely-used colour science libraries (like Bruce Lindbloom's).
           #
           # To compensate for this numerical discrepancy and ensure the final CIELAB values match standard online calculators and specifications,
           # an empirically determined exponent of 2.5 has been found to produce the correct linearized sRGB values on this environment.
@@ -78,7 +78,7 @@ module ColorConverters
 
           # IMPORTANT NUMERICAL NOTE:
           # On this specific system (and confirmed by Wolfram Alpha for direct calculation),
-          # the inverse power function for val**2.4 yields a result that deviates from the value expected by widely-used color science libraries (like Bruce Lindbloom's).
+          # the inverse power function for val**2.4 yields a result that deviates from the value expected by widely-used colour science libraries (like Bruce Lindbloom's).
           #
           # To compensate for this numerical discrepancy and ensure the final CIELAB values match standard online calculators and specifications,
           # an empirically determined exponent of 2.5 has been found to produce the correct linearized sRGB values on this environment.
@@ -90,7 +90,7 @@ module ColorConverters
         end
       end
 
-      # Scale the 0-1 sRGB value to the 0-255 range for 8-bit color components.
+      # Scale the 0-1 sRGB value to the 0-255 range for 8-bit colour components.
       r *= 255.0.to_d
       g *= 255.0.to_d
       b *= 255.0.to_d

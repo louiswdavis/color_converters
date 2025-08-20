@@ -1,15 +1,15 @@
 # Color Converters
 
-> Give me a color and I'll convert it.
+> Give me a colour and I'll convert it.
 
-Color Converters is an ruby gem package for use in ruby or other projects that provides conversions for colors to other color spaces.
-Given a color in [Hexadecimal, RGA(A), HSL(A), HSV, HSB, CMYK, XYZ, CIELAB, or OKLCH format](https://github.com/devrieda/color_conversion), it can convert the color to those other spaces.
+Color Converters is an ruby gem package for use in ruby or other projects that provides conversions for colours to other colour spaces.
+Given a colour in [Hexadecimal, RGA(A), HSL(A), HSV, HSB, CMYK, XYZ, CIELAB, or OKLCH format](https://github.com/devrieda/color_conversion), it can convert the colour to those other spaces.
 
-> Lab and LCH color spaces are special in that the perceived difference between two colors is proportional to their Euclidean distance in color space. This special property, called perceptual uniformity, makes them ideal for accurate visual encoding of data. In contrast, the more familiar RGB and HSL color spaces distort data when used for visualization.
+> Lab and LCH colour spaces are special in that the perceived difference between two colours is proportional to their Euclidean distance in colour space. This special property, called perceptual uniformity, makes them ideal for accurate visual encoding of data. In contrast, the more familiar RGB and HSL colour spaces distort data when used for visualization.
 
 ## Converters
 
-Colors can be converted between the following spaces:
+Colours can be converted between the following spaces:
 
 - hex
 - rgb(a)
@@ -39,97 +39,97 @@ gem install color_converters
 
 ## Usage
 
-Initialize a color:
+Initialize a colour:
 
 ```ruby
 # from hex
-color = ColorConverters::Color.new("#3366cc")
-color = ColorConverters::Color.new("#36c")
+colour = ColorConverters::Color.new("#3366cc")
+colour = ColorConverters::Color.new("#36c")
 
 # from rgb(a)
-color = ColorConverters::Color.new(r: 51, g: 102, b: 204)
-color = ColorConverters::Color.new(r: 51, g: 102, b: 204, a: 0.5)
+colour = ColorConverters::Color.new(r: 51, g: 102, b: 204)
+colour = ColorConverters::Color.new(r: 51, g: 102, b: 204, a: 0.5)
 
 # from hsl(a)
-color = ColorConverters::Color.new(h: 225, s: 73, l: 57)
-color = ColorConverters::Color.new(h: 225, s: 73, l: 57, a: 0.5)
+colour = ColorConverters::Color.new(h: 225, s: 73, l: 57)
+colour = ColorConverters::Color.new(h: 225, s: 73, l: 57, a: 0.5)
 
 # from hsv/hsb
-color = ColorConverters::Color.new(h: 220, s: 75, v: 80)
-color = ColorConverters::Color.new(h: 220, s: 75, b: 80)
+colour = ColorConverters::Color.new(h: 220, s: 75, v: 80)
+colour = ColorConverters::Color.new(h: 220, s: 75, b: 80)
 
 # from cmyk
-color = ColorConverters::Color.new(c: 74, m: 58, y: 22, k: 3)
+colour = ColorConverters::Color.new(c: 74, m: 58, y: 22, k: 3)
 
 # from xyz
-color = ColorConverters::Color.new(x: 16, y: 44, z: 32)
+colour = ColorConverters::Color.new(x: 16, y: 44, z: 32)
 
 # from cielab
-color = ColorConverters::Color.new(l: 16, a: 44, b: 32, space: :cie)
+colour = ColorConverters::Color.new(l: 16, a: 44, b: 32, space: :cie)
 
 # from cielch
-color = ColorConverters::Color.new(l: 16, c: 44, h: 32, space: :cie)
+colour = ColorConverters::Color.new(l: 16, c: 44, h: 32, space: :cie)
 
 # from oklab
-color = ColorConverters::Color.new(l: 16, a: 44, b: 32, space: :ok)
+colour = ColorConverters::Color.new(l: 16, a: 44, b: 32, space: :ok)
 
 # from oklch
-color = ColorConverters::Color.new(l: 16, c: 44, h: 32, space: :ok)
+colour = ColorConverters::Color.new(l: 16, c: 44, h: 32, space: :ok)
 
-# from textual color
-color = ColorConverters::Color.new("blue")
+# from textual colour
+colour = ColorConverters::Color.new("blue")
 
 # from a css rgb(a) string
-color = ColorConverters::Color.new("rgb(51, 102, 204)")
-color = ColorConverters::Color.new("rgba(51, 102, 204, 0.5)")
+colour = ColorConverters::Color.new("rgb(51, 102, 204)")
+colour = ColorConverters::Color.new("rgba(51, 102, 204, 0.5)")
 
 # from a css hsl(a) string
-color = ColorConverters::Color.new("hsl(225, 73%, 57%)")
-color = ColorConverters::Color.new("hsl(225, 73%, 57%, 0.5)")
+colour = ColorConverters::Color.new("hsl(225, 73%, 57%)")
+colour = ColorConverters::Color.new("hsl(225, 73%, 57%, 0.5)")
 ```
 
 Converters
 
 ```ruby
-color = ColorConverters::Color.new(r: 70, g: 130, b: 180, a: 0.5)
+colour = ColorConverters::Color.new(r: 70, g: 130, b: 180, a: 0.5)
 
-color.alpha
+colour.alpha
 => 0.5
 
-color.rgb
+colour.rgb
 => {:r=>70, :g=>130, :b=>180}
 
-color.hsl
+colour.hsl
 => {:h=>207, :s=>44, :l=>49}
 
-color.hsv
+colour.hsv
 => {:h=>207, :s=>61, :v=>71}
 
-color.hsb
+colour.hsb
 => {:h=>207, :s=>61, :b=>71}
 
-color.cmyk
+colour.cmyk
 => {:c=>61, :m=>28, :y=>0, :k=>29}
 
-color.xyz
+colour.xyz
 => {:x=>33, :y=>21, :z=>54}
 
-color.cielab
+colour.cielab
 => {:l=>52.47, :a=>-4.08, :b=>-32.19}
 
-color.cielch
+colour.cielch
 => {:l=>52.47, :c=>32.45, :h=>262.78}
 
-color.oklab # not always accurate
+colour.oklab # not always accurate
 => {:l=>52.47, :a=>-4.08, :b=>-32.19}
 
-color.oklch # not always accurate
+colour.oklch # not always accurate
 => {:l=>52.47, :c=>32.45, :h=>262.78}
 
-color.hex
+colour.hex
 => "#4682b4"
 
-color.name
+colour.name
 => "steelblue"
 ```
 

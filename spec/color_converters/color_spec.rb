@@ -44,22 +44,22 @@ RSpec.describe ColorConverters::Color do
     end
 
     it '.==' do
-      # should be equal when same color
+      # should be equal when same colour
       colour_1 = described_class.new('#3366cc')
       colour_2 = described_class.new('#3366cc')
       expect(colour_1).to eq(colour_2)
 
-      # should be equal when logically same color
+      # should be equal when logically same colour
       colour_1 = described_class.new('#3366cc')
       colour_2 = described_class.new(r: 51, g: 102, b: 204)
       expect(colour_1).to eq(colour_2)
 
-      # should be equal when same color and alpha
+      # should be equal when same colour and alpha
       colour_1 = described_class.new(r: 51, g: 102, b: 204, a: 0.2)
       colour_2 = described_class.new('rgba(51, 102, 204, 0.2)')
       expect(colour_1).to eq(colour_2)
 
-      # should not be equal when same color but not same alpha
+      # should not be equal when same colour but not same alpha
       colour_1 = described_class.new(r: 51, g: 102, b: 204, a: 0.2)
       colour_2 = described_class.new(r: 51, g: 102, b: 204, a: 0.2)
       expect(colour_1).to eq(colour_2)

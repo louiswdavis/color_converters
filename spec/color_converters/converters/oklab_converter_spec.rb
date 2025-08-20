@@ -28,17 +28,17 @@ RSpec.describe ColorConverters::OklabConverter do
       xyz = { x: 2, y: 1, z: 4 }
       rgba = { r: 44, g: 0, b: 59, a: 1.0 }
 
-      color = described_class.new(**oklab_1, space: :ok)
-      expect(color.oklab).not_to eq oklab_1
-      expect(color.oklab).to eq oklab_2
-      expect(color.xyz.transform_values(&:round)).to eq xyz
-      expect(color.rgba.transform_values(&:round)).to eq rgba
+      colour = described_class.new(**oklab_1, space: :ok)
+      expect(colour.oklab).not_to eq oklab_1
+      expect(colour.oklab).to eq oklab_2
+      expect(colour.xyz.transform_values(&:round)).to eq xyz
+      expect(colour.rgba.transform_values(&:round)).to eq rgba
 
-      color = described_class.new(**oklab_2, space: :ok)
-      expect(color.oklab).not_to eq oklab_1
-      expect(color.oklab).to eq oklab_2
-      expect(color.xyz.transform_values(&:round)).to eq xyz
-      expect(color.rgba.transform_values(&:round)).to eq rgba
+      colour = described_class.new(**oklab_2, space: :ok)
+      expect(colour.oklab).not_to eq oklab_1
+      expect(colour.oklab).to eq oklab_2
+      expect(colour.xyz.transform_values(&:round)).to eq xyz
+      expect(colour.rgba.transform_values(&:round)).to eq rgba
     end
   end
 

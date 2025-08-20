@@ -45,13 +45,13 @@ RSpec.describe ColorConverters::RgbConverter do
       let(:converter) { described_class }
       let(:colour_space) { :rgb }
 
-      let(:sample_colors) do
+      let(:sample_colours) do
         [
           { r: 51.0, g: 102.0, b: 204.0 }
         ]
       end
 
-      let(:passed_colors) do
+      let(:passed_colours) do
         [
           { r: 51.0, g: 102.0, b: 204.0 }
         ]

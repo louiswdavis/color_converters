@@ -25,27 +25,27 @@ RSpec.describe ColorConverters::XyzConverter do
     it '.input_to_rgba and back' do
       xyz = { x: 23.94, y: 14.96, z: 56.87 }
       rgba = { r: 140.02, g: 75.98, b: 200.97, a: 1.0 }
-      color = described_class.new(**xyz)
-      expect(color.xyz).to eq xyz
-      expect(color.rgba).to eq rgba
+      colour = described_class.new(**xyz)
+      expect(colour.xyz).to eq xyz
+      expect(colour.rgba).to eq rgba
 
       xyz = { x: 16.69, y: 14.84, z: 52.43 }
       rgba = { r: 64.05, g: 103.99, b: 192.99, a: 1.0 }
-      color = described_class.new(**xyz)
-      expect(color.xyz).to eq xyz
-      expect(color.rgba).to eq rgba
+      colour = described_class.new(**xyz)
+      expect(colour.xyz).to eq xyz
+      expect(colour.rgba).to eq rgba
 
       xyz = { x: 95.04, y: 100.0, z: 108.88 }
       rgba = { r: 254.99, g: 255.0, b: 254.97, a: 1.0 }
-      color = described_class.new(**xyz)
-      expect(color.xyz).to eq xyz
-      expect(color.rgba).to eq rgba
+      colour = described_class.new(**xyz)
+      expect(colour.xyz).to eq xyz
+      expect(colour.rgba).to eq rgba
 
       xyz = { x: 0.0, y: 0.0, z: 0.0 }
       rgba = { r: 0, g: 0, b: 0, a: 1.0 }
-      color = described_class.new(**xyz)
-      expect(color.xyz).to eq xyz
-      expect(color.rgba).to eq rgba
+      colour = described_class.new(**xyz)
+      expect(colour.xyz).to eq xyz
+      expect(colour.rgba).to eq rgba
     end
   end
 

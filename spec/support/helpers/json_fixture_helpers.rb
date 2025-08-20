@@ -12,7 +12,7 @@ module JsonFixtureHelpers
   rescue Errno::ENOENT => e
     raise "Fixture file not found for #{colour_name}: #{e.message}"
   rescue KeyError
-    raise "Format '#{format_name}' not found for color '#{colour_name}'"
+    raise "Format '#{format_name}' not found for colour '#{colour_name}'"
   end
 
   private

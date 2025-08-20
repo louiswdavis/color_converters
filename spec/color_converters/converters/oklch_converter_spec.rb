@@ -28,17 +28,17 @@ RSpec.describe ColorConverters::OklchConverter do
       xyz = { x: 72, y: 67, z: 64 }
       rgba = { r: 255, g: 201, b: 200, a: 1.0 }
 
-      color = described_class.new(**oklch_1)
-      expect(color.oklch).not_to eq oklch_1
-      expect(color.oklch).to eq oklch_2
-      expect(color.xyz.transform_values(&:round)).to eq xyz
-      expect(color.rgba.transform_values(&:round)).to eq rgba
+      colour = described_class.new(**oklch_1)
+      expect(colour.oklch).not_to eq oklch_1
+      expect(colour.oklch).to eq oklch_2
+      expect(colour.xyz.transform_values(&:round)).to eq xyz
+      expect(colour.rgba.transform_values(&:round)).to eq rgba
 
-      color = described_class.new(**oklch_2)
-      expect(color.oklch).not_to eq oklch_1
-      expect(color.oklch).to eq oklch_2
-      expect(color.xyz.transform_values(&:round)).to eq xyz
-      expect(color.rgba.transform_values(&:round)).to eq rgba
+      colour = described_class.new(**oklch_2)
+      expect(colour.oklch).not_to eq oklch_1
+      expect(colour.oklch).to eq oklch_2
+      expect(colour.xyz.transform_values(&:round)).to eq xyz
+      expect(colour.rgba.transform_values(&:round)).to eq rgba
     end
   end
 

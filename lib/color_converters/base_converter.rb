@@ -20,9 +20,9 @@ module ColorConverters
       BaseConverter.converters << subclass
     end
 
-    def self.factory(color)
-      converter = BaseConverter.converters.find { |klass| klass.matches?(color) }
-      converter.new(color) if converter
+    def self.factory(colour)
+      converter = BaseConverter.converters.find { |klass| klass.matches?(colour) }
+      converter.new(colour) if converter
     end
 
     def initialize(colour_input, limit_override = false)
