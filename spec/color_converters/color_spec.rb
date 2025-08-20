@@ -40,29 +40,29 @@ RSpec.describe ColorConverters::Color do
       expect(described_class.new(l: 74, c: 58, h: 122, space: :cie).rgb).to eq({ r: 154.25, g: 195.2, b: 86.99 })
 
       expect(described_class.new(l: 79, a: 0.16, b: -0.06, space: :ok).rgb).to eq({ r: 255.0, g: 139.18, b: 221.68 })
-      expect(described_class.new(l: 76, c: 0.14, h: 130, space: :ok).rgb).to eq({ r: 154.24, g: 194.52, b: 87.0 }) # TODO: WIP
+      expect(described_class.new(l: 76, c: 0.14, h: 80, space: :ok).rgb).to eq({ r: 223.24, g: 165.84, b: 52.92 })
     end
 
     it '.==' do
       # should be equal when same colour
       colour_1 = described_class.new('#3366cc')
       colour_2 = described_class.new('#3366cc')
-      expect(colour_1).to eq(colour_2)
+      expect(colour_1).to eq colour_2
 
       # should be equal when logically same colour
       colour_1 = described_class.new('#3366cc')
       colour_2 = described_class.new(r: 51, g: 102, b: 204)
-      expect(colour_1).to eq(colour_2)
+      expect(colour_1).to eq colour_2
 
       # should be equal when same colour and alpha
       colour_1 = described_class.new(r: 51, g: 102, b: 204, a: 0.2)
       colour_2 = described_class.new('rgba(51, 102, 204, 0.2)')
-      expect(colour_1).to eq(colour_2)
+      expect(colour_1).to eq colour_2
 
       # should not be equal when same colour but not same alpha
       colour_1 = described_class.new(r: 51, g: 102, b: 204, a: 0.2)
       colour_2 = described_class.new(r: 51, g: 102, b: 204, a: 0.2)
-      expect(colour_1).to eq(colour_2)
+      expect(colour_1).to eq colour_2
     end
   end
 end

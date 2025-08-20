@@ -5,7 +5,7 @@ require 'color_swatch_collection'
 module ColorConverters
   class NameConverter < BaseConverter
     def self.matches?(colour_input)
-      false unless colour_input.is_a?(String)
+      return false unless colour_input.is_a?(String)
 
       !colour_input.include?('#') && !colour_input.include?('rgb') && !colour_input.include?('hsl')
     end

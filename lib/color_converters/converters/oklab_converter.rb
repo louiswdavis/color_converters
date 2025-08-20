@@ -43,9 +43,9 @@ module ColorConverters
 
       l_lms, m_lms, s_lms = (lab_to_lms_matrix * ::Matrix.column_vector([l, a, b])).to_a.flatten
 
-      l_lms **= 3.to_d
-      m_lms **= 3.to_d
-      s_lms **= 3.to_d
+      l_lms **= 3.0.to_d
+      m_lms **= 3.0.to_d
+      s_lms **= 3.0.to_d
 
       lms_to_xyz_matrix = ::Matrix[
         [1.2268798758459243.to_d, -0.5578149944602171.to_d, 0.2813910456659647.to_d],
@@ -79,9 +79,10 @@ module ColorConverters
 
       l_lms, m_lms, s_lms = (xyz_to_lms_matrix * ::Matrix.column_vector([x, y, z])).to_a.flatten
 
-      l_lms **= (1.0.to_d / 3.0.to_d)
-      m_lms **= (1.0.to_d / 3.0.to_d)
-      s_lms **= (1.0.to_d / 3.0.to_d)
+      cube_root = (1.0.to_d / 3.0.to_d)
+      l_lms **= cube_root
+      m_lms **= cube_root
+      s_lms **= cube_root
 
       lms_to_lab_matrix = ::Matrix[
         [0.2104542683093140.to_d, 0.7936177747023054.to_d, -0.0040720430116193.to_d],
