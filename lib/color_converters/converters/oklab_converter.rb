@@ -2,10 +2,10 @@
 
 module ColorConverters
   class OklabConverter < BaseConverter
-    def self.matches?(color_input)
-      return false unless color_input.is_a?(Hash)
+    def self.matches?(colour_input)
+      return false unless colour_input.is_a?(Hash)
 
-      color_input.keys - [:l, :a, :b, :space] == [] && color_input[:space].to_s == 'ok'
+      colour_input.keys - [:l, :a, :b, :space] == [] && colour_input[:space].to_s == 'ok'
     end
 
     def self.bounds
@@ -14,22 +14,22 @@ module ColorConverters
 
     private
 
-    def validate_input(color_input)
+    def validate_input(colour_input)
       bounds = OklabConverter.bounds
-      color_input[:l].to_f.between?(*bounds[:l]) && color_input[:a].to_f.between?(*bounds[:a]) && color_input[:b].to_f.between?(*bounds[:b])
+      colour_input[:l].to_f.between?(*bounds[:l]) && colour_input[:a].to_f.between?(*bounds[:a]) && colour_input[:b].to_f.between?(*bounds[:b])
     end
 
-    def input_to_rgba(color_input)
-      x, y, z = OklabConverter.oklab_to_xyz(color_input)
+    def input_to_rgba(colour_input)
+      x, y, z = OklabConverter.oklab_to_xyz(colour_input)
       r, g, b = XyzConverter.xyz_to_rgb({ x: x, y: y, z: z })
 
       [r, g, b, 1.0]
     end
 
-    def self.oklab_to_xyz(color_input)
-      l = color_input[:l].to_d
-      a = color_input[:a].to_d
-      b = color_input[:b].to_d
+    def self.oklab_to_xyz(colour_input)
+      l = colour_input[:l].to_d
+      a = colour_input[:a].to_d
+      b = colour_input[:b].to_d
 
       # Now, scale l to a decimal
       l /= 100.0.to_d

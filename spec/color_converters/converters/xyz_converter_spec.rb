@@ -18,52 +18,71 @@ RSpec.describe ColorConverters::XyzConverter do
     end
 
     it '.input_to_rgba for strings' do
-      expect(described_class.new(x: 17.0157, y: 14.5662, z: 59.0415).rgba).to eq({ r: 51.04, g: 102.0, b: 204.0, a: 1.0 })
-      expect(described_class.new(x: '17.0157', y: '14.5662', z: '59.0415').rgba).to eq({ r: 51.04, g: 102.0, b: 204.0, a: 1.0 })
+      expect(described_class.new(x: 17.0157, y: 14.5662, z: 59.0415).rgba).to eq({ r: 51.03548592, g: 101.99999871, b: 203.99678845, a: 1.0 })
+      expect(described_class.new(x: '17.0157', y: '14.5662', z: '59.0415').rgba).to eq({ r: 51.03548592, g: 101.99999871, b: 203.99678845, a: 1.0 })
     end
 
     it '.input_to_rgba and back' do
       xyz = { x: 23.94, y: 14.96, z: 56.87 }
-      rgba = { r: 140.02, g: 75.98, b: 200.97, a: 1.0 }
-      color = described_class.new(**xyz)
-      expect(color.xyz).to eq xyz
-      expect(color.rgba).to eq rgba
+      rgba = { r: 140.02081945, g: 75.98355652, b: 200.97302652, a: 1.0 }
+      colour = described_class.new(**xyz)
+      expect(colour.xyz).to eq xyz
+      expect(colour.rgba).to eq rgba
 
       xyz = { x: 16.69, y: 14.84, z: 52.43 }
-      rgba = { r: 64.05, g: 103.99, b: 192.99, a: 1.0 }
-      color = described_class.new(**xyz)
-      expect(color.xyz).to eq xyz
-      expect(color.rgba).to eq rgba
+      rgba = { r: 64.05, g: 103.99378864, b: 192.98515665, a: 1.0 }
+      colour = described_class.new(**xyz)
+      expect(colour.xyz).to eq xyz
+      expect(colour.rgba).to eq rgba
 
       xyz = { x: 95.04, y: 100.0, z: 108.88 }
       rgba = { r: 254.99, g: 255.0, b: 254.97, a: 1.0 }
-      color = described_class.new(**xyz)
-      expect(color.xyz).to eq xyz
-      expect(color.rgba).to eq rgba
+      colour = described_class.new(**xyz)
+      expect(colour.xyz).to eq xyz
+      expect(colour.rgba).to eq rgba
 
       xyz = { x: 0.0, y: 0.0, z: 0.0 }
       rgba = { r: 0, g: 0, b: 0, a: 1.0 }
-      color = described_class.new(**xyz)
-      expect(color.xyz).to eq xyz
-      expect(color.rgba).to eq rgba
+      colour = described_class.new(**xyz)
+      expect(colour.xyz).to eq xyz
+      expect(colour.rgba).to eq rgba
     end
   end
 
   context 'shared_examples for .input_to_rgba and back' do
-    it_behaves_like 'classic_color_conversions' do
+    it_behaves_like 'classic_colour_conversions' do
       let(:converter) { described_class }
-      let(:color_space) { :xyz }
+      let(:colour_space) { :xyz }
 
-      let(:black)   { get_classic_color_value('black', 'XYZ') }
-      let(:white)   { get_classic_color_value('white', 'XYZ') }
+      let(:black)   { get_classic_colour_value('black', 'XYZ') }
+      let(:white)   { get_classic_colour_value('white', 'XYZ') }
 
-      let(:red)     { get_classic_color_value('red', 'XYZ') }
-      let(:orange)  { get_classic_color_value('orange', 'XYZ') }
-      let(:yellow)  { get_classic_color_value('yellow', 'XYZ') }
-      let(:green)   { get_classic_color_value('green', 'XYZ') }
-      let(:blue)    { get_classic_color_value('blue', 'XYZ') }
-      let(:indigo)  { get_classic_color_value('indigo', 'XYZ') }
-      let(:violet)  { get_classic_color_value('violet', 'XYZ') }
+      let(:red)     { get_classic_colour_value('red', 'XYZ') }
+      let(:orange)  { get_classic_colour_value('orange', 'XYZ') }
+      let(:yellow)  { get_classic_colour_value('yellow', 'XYZ') }
+      let(:green)   { get_classic_colour_value('green', 'XYZ') }
+      let(:blue)    { get_classic_colour_value('blue', 'XYZ') }
+      let(:indigo)  { get_classic_colour_value('indigo', 'XYZ') }
+      let(:violet)  { get_classic_colour_value('violet', 'XYZ') }
+    end
+
+    it_behaves_like 'custom_colour_conversions' do
+      let(:converter) { described_class }
+      let(:colour_space) { :xyz }
+
+      let(:passed_colours) do
+        [
+          { x: 23.94, y: 14.96, z: 56.87 },
+          { x: 16.69, y: 14.84, z: 52.43 }
+        ]
+      end
+
+      let(:expected_rgbs) do
+        [
+          { r: 140.02081945, g: 75.98355652, b: 200.97302652 },
+          { r: 64.05, g: 103.99378864, b: 192.98515665 }
+        ]
+      end
     end
   end
 end

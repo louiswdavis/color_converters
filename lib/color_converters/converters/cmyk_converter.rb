@@ -2,10 +2,10 @@
 
 module ColorConverters
   class CmykConverter < BaseConverter
-    def self.matches?(color_input)
-      return false unless color_input.is_a?(Hash)
+    def self.matches?(colour_input)
+      return false unless colour_input.is_a?(Hash)
 
-      color_input.keys - [:c, :m, :y, :k] == []
+      colour_input.keys - [:c, :m, :y, :k] == []
     end
 
     def self.bounds
@@ -14,16 +14,16 @@ module ColorConverters
 
     private
 
-    def validate_input(color_input)
+    def validate_input(colour_input)
       bounds = CmykConverter.bounds
-      color_input[:c].to_f.between?(*bounds[:c]) && color_input[:m].to_f.between?(*bounds[:m]) && color_input[:y].to_f.between?(*bounds[:y]) && color_input[:k].to_f.between?(*bounds[:k])
+      colour_input[:c].to_f.between?(*bounds[:c]) && colour_input[:m].to_f.between?(*bounds[:m]) && colour_input[:y].to_f.between?(*bounds[:y]) && colour_input[:k].to_f.between?(*bounds[:k])
     end
 
-    def input_to_rgba(color_input)
-      c = color_input[:c].to_f
-      m = color_input[:m].to_f
-      y = color_input[:y].to_f
-      k = color_input[:k].to_f
+    def input_to_rgba(colour_input)
+      c = colour_input[:c].to_f
+      m = colour_input[:m].to_f
+      y = colour_input[:y].to_f
+      k = colour_input[:k].to_f
 
       c /= 100.0
       m /= 100.0

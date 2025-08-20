@@ -2,10 +2,10 @@
 
 module ColorConverters
   class XyzConverter < BaseConverter
-    def self.matches?(color_input)
-      return false unless color_input.is_a?(Hash)
+    def self.matches?(colour_input)
+      return false unless colour_input.is_a?(Hash)
 
-      color_input.keys - [:x, :y, :z] == []
+      colour_input.keys - [:x, :y, :z] == []
     end
 
     def self.d65
@@ -18,13 +18,13 @@ module ColorConverters
 
     private
 
-    def validate_input(color_input)
+    def validate_input(colour_input)
       bounds = XyzConverter.bounds
-      color_input[:x].to_f.between?(*bounds[:x]) && color_input[:y].to_f.between?(*bounds[:y]) && color_input[:z].to_f.between?(*bounds[:z])
+      colour_input[:x].to_f.between?(*bounds[:x]) && colour_input[:y].to_f.between?(*bounds[:y]) && colour_input[:z].to_f.between?(*bounds[:z])
     end
 
-    def input_to_rgba(color_input)
-      r, g, b = XyzConverter.xyz_to_rgb(color_input)
+    def input_to_rgba(colour_input)
+      r, g, b = XyzConverter.xyz_to_rgb(colour_input)
 
       [r, g, b, 1.0]
     end

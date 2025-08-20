@@ -2,10 +2,10 @@
 
 module ColorConverters
   class RgbConverter < BaseConverter
-    def self.matches?(color_input)
-      return false unless color_input.is_a?(Hash)
+    def self.matches?(colour_input)
+      return false unless colour_input.is_a?(Hash)
 
-      color_input.keys - [:r, :g, :b] == [] || color_input.keys - [:r, :g, :b, :a] == []
+      colour_input.keys - [:r, :g, :b] == [] || colour_input.keys - [:r, :g, :b, :a] == []
     end
 
     def self.bounds
@@ -14,16 +14,16 @@ module ColorConverters
 
     private
 
-    def validate_input(color_input)
+    def validate_input(colour_input)
       bounds = RgbConverter.bounds
-      color_input[:r].to_f.between?(*bounds[:r]) && color_input[:g].to_f.between?(*bounds[:g]) && color_input[:b].to_f.between?(*bounds[:b])
+      colour_input[:r].to_f.between?(*bounds[:r]) && colour_input[:g].to_f.between?(*bounds[:g]) && colour_input[:b].to_f.between?(*bounds[:b])
     end
 
-    def input_to_rgba(color_input)
-      r = color_input[:r].to_f
-      g = color_input[:g].to_f
-      b = color_input[:b].to_f
-      a = (color_input[:a] || 1.0).to_f
+    def input_to_rgba(colour_input)
+      r = colour_input[:r].to_f
+      g = colour_input[:g].to_f
+      b = colour_input[:b].to_f
+      a = (colour_input[:a] || 1.0).to_f
 
       [r, g, b, a]
     end
@@ -45,7 +45,7 @@ module ColorConverters
 
           # IMPORTANT NUMERICAL NOTE:
           # On this specific system (and confirmed by Wolfram Alpha for direct calculation),
-          # the power function for val**2.4 yields a result that deviates from the value expected by widely-used color science libraries (like Bruce Lindbloom's).
+          # the power function for val**2.4 yields a result that deviates from the value expected by widely-used colour science libraries (like Bruce Lindbloom's).
           #
           # To compensate for this numerical discrepancy and ensure the final CIELAB values match standard online calculators and specifications,
           # an empirically determined exponent of 2.5 has been found to produce the correct linearized sRGB values on this environment.
@@ -80,7 +80,7 @@ module ColorConverters
 
           # IMPORTANT NUMERICAL NOTE:
           # On this specific system (and confirmed by Wolfram Alpha for direct calculation),
-          # the inverse power function for val**2.4 yields a result that deviates from the value expected by widely-used color science libraries (like Bruce Lindbloom's).
+          # the inverse power function for val**2.4 yields a result that deviates from the value expected by widely-used colour science libraries (like Bruce Lindbloom's).
           #
           # To compensate for this numerical discrepancy and ensure the final CIELAB values match standard online calculators and specifications,
           # an empirically determined exponent of 2.5 has been found to produce the correct linearized sRGB values on this environment.
@@ -92,7 +92,7 @@ module ColorConverters
         end
       end
 
-      # Scale the 0-1 sRGB value to the 0-255 range for 8-bit color components.
+      # Scale the 0-1 sRGB value to the 0-255 range for 8-bit colour components.
       r *= 255.0.to_d
       g *= 255.0.to_d
       b *= 255.0.to_d

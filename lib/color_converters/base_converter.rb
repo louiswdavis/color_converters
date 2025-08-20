@@ -22,21 +22,21 @@ module ColorConverters
       BaseConverter.converters << subclass
     end
 
-    def self.factory(color)
-      converter = BaseConverter.converters.find { |klass| klass.matches?(color) }
-      converter&.new(color)
+    def self.factory(colour)
+      converter = BaseConverter.converters.find { |klass| klass.matches?(colour) }
+      converter&.new(colour)
     end
 
-    def initialize(color_input, limit_override = false)
-      @original_value = color_input
+    def initialize(colour_input, limit_override = false)
+      @original_value = colour_input
 
-      # self.clamp_input(color_input) if limit_clamp == true
+      # self.clamp_input(colour_input) if limit_clamp == true
 
-      if limit_override == false && !self.validate_input(color_input)
+      if limit_override == false && !self.validate_input(colour_input)
         raise InvalidColorError # validation method is defined in each convertor
       end
 
-      r, g, b, a = self.input_to_rgba(color_input) # conversion method is defined in each convertor
+      r, g, b, a = self.input_to_rgba(colour_input) # conversion method is defined in each convertor
 
       @rgba = { r: r.to_f.round(IMPORT_DP), g: g.to_f.round(IMPORT_DP), b: b.to_f.round(IMPORT_DP), a: a.to_f.round(IMPORT_DP) }
     end
@@ -49,12 +49,14 @@ module ColorConverters
       HexConverter.rgb_to_hex(self.rgb_array)
     end
 
+    # not refactored to SubClass methods due to needing so many of the private methods
     def hsl
       @r, @g, @b = self.rgb_array_frac
 
       { h: self.hue.to_f.round(OUTPUT_DP), s: self.hsl_saturation.to_f.round(OUTPUT_DP), l: self.hsl_lightness.to_f.round(OUTPUT_DP) }
     end
 
+    # not refactored to SubClass methods due to needing so many of the private methods
     def hsv
       @r, @g, @b = self.rgb_array
 

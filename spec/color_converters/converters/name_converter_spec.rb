@@ -27,27 +27,27 @@ RSpec.describe ColorConverters::NameConverter do
       expect(described_class.rgb_to_name([0, 0, 0])).to eq 'black'
       expect(described_class.rgb_to_name([176, 196, 222])).to eq 'lightsteelblue'
 
-      # sometimes the RGB values when converted to Hex values align with a/the named color
+      # sometimes the RGB values when converted to Hex values align with a/the named colour
       expect(described_class.rgb_to_name([0.1, 0.1, 0.1])).to eq 'black'
       expect(described_class.rgb_to_name([175.8, 196.4, 222.1])).to eq nil
     end
   end
 
   context 'shared_examples for .input_to_rgba and back' do
-    it_behaves_like 'classic_color_conversions' do
+    it_behaves_like 'classic_colour_conversions' do
       let(:converter) { described_class }
-      let(:color_space) { :name }
+      let(:colour_space) { :name }
 
-      let(:black)   { get_classic_color_value('black', 'Name') }
-      let(:white)   { get_classic_color_value('white', 'Name') }
+      let(:black)   { get_classic_colour_value('black', 'Name') }
+      let(:white)   { get_classic_colour_value('white', 'Name') }
 
-      let(:red)     { get_classic_color_value('red', 'Name') }
-      let(:orange)  { get_classic_color_value('orange', 'Name') }
-      let(:yellow)  { get_classic_color_value('yellow', 'Name') }
-      let(:green)   { get_classic_color_value('green', 'Name') }
-      let(:blue)    { get_classic_color_value('blue', 'Name') }
-      let(:indigo)  { get_classic_color_value('indigo', 'Name') }
-      let(:violet)  { get_classic_color_value('violet', 'Name') }
+      let(:red)     { get_classic_colour_value('red', 'Name') }
+      let(:orange)  { get_classic_colour_value('orange', 'Name') }
+      let(:yellow)  { get_classic_colour_value('yellow', 'Name') }
+      let(:green)   { get_classic_colour_value('green', 'Name') }
+      let(:blue)    { get_classic_colour_value('blue', 'Name') }
+      let(:indigo)  { get_classic_colour_value('indigo', 'Name') }
+      let(:violet)  { get_classic_colour_value('violet', 'Name') }
     end
   end
 end

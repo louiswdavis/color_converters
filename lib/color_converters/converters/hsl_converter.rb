@@ -2,10 +2,10 @@
 
 module ColorConverters
   class HslConverter < BaseConverter
-    def self.matches?(color_input)
-      return false unless color_input.is_a?(Hash)
+    def self.matches?(colour_input)
+      return false unless colour_input.is_a?(Hash)
 
-      color_input.keys - [:h, :s, :l] == [] || color_input.keys - [:h, :s, :l, :a] == []
+      colour_input.keys - [:h, :s, :l] == [] || colour_input.keys - [:h, :s, :l, :a] == []
     end
 
     def self.bounds
@@ -14,16 +14,16 @@ module ColorConverters
 
     private
 
-    def validate_input(color_input)
+    def validate_input(colour_input)
       bounds = HslConverter.bounds
-      color_input[:h].to_f.between?(*bounds[:h]) && color_input[:s].to_f.between?(*bounds[:s]) && color_input[:l].to_f.between?(*bounds[:l])
+      colour_input[:h].to_f.between?(*bounds[:h]) && colour_input[:s].to_f.between?(*bounds[:s]) && colour_input[:l].to_f.between?(*bounds[:l])
     end
 
-    def input_to_rgba(color_input)
-      h = color_input[:h].to_s.gsub(/[^0-9.]/, '').to_f / 360.0
-      s = color_input[:s].to_s.gsub(/[^0-9.]/, '').to_f / 100.0
-      l = color_input[:l].to_s.gsub(/[^0-9.]/, '').to_f / 100.0
-      a = color_input[:a] ? color_input[:a].to_s.gsub(/[^0-9.]/, '').to_f : 1.0
+    def input_to_rgba(colour_input)
+      h = colour_input[:h].to_s.gsub(/[^0-9.]/, '').to_f / 360.0
+      s = colour_input[:s].to_s.gsub(/[^0-9.]/, '').to_f / 100.0
+      l = colour_input[:l].to_s.gsub(/[^0-9.]/, '').to_f / 100.0
+      a = colour_input[:a] ? colour_input[:a].to_s.gsub(/[^0-9.]/, '').to_f : 1.0
 
       return greyscale(l, a) if s.zero?
 

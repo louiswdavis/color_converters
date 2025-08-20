@@ -16,8 +16,8 @@ RSpec.describe ColorConverters::HslStringConverter do
     end
 
     it '.input_to_rgba' do
-      expect(described_class.new('hsl(225, 73%, 57%)').rgba).to eq({ r: 65.31, g: 105.33, b: 225.39, a: 1.0 })
-      expect(described_class.new('hsla(225, 73%, 57%, 0.5)').rgba).to eq({ r: 65.31, g: 105.33, b: 225.39, a: 0.5 })
+      expect(described_class.new('hsl(225, 73%, 57%)').rgba).to eq({ r: 65.3055, g: 105.32775, b: 225.3945, a: 1.0 })
+      expect(described_class.new('hsla(225, 73%, 57%, 0.5)').rgba).to eq({ r: 65.3055, g: 105.32775, b: 225.3945, a: 0.5 })
     end
   end
 end

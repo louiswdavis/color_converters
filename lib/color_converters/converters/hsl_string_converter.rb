@@ -2,20 +2,20 @@
 
 module ColorConverters
   class HslStringConverter < BaseConverter
-    def self.matches?(color_input)
-      return false unless color_input.is_a?(String)
+    def self.matches?(colour_input)
+      return false unless colour_input.is_a?(String)
 
-      color_input.include?('hsl(') || color_input.include?('hsla(')
+      colour_input.include?('hsl(') || colour_input.include?('hsla(')
     end
 
     private
 
-    def validate_input(_color_input)
+    def validate_input(_colour_input)
       true
     end
 
-    def input_to_rgba(color_input)
-      matches = color_input.match(/hsla?\(([0-9.,%\s]+)\)/)
+    def input_to_rgba(colour_input)
+      matches = colour_input.match(/hsla?\(([0-9.,%\s]+)\)/)
       raise InvalidColorError unless matches
 
       h, s, l, a = matches[1].split(',').map(&:strip)

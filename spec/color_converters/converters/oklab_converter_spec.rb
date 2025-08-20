@@ -18,8 +18,8 @@ RSpec.describe ColorConverters::OklabConverter do
     end
 
     it '.input_to_rgba for strings' do
-      expect(described_class.new(l: 53, a: -0.02, b: -0.17, space: :ok).rgba).to eq({ r: 52.28, g: 100.18, b: 205.1, a: 1.0 })
-      expect(described_class.new(l: '53', a: '-0.02', b: '-0.17', space: :ok).rgba).to eq({ r: 52.28, g: 100.18, b: 205.1, a: 1.0 })
+      expect(described_class.new(l: 53, a: -0.02, b: -0.17, space: :ok).rgba).to eq({ r: 52.28190213, g: 100.18295421, b: 205.1047036, a: 1.0 })
+      expect(described_class.new(l: '53', a: '-0.02', b: '-0.17', space: :ok).rgba).to eq({ r: 52.28190213, g: 100.18295421, b: 205.1047036, a: 1.0 })
     end
 
     xit '.input_to_rgba and exceeds the xyz bound, so is changed back to a different value' do
@@ -28,35 +28,35 @@ RSpec.describe ColorConverters::OklabConverter do
       xyz = { x: 2, y: 1, z: 4 }
       rgba = { r: 44, g: 0, b: 59, a: 1.0 }
 
-      color = described_class.new(**oklab_1, space: :ok)
-      expect(color.oklab).not_to eq oklab_1
-      expect(color.oklab).to eq oklab_2
-      expect(color.xyz.transform_values(&:round)).to eq xyz
-      expect(color.rgba.transform_values(&:round)).to eq rgba
+      colour = described_class.new(**oklab_1, space: :ok)
+      expect(colour.oklab).not_to eq oklab_1
+      expect(colour.oklab).to eq oklab_2
+      expect(colour.xyz.transform_values(&:round)).to eq xyz
+      expect(colour.rgba.transform_values(&:round)).to eq rgba
 
-      color = described_class.new(**oklab_2, space: :ok)
-      expect(color.oklab).not_to eq oklab_1
-      expect(color.oklab).to eq oklab_2
-      expect(color.xyz.transform_values(&:round)).to eq xyz
-      expect(color.rgba.transform_values(&:round)).to eq rgba
+      colour = described_class.new(**oklab_2, space: :ok)
+      expect(colour.oklab).not_to eq oklab_1
+      expect(colour.oklab).to eq oklab_2
+      expect(colour.xyz.transform_values(&:round)).to eq xyz
+      expect(colour.rgba.transform_values(&:round)).to eq rgba
     end
   end
 
   context 'shared_examples for .input_to_rgba and back' do
-    it_behaves_like 'classic_color_conversions' do
+    it_behaves_like 'classic_colour_conversions' do
       let(:converter) { described_class }
-      let(:color_space) { :oklab }
+      let(:colour_space) { :oklab }
 
-      let(:black)   { get_classic_color_value('black', 'OKLab').merge({ space: 'ok' }) }
-      let(:white)   { get_classic_color_value('white', 'OKLab').merge({ space: 'ok' }) }
+      let(:black)   { get_classic_colour_value('black', 'OKLab').merge({ space: 'ok' }) }
+      let(:white)   { get_classic_colour_value('white', 'OKLab').merge({ space: 'ok' }) }
 
-      let(:red)     { get_classic_color_value('red', 'OKLab').merge({ space: 'ok' }) }
-      let(:orange)  { get_classic_color_value('orange', 'OKLab').merge({ space: 'ok' }) }
-      let(:yellow)  { get_classic_color_value('yellow', 'OKLab').merge({ space: 'ok' }) }
-      let(:green)   { get_classic_color_value('green', 'OKLab').merge({ space: 'ok' }) }
-      let(:blue)    { get_classic_color_value('blue', 'OKLab').merge({ space: 'ok' }) }
-      let(:indigo)  { get_classic_color_value('indigo', 'OKLab').merge({ space: 'ok' }) }
-      let(:violet)  { get_classic_color_value('violet', 'OKLab').merge({ space: 'ok' }) }
+      let(:red)     { get_classic_colour_value('red', 'OKLab').merge({ space: 'ok' }) }
+      let(:orange)  { get_classic_colour_value('orange', 'OKLab').merge({ space: 'ok' }) }
+      let(:yellow)  { get_classic_colour_value('yellow', 'OKLab').merge({ space: 'ok' }) }
+      let(:green)   { get_classic_colour_value('green', 'OKLab').merge({ space: 'ok' }) }
+      let(:blue)    { get_classic_colour_value('blue', 'OKLab').merge({ space: 'ok' }) }
+      let(:indigo)  { get_classic_colour_value('indigo', 'OKLab').merge({ space: 'ok' }) }
+      let(:violet)  { get_classic_colour_value('violet', 'OKLab').merge({ space: 'ok' }) }
     end
   end
 end

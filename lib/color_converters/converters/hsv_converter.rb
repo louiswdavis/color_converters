@@ -2,10 +2,10 @@
 
 module ColorConverters
   class HsvConverter < BaseConverter
-    def self.matches?(color_input)
-      return false unless color_input.is_a?(Hash)
+    def self.matches?(colour_input)
+      return false unless colour_input.is_a?(Hash)
 
-      color_input.keys - [:h, :s, :v] == [] || color_input.keys - [:h, :s, :b] == []
+      colour_input.keys - [:h, :s, :v] == [] || colour_input.keys - [:h, :s, :b] == []
     end
 
     def self.bounds
@@ -14,16 +14,16 @@ module ColorConverters
 
     private
 
-    def validate_input(color_input)
+    def validate_input(colour_input)
       bounds = HsvConverter.bounds
-      light = (color_input[:v].present? && color_input[:v].to_f.between?(*bounds[:v])) || (color_input[:b].present? && color_input[:b].to_f.between?(*bounds[:v]))
-      color_input[:h].to_f.between?(*bounds[:h]) && color_input[:s].to_f.between?(*bounds[:s]) && light
+      light = (colour_input[:v].present? && colour_input[:v].to_f.between?(*bounds[:v])) || (colour_input[:b].present? && colour_input[:b].to_f.between?(*bounds[:v]))
+      colour_input[:h].to_f.between?(*bounds[:h]) && colour_input[:s].to_f.between?(*bounds[:s]) && light
     end
 
-    def input_to_rgba(color_input)
-      h = color_input[:h].to_f
-      s = color_input[:s].to_f
-      v = (color_input[:v] || color_input[:b]).to_f
+    def input_to_rgba(colour_input)
+      h = colour_input[:h].to_f
+      s = colour_input[:s].to_f
+      v = (colour_input[:v] || colour_input[:b]).to_f
 
       h /= 360
       s /= 100

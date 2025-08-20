@@ -24,20 +24,20 @@ RSpec.describe ColorConverters::CmykConverter do
   end
 
   context 'shared_examples for .input_to_rgba and back' do
-    it_behaves_like 'classic_color_conversions' do
+    it_behaves_like 'classic_colour_conversions' do
       let(:converter) { described_class }
-      let(:color_space) { :cmyk }
+      let(:colour_space) { :cmyk }
 
-      let(:black)   { get_classic_color_value('black', 'CMYK') }
-      let(:white)   { get_classic_color_value('white', 'CMYK') }
+      let(:black)   { get_classic_colour_value('black', 'CMYK') }
+      let(:white)   { get_classic_colour_value('white', 'CMYK') }
 
-      let(:red)     { get_classic_color_value('red', 'CMYK') }
-      let(:orange)  { get_classic_color_value('orange', 'CMYK') }
-      let(:yellow)  { get_classic_color_value('yellow', 'CMYK') }
-      let(:green)   { get_classic_color_value('green', 'CMYK') }
-      let(:blue)    { get_classic_color_value('blue', 'CMYK') }
-      let(:indigo)  { get_classic_color_value('indigo', 'CMYK') }
-      let(:violet)  { get_classic_color_value('violet', 'CMYK') }
+      let(:red)     { get_classic_colour_value('red', 'CMYK') }
+      let(:orange)  { get_classic_colour_value('orange', 'CMYK') }
+      let(:yellow)  { get_classic_colour_value('yellow', 'CMYK') }
+      let(:green)   { get_classic_colour_value('green', 'CMYK') }
+      let(:blue)    { get_classic_colour_value('blue', 'CMYK') }
+      let(:indigo)  { get_classic_colour_value('indigo', 'CMYK') }
+      let(:violet)  { get_classic_colour_value('violet', 'CMYK') }
     end
   end
 end
