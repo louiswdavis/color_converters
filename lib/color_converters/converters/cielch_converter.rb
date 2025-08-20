@@ -43,7 +43,7 @@ module ColorConverters
     def self.cielab_to_cielch(lab_array)
       l, aa, bb = lab_array.map(&:to_d)
 
-      e = 0.0015.to_d; # if chroma is smaller than this, set hue to 0 [https://www.w3.org/TR/css-colour-4/#colour-conversion-code]
+      e = 0.0015.to_d; # if chroma is smaller than this, set hue to 0 [https://www.w3.org/TR/css-color-4/#color-conversion-code]
 
       c = ((aa**2.to_d) + (bb**2.to_d))**0.5.to_d
 
