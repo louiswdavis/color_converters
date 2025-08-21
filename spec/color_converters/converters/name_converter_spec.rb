@@ -30,6 +30,9 @@ RSpec.describe ColorConverters::NameConverter do
       # sometimes the RGB values when converted to Hex values align with a/the named colour
       expect(described_class.rgb_to_name([0.1, 0.1, 0.1])).to eq 'black'
       expect(described_class.rgb_to_name([175.8, 196.4, 222.1])).to eq nil
+
+      expect(described_class.rgb_to_name([175.8, 196.4, 222.1], true)).to eq 'lightsteelblue'
+      expect(described_class.rgb_to_name([183.8, 201.4, 111.1], fuzzy: true)).to eq 'wild willow'
     end
   end
 

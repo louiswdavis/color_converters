@@ -109,8 +109,8 @@ module ColorConverters
       @rgba[:a]
     end
 
-    def name
-      NameConverter.rgb_to_name(self.rgb_array)
+    def name(fuzzy: false)
+      NameConverter.rgb_to_name(self.rgb_array, fuzzy)
     end
 
     protected

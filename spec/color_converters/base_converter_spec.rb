@@ -25,6 +25,7 @@ RSpec.describe ColorConverters::BaseConverter do
 
       colour = ColorConverters::Color.new(r: 1, g: 1, b: 1)
       expect(colour.name).to eq nil
+      expect(colour.name(fuzzy: true)).to eq 'black'
 
       # xyz
       colour = ColorConverters::Color.new(r: 64, g: 104, b: 193)
