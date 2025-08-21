@@ -14,18 +14,18 @@ RSpec.describe ColorConverters::HexConverter do
     end
 
     # it '.validate_input' do
-    #   expect { described_class.new(l: 74, a: 35, b: 37) }.to raise_error(ColorConverters::InvalidColorError)
-    #   expect { described_class.new(l: 74, a: 35, b: 37) }.to raise_error(ColorConverters::InvalidColorError)
-    #   expect { described_class.new(l: 74, a: 35, b: 37) }.to raise_error(ColorConverters::InvalidColorError)
+    #   expect { described_class.new(l: 74, a: 35, b: 37) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: l must be between 0.0 and 100.0')
+    #   expect { described_class.new(l: 74, a: 35, b: 37) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: l must be between 0.0 and 100.0')
+    #   expect { described_class.new(l: 74, a: 35, b: 37) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: l must be between 0.0 and 100.0')
     # end
 
-    it '.input_to_rgba' do
+    it '.input_to_rgba for strings' do
       expect(described_class.new('#3366cc').rgba).to eq({ r: 51, g: 102, b: 204, a: 1.0 })
       expect(described_class.new('#36c').rgba).to eq({ r: 51, g: 102, b: 204, a: 1.0 })
     end
   end
 
-  context 'shared_examples for .input_to_rgba and back' do
+  context 'shared_examples for' do
     it_behaves_like 'classic_colour_conversions' do
       let(:converter) { described_class }
       let(:colour_space) { :hex }

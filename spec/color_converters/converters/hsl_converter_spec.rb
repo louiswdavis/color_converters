@@ -12,9 +12,10 @@ RSpec.describe ColorConverters::HslConverter do
     end
 
     it '.validate_input' do
-      expect { described_class.new(h: 374, s: 35, l: 37) }.to raise_error(ColorConverters::InvalidColorError)
-      expect { described_class.new(h: 74, s: 135, l: 37) }.to raise_error(ColorConverters::InvalidColorError)
-      expect { described_class.new(h: 74, s: 35, l: 137) }.to raise_error(ColorConverters::InvalidColorError)
+      expect { described_class.new(h: 374, s: 35, l: 37) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: h must be between 0.0 and 360.0')
+      expect { described_class.new(h: 74, s: 135, l: 37) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: s must be between 0.0 and 100.0')
+      expect { described_class.new(h: 74, s: 35, l: 137) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: l must be between 0.0 and 100.0')
+      expect { described_class.new(h: 74, s: 35, l: 37, a: 5.0) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: a must be between 0.0 and 1.0')
     end
 
     it '.input_to_rgba for strings' do
@@ -23,7 +24,7 @@ RSpec.describe ColorConverters::HslConverter do
     end
   end
 
-  context 'shared_examples for .input_to_rgba and back' do
+  context 'shared_examples for' do
     it_behaves_like 'classic_colour_conversions' do
       let(:converter) { described_class }
       let(:colour_space) { :hsl }

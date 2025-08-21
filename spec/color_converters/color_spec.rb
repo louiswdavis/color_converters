@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe ColorConverters::Color do
   context 'methods' do
-    it '.initialize' do
+    it '.initialize from colour spaces' do
       expect(described_class.new(r: 51, g: 102, b: 204).rgb).not_to eq nil
 
       expect(described_class.new(r: 51, g: 102, b: 204).rgb).to eq({ r: 51, g: 102, b: 204 })
@@ -18,14 +18,6 @@ RSpec.describe ColorConverters::Color do
       expect(described_class.new(h: 220, s: 75, v: 80).rgb).to eq({ r: 51, g: 102, b: 204 })
       expect(described_class.new(h: 220, s: 75, b: 80).rgb).to eq({ r: 51, g: 102, b: 204 })
       expect(described_class.new(c: 74, m: 58, y: 22, k: 3).rgb).to eq({ r: 64.31, g: 103.89, b: 192.93 })
-
-      expect(described_class.new(x: 45, y: 23, z: 64).rgb).to eq({ r: 229.28, g: 40.72, b: 211.46 })
-
-      expect(described_class.new(l: 74, a: 58, b: -22, space: :cie).rgb).to eq({ r: 255.0, g: 137.98, b: 223.59 })
-      expect(described_class.new(l: 74, c: 58, h: 122, space: :cie).rgb).to eq({ r: 154.25, g: 195.20, b: 86.99 })
-
-      expect(described_class.new(l: 79, a: 0.16, b: -0.06, space: :ok).rgb).to eq({ r: 255.0, g: 137.98, b: 223.61 })
-      expect(described_class.new(l: 79, c: 0.17, h: 340, space: :ok).rgb).to eq({ r: 154.24, g: 195.21, b: 87.0 })
 
       expect(described_class.new('#3366cc').rgb).to eq({ r: 51, g: 102, b: 204 })
       expect(described_class.new('#3366CC').rgb).to eq({ r: 51, g: 102, b: 204 })
@@ -41,28 +33,36 @@ RSpec.describe ColorConverters::Color do
 
       expect(described_class.new('royalblue').rgb).to eq({ r: 65, g: 105, b: 225 })
       expect(described_class.new('RoyalBlue').rgb).to eq({ r: 65, g: 105, b: 225 })
+
+      expect(described_class.new(x: 45, y: 23, z: 64).rgb).to eq({ r: 229.28, g: 40.72, b: 211.46 })
+
+      expect(described_class.new(l: 74, a: 58, b: -22, space: :cie).rgb).to eq({ r: 255.0, g: 137.98, b: 223.59 })
+      expect(described_class.new(l: 74, c: 58, h: 122, space: :cie).rgb).to eq({ r: 154.25, g: 195.2, b: 86.99 })
+
+      expect(described_class.new(l: 79, a: 0.16, b: -0.06, space: :ok).rgb).to eq({ r: 255.0, g: 139.18, b: 221.68 })
+      expect(described_class.new(l: 76, c: 0.14, h: 80, space: :ok).rgb).to eq({ r: 223.24, g: 165.84, b: 52.92 })
     end
 
     it '.==' do
       # should be equal when same colour
       colour_1 = described_class.new('#3366cc')
       colour_2 = described_class.new('#3366cc')
-      expect(colour_1).to eq(colour_2)
+      expect(colour_1).to eq colour_2
 
       # should be equal when logically same colour
       colour_1 = described_class.new('#3366cc')
       colour_2 = described_class.new(r: 51, g: 102, b: 204)
-      expect(colour_1).to eq(colour_2)
+      expect(colour_1).to eq colour_2
 
       # should be equal when same colour and alpha
       colour_1 = described_class.new(r: 51, g: 102, b: 204, a: 0.2)
       colour_2 = described_class.new('rgba(51, 102, 204, 0.2)')
-      expect(colour_1).to eq(colour_2)
+      expect(colour_1).to eq colour_2
 
       # should not be equal when same colour but not same alpha
       colour_1 = described_class.new(r: 51, g: 102, b: 204, a: 0.2)
       colour_2 = described_class.new(r: 51, g: 102, b: 204, a: 0.2)
-      expect(colour_1).to eq(colour_2)
+      expect(colour_1).to eq colour_2
     end
   end
 end

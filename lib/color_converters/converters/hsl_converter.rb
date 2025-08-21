@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ColorConverters
   class HslConverter < BaseConverter
     def self.matches?(colour_input)
@@ -7,14 +9,15 @@ module ColorConverters
     end
 
     def self.bounds
-      { h: [0.0, 360.0], s: [0.0, 100.0], l: [0.0, 100.0] }
+      { h: [0.0, 360.0], s: [0.0, 100.0], l: [0.0, 100.0], a: [0.0, 1.0] }
     end
 
     private
 
     def validate_input(colour_input)
-      bounds = HslConverter.bounds
-      colour_input[:h].to_f.between?(*bounds[:h]) && colour_input[:s].to_f.between?(*bounds[:s]) && colour_input[:l].to_f.between?(*bounds[:l])
+      HslConverter.bounds.collect do |key, range|
+        "#{key} must be between #{range[0]} and #{range[1]}" unless colour_input[key].to_f.between?(*range)
+      end.compact
     end
 
     def input_to_rgba(colour_input)
@@ -37,7 +40,7 @@ module ColorConverters
 
       (0..2).each do |i|
         t3 = h + 1 / 3.0 * - (i - 1)
-        t3 < 0 && t3 += 1
+        t3.negative? && t3 += 1
         t3 > 1 && t3 -= 1
 
         val = if 6 * t3 < 1

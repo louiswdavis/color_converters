@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ColorConverters
   class RgbConverter < BaseConverter
     def self.matches?(colour_input)
@@ -7,14 +9,15 @@ module ColorConverters
     end
 
     def self.bounds
-      { r: [0.0, 255.0], g: [0.0, 255.0], b: [0.0, 255.0] }
+      { r: [0.0, 255.0], g: [0.0, 255.0], b: [0.0, 255.0], a: [0.0, 1.0] }
     end
 
     private
 
     def validate_input(colour_input)
-      bounds = RgbConverter.bounds
-      colour_input[:r].to_f.between?(*bounds[:r]) && colour_input[:g].to_f.between?(*bounds[:g]) && colour_input[:b].to_f.between?(*bounds[:b])
+      RgbConverter.bounds.collect do |key, range|
+        "#{key} must be between #{range[0]} and #{range[1]}" unless colour_input[key].to_f.between?(*range)
+      end.compact
     end
 
     def input_to_rgba(colour_input)

@@ -7,6 +7,7 @@ require 'color_converters/version'
 require 'color_converters/color'
 require 'color_converters/base_converter'
 
+# Converters
 require 'color_converters/converters/rgb_converter'
 require 'color_converters/converters/rgb_string_converter'
 require 'color_converters/converters/hex_converter'

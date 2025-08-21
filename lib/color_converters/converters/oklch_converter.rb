@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ColorConverters
   class OklchConverter < BaseConverter
     def self.matches?(colour_input)
@@ -13,8 +15,9 @@ module ColorConverters
     private
 
     def validate_input(colour_input)
-      bounds = OklchConverter.bounds
-      colour_input[:l].to_f.between?(*bounds[:l]) && colour_input[:c].to_f.between?(*bounds[:c]) && colour_input[:h].to_f.between?(*bounds[:h])
+      OklchConverter.bounds.collect do |key, range|
+        "#{key} must be between #{range[0]} and #{range[1]}" unless colour_input[key].to_f.between?(*range)
+      end.compact
     end
 
     def input_to_rgba(colour_input)

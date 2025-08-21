@@ -19,8 +19,8 @@ Colours can be converted between the following spaces:
 - xyz
 - cielab
 - cielch
-- oklab (not always reliable)
-- oklch (not always reliable)
+- oklab (not always reliable when going from oklab to the source colour)
+- oklch (not always reliable when going from oklch to the source colour)
 - name
 
 ## Installation
@@ -137,7 +137,7 @@ colour.name
 
 ### space
 
-As there are certain color spaces that use the same letter keys, there needed to be a way to different between those space.
+As there are certain colour spaces that use the same letter keys, there needed to be a way to different between those space.
 The space parameter allows that, with examples in the usage code above
 
 ```ruby
@@ -154,9 +154,23 @@ This parameter allows you to ignore those ranges and submit any values you want.
 ColorConverters::Color.new(r: 270, g: 1300, b: 380, a: 0.5, limit_override: true)
 ```
 
+### fuzzy
+
+Name conversions by default look for exact matches between the hex value of the colour
+
+```ruby
+colour = ColorConverters::Color.new(r: 175.8, g: 196.4, b: 222.1)
+
+colour.name
+=> nil
+
+colour.name(fuzzy: true)
+=> 'lightsteelblue'
+```
+
 ## Development
 
-[Converting Colors](https://convertingcolors.com/) and [Colorffy](https://colorffy.com/) can be usef to help verify results. Different calculators use different exponents and standards so there can be discrepency across them (like this calculator for LCH).
+[Converting Colors](https://convertingcolors.com/) and [Colorffy](https://colorffy.com/) can be used to help verify results. Different calculators use different exponents and standards so there can be discrepency across them (like this calculator for LCH).
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 

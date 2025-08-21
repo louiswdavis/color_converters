@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ColorConverters
   class RgbStringConverter < BaseConverter
     def self.matches?(colour_input)
@@ -6,27 +8,42 @@ module ColorConverters
       colour_input.include?('rgb(') || colour_input.include?('rgba(')
     end
 
+    def self.bounds
+      RgbConverter.bounds
+    end
+
     private
 
-    def validate_input(_colour_input)
-      true
+    def validate_input(colour_input)
+      keys = colour_input.include?('rgba(') ? [:r, :g, :b, :a] : [:r, :g, :b]
+      colour_input = RgbStringConverter.sanitize_input(colour_input)
+
+      errors = keys.collect do |key|
+        "#{key} must be present" if colour_input[key].blank?
+      end.compact
+
+      return errors if errors.present?
+
+      RgbStringConverter.bounds.collect do |key, range|
+        "#{key} must be between #{range[0]} and #{range[1]}" unless colour_input[key].to_f.between?(*range)
+      end.compact
     end
 
     def input_to_rgba(colour_input)
-      matches = colour_input.match(/rgba?\(([0-9.,\s]+)\)/)
-      raise InvalidColorError unless matches
+      colour_input = RgbStringConverter.sanitize_input(colour_input)
 
-      r, g, b, a = matches[1].split(',').map(&:strip)
-      raise InvalidColorError unless r.present? && g.present? && b.present?
-
-      a ||= 1.0
-
-      r = r.to_f
-      g = g.to_f
-      b = b.to_f
-      a = a.to_f
+      r = colour_input[:r].to_f
+      g = colour_input[:g].to_f
+      b = colour_input[:b].to_f
+      a = (colour_input[:a] || 1.0).to_f
 
       [r, g, b, a]
+    end
+
+    def self.sanitize_input(colour_input)
+      matches = colour_input.match(/rgba?\(([0-9.,%\s]+)\)/) || []
+      r, g, b, a = matches[1]&.split(',')&.map(&:strip)
+      { r: r, g: g, b: b, a: a }
     end
   end
 end

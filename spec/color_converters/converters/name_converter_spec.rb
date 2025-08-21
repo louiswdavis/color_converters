@@ -12,25 +12,31 @@ RSpec.describe ColorConverters::NameConverter do
     end
 
     it '.validate_input' do
-      expect { described_class.new('bluee') }.to raise_error(ColorConverters::InvalidColorError)
+      expect { described_class.new('bluee') }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: name could not be found across colour collections')
     end
 
-    it '.input_to_rgba' do
+    it '.input_to_rgba for strings' do
       expect(described_class.new('blue').rgba).to eq({ r: 0, g: 0, b: 255, a: 1.0 })
     end
 
     it '.rgb_to_name' do
       expect(described_class.rgb_to_name([255, 255, 255])).to eq 'white'
-      expect(described_class.rgb_to_name([0, 255, 255])).to eq 'aqua'
+      expect(described_class.rgb_to_name([0, 255, 255])).to eq 'cyan'
       expect(described_class.rgb_to_name([255, 0, 255])).to eq 'fuchsia'
       expect(described_class.rgb_to_name([255, 255, 0])).to eq 'yellow'
       expect(described_class.rgb_to_name([0, 0, 0])).to eq 'black'
+      expect(described_class.rgb_to_name([176, 196, 222])).to eq 'lightsteelblue'
+
+      # sometimes the RGB values when converted to Hex values align with a/the named colour
       expect(described_class.rgb_to_name([0.1, 0.1, 0.1])).to eq 'black'
-      expect(described_class.rgb_to_name([175.8, 196.4, 222.1])).to eq 'lightsteelblue'
+      expect(described_class.rgb_to_name([175.8, 196.4, 222.1])).to eq nil
+
+      expect(described_class.rgb_to_name([175.8, 196.4, 222.1], true)).to eq 'lightsteelblue'
+      expect(described_class.rgb_to_name([183.8, 201.4, 111.1], fuzzy: true)).to eq 'wild willow'
     end
   end
 
-  context 'shared_examples for .input_to_rgba and back' do
+  context 'shared_examples for' do
     it_behaves_like 'classic_colour_conversions' do
       let(:converter) { described_class }
       let(:colour_space) { :name }

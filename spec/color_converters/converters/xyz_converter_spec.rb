@@ -12,44 +12,18 @@ RSpec.describe ColorConverters::XyzConverter do
     end
 
     it '.validate_input' do
-      expect { described_class.new(x: 174, y: 35, z: 37) }.to raise_error(ColorConverters::InvalidColorError)
-      expect { described_class.new(x: 74, y: 135, z: 37) }.to raise_error(ColorConverters::InvalidColorError)
-      expect { described_class.new(x: 74, y: 35, z: 137) }.to raise_error(ColorConverters::InvalidColorError)
+      expect { described_class.new(x: 174, y: 35, z: 37) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: x must be between 0.0 and 100.0')
+      expect { described_class.new(x: 74, y: 135, z: 37) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: y must be between 0.0 and 100.0')
+      expect { described_class.new(x: 74, y: 35, z: 137) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: z must be between 0.0 and 110.0')
     end
 
     it '.input_to_rgba for strings' do
-      expect(described_class.new(x: 17.0157, y: 14.5662, z: 59.0415).rgba).to eq({ r: 51.04, g: 102.0, b: 204.0, a: 1.0 })
-      expect(described_class.new(x: '17.0157', y: '14.5662', z: '59.0415').rgba).to eq({ r: 51.04, g: 102.0, b: 204.0, a: 1.0 })
-    end
-
-    it '.input_to_rgba and back' do
-      xyz = { x: 23.94, y: 14.96, z: 56.87 }
-      rgba = { r: 140.02, g: 75.98, b: 200.97, a: 1.0 }
-      colour = described_class.new(**xyz)
-      expect(colour.xyz).to eq xyz
-      expect(colour.rgba).to eq rgba
-
-      xyz = { x: 16.69, y: 14.84, z: 52.43 }
-      rgba = { r: 64.05, g: 103.99, b: 192.99, a: 1.0 }
-      colour = described_class.new(**xyz)
-      expect(colour.xyz).to eq xyz
-      expect(colour.rgba).to eq rgba
-
-      xyz = { x: 95.04, y: 100.0, z: 108.88 }
-      rgba = { r: 254.99, g: 255.0, b: 254.97, a: 1.0 }
-      colour = described_class.new(**xyz)
-      expect(colour.xyz).to eq xyz
-      expect(colour.rgba).to eq rgba
-
-      xyz = { x: 0.0, y: 0.0, z: 0.0 }
-      rgba = { r: 0, g: 0, b: 0, a: 1.0 }
-      colour = described_class.new(**xyz)
-      expect(colour.xyz).to eq xyz
-      expect(colour.rgba).to eq rgba
+      expect(described_class.new(x: 17.0157, y: 14.5662, z: 59.0415).rgba).to eq({ r: 51.03548592, g: 101.99999871, b: 203.99678845, a: 1.0 })
+      expect(described_class.new(x: '17.0157', y: '14.5662', z: '59.0415').rgba).to eq({ r: 51.03548592, g: 101.99999871, b: 203.99678845, a: 1.0 })
     end
   end
 
-  context 'shared_examples for .input_to_rgba and back' do
+  context 'shared_examples for' do
     it_behaves_like 'classic_colour_conversions' do
       let(:converter) { described_class }
       let(:colour_space) { :xyz }
@@ -64,6 +38,14 @@ RSpec.describe ColorConverters::XyzConverter do
       let(:blue)    { get_classic_colour_value('blue', 'XYZ') }
       let(:indigo)  { get_classic_colour_value('indigo', 'XYZ') }
       let(:violet)  { get_classic_colour_value('violet', 'XYZ') }
+    end
+
+    it_behaves_like 'custom_colour_conversions' do
+      let(:converter) { described_class }
+      let(:colour_space) { :xyz }
+
+      let(:passed_colours) { [0, 1, 2, 3, 4, 5].collect { |i| get_custom_colour_value(i, 'XYZ') } }
+      let(:expected_rgbs) { [0, 1, 2, 3, 4, 5].collect { |i| get_custom_colour_value(i, 'RGB') } }
     end
   end
 end

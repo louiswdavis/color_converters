@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe ColorConverters::BaseConverter do
   context 'methods' do
-    it 'conversions' do
+    it 'conversions to colour spaces' do
       colour = ColorConverters::Color.new(r: 51, g: 102, b: 204, a: 0.8)
 
       expect(colour.alpha).to eq 0.8
@@ -25,6 +25,7 @@ RSpec.describe ColorConverters::BaseConverter do
 
       colour = ColorConverters::Color.new(r: 1, g: 1, b: 1)
       expect(colour.name).to eq nil
+      expect(colour.name(fuzzy: true)).to eq 'black'
 
       # xyz
       colour = ColorConverters::Color.new(r: 64, g: 104, b: 193)
@@ -58,8 +59,8 @@ RSpec.describe ColorConverters::BaseConverter do
       expect(colour.cielch).to eq({ l: 53.39, c: 0.0, h: 0.0 })
 
       colour = ColorConverters::Color.new(h: 255, s: 1, l: 50)
-      expect(colour.cielab).to eq({ l: 53.02, a: 0.75, b: -1.3 })
-      expect(colour.cielch).to eq({ l: 53.02, c: 1.5, h: 299.92 })
+      expect(colour.cielab).to eq({ l: 53.01, a: 0.75, b: -1.3 })
+      expect(colour.cielch).to eq({ l: 53.01, c: 1.5, h: 300.03 })
 
       # ok
       colour = ColorConverters::Color.new(r: 64, g: 104, b: 193)

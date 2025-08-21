@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'active_support/core_ext/object/blank'
 require 'bigdecimal'
 require 'bigdecimal/util'
 
 module ColorConverters
   class BaseConverter
-    IMPORT_DP = 2
+    IMPORT_DP = 8
     OUTPUT_DP = 2
 
     attr_reader :original_value, :rgba
@@ -22,7 +24,7 @@ module ColorConverters
 
     def self.factory(colour)
       converter = BaseConverter.converters.find { |klass| klass.matches?(colour) }
-      converter.new(colour) if converter
+      converter&.new(colour)
     end
 
     def initialize(colour_input, limit_override = false)
@@ -30,8 +32,9 @@ module ColorConverters
 
       # self.clamp_input(colour_input) if limit_clamp == true
 
-      if limit_override == false && !self.validate_input(colour_input)
-        raise InvalidColorError # validation method is defined in each convertor
+      validation_errors = self.validate_input(colour_input)
+      if limit_override == false && validation_errors.present?
+        raise InvalidColorError, "Invalid color input: #{validation_errors.join(', ')}" # validation method is defined in each convertor
       end
 
       r, g, b, a = self.input_to_rgba(colour_input) # conversion method is defined in each convertor
@@ -44,15 +47,17 @@ module ColorConverters
     end
 
     def hex
-      "##{'%02x' % @rgba[:r] + '%02x' % @rgba[:g] + '%02x' % @rgba[:b]}"
+      HexConverter.rgb_to_hex(self.rgb_array)
     end
 
+    # not refactored to SubClass methods due to needing so many of the private methods
     def hsl
       @r, @g, @b = self.rgb_array_frac
 
       { h: self.hue.to_f.round(OUTPUT_DP), s: self.hsl_saturation.to_f.round(OUTPUT_DP), l: self.hsl_lightness.to_f.round(OUTPUT_DP) }
     end
 
+    # not refactored to SubClass methods due to needing so many of the private methods
     def hsv
       @r, @g, @b = self.rgb_array
 
@@ -105,8 +110,8 @@ module ColorConverters
       @rgba[:a]
     end
 
-    def name
-      NameConverter.rgb_to_name(self.rgb_array)
+    def name(fuzzy: false)
+      NameConverter.rgb_to_name(self.rgb_array, fuzzy)
     end
 
     protected

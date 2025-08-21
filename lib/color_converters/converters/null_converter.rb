@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ColorConverters
   class NullConverter < BaseConverter
     def self.matches?(_colour_input)
@@ -7,7 +9,7 @@ module ColorConverters
     private
 
     def validate_input(_colour_input)
-      false
+      ['did not recognise colour input']
     end
 
     def input_to_rgba(_colour_input)

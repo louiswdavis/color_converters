@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ColorConverters
   class CmykConverter < BaseConverter
     def self.matches?(colour_input)
@@ -13,8 +15,9 @@ module ColorConverters
     private
 
     def validate_input(colour_input)
-      bounds = CmykConverter.bounds
-      colour_input[:c].to_f.between?(*bounds[:c]) && colour_input[:m].to_f.between?(*bounds[:m]) && colour_input[:y].to_f.between?(*bounds[:y]) && colour_input[:k].to_f.between?(*bounds[:k])
+      CmykConverter.bounds.collect do |key, range|
+        "#{key} must be between #{range[0]} and #{range[1]}" unless colour_input[key].to_f.between?(*range)
+      end.compact
     end
 
     def input_to_rgba(colour_input)
