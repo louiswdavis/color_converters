@@ -33,7 +33,7 @@ module ColorConverters
     def self.rgb_to_hex(rgb_array)
       r, g, b = rgb_array
 
-      "##{'%02x' % r + '%02x' % g + '%02x' % b}"
+      format('#%<r>02x%<g>02x%<b>02x', r: r, g: g, b: b)
     end
 
     def self.normalize_hex(hex_input)
