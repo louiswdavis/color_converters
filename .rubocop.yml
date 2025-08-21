@@ -47,6 +47,8 @@ Style/Documentation:
   Enabled: false
 Style/FloatDivision:
   Enabled: false
+Style/OptionalBooleanParameter:
+  Enabled: false
 Style/RedundantSelf:
   Enabled: false
 Style/SingleArgumentDig:
