@@ -29,7 +29,7 @@ module ColorConverters
     private
 
     def validate_input(colour_input)
-      self.class.match_name_from_palettes(colour_input).present?
+      self.class.match_name_from_palettes(colour_input).present? ? [] : ['name could not be found across colour collections']
     end
 
     def input_to_rgba(colour_input)
@@ -46,7 +46,6 @@ module ColorConverters
     end
 
     def self.add_colour_distances_to_collection(collection_colours, source_colour)
-      puts 'fuzzy-matching colour'
       collection_colours.map do |swatch|
         swatch[:distance] = self.distance_between_colours(ColorConverters::Color.new(swatch.dig(:hex)), source_colour)
       end
@@ -57,6 +56,7 @@ module ColorConverters
     def self.distance_between_colours(comparison_colour, source_colour)
       # https://en.wikipedia.org/wiki/Euclidean_distance#Higher_dimensions
       # https://www.baeldung.com/cs/compute-similarity-of-colours
+      # TODO: allow the type of matching to be set via config. Use HSL for now as it's far faster than CIELab
       conversion_1 = comparison_colour.hsl
       conversion_2 = source_colour.hsl
 

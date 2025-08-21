@@ -9,7 +9,7 @@ module ColorConverters
     private
 
     def validate_input(_colour_input)
-      false
+      ['did not recognise colour input']
     end
 
     def input_to_rgba(_colour_input)

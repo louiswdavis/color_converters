@@ -11,10 +11,10 @@ RSpec.describe ColorConverters::CmykConverter do
     end
 
     it '.validate_input' do
-      expect { described_class.new(c: 187, m: 69, y: 13, k: 41) }.to raise_error(ColorConverters::InvalidColorError)
-      expect { described_class.new(c: 87, m: -69, y: 13, k: 41) }.to raise_error(ColorConverters::InvalidColorError)
-      expect { described_class.new(c: 87, m: 69, y: 213, k: 41) }.to raise_error(ColorConverters::InvalidColorError)
-      expect { described_class.new(c: 87, m: 69, y: 13, k: 141) }.to raise_error(ColorConverters::InvalidColorError)
+      expect { described_class.new(c: 187, m: 69, y: 13, k: 41) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: c must be between 0.0 and 100.0')
+      expect { described_class.new(c: 87, m: -69, y: 13, k: 41) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: m must be between 0.0 and 100.0')
+      expect { described_class.new(c: 87, m: 69, y: 213, k: 41) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: y must be between 0.0 and 100.0')
+      expect { described_class.new(c: 87, m: 69, y: 13, k: 141) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: k must be between 0.0 and 100.0')
     end
 
     it '.input_to_rgba for strings' do

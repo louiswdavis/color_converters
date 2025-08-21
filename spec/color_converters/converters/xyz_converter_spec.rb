@@ -12,9 +12,9 @@ RSpec.describe ColorConverters::XyzConverter do
     end
 
     it '.validate_input' do
-      expect { described_class.new(x: 174, y: 35, z: 37) }.to raise_error(ColorConverters::InvalidColorError)
-      expect { described_class.new(x: 74, y: 135, z: 37) }.to raise_error(ColorConverters::InvalidColorError)
-      expect { described_class.new(x: 74, y: 35, z: 137) }.to raise_error(ColorConverters::InvalidColorError)
+      expect { described_class.new(x: 174, y: 35, z: 37) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: x must be between 0.0 and 100.0')
+      expect { described_class.new(x: 74, y: 135, z: 37) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: y must be between 0.0 and 100.0')
+      expect { described_class.new(x: 74, y: 35, z: 137) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: z must be between 0.0 and 110.0')
     end
 
     it '.input_to_rgba for strings' do

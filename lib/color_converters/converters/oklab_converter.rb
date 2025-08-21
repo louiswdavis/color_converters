@@ -15,8 +15,9 @@ module ColorConverters
     private
 
     def validate_input(colour_input)
-      bounds = OklabConverter.bounds
-      colour_input[:l].to_f.between?(*bounds[:l]) && colour_input[:a].to_f.between?(*bounds[:a]) && colour_input[:b].to_f.between?(*bounds[:b])
+      OklabConverter.bounds.collect do |key, range|
+        "#{key} must be between #{range[0]} and #{range[1]}" unless colour_input[key].to_f.between?(*range)
+      end.compact
     end
 
     def input_to_rgba(colour_input)

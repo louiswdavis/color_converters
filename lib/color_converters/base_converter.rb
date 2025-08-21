@@ -32,8 +32,9 @@ module ColorConverters
 
       # self.clamp_input(colour_input) if limit_clamp == true
 
-      if limit_override == false && !self.validate_input(colour_input)
-        raise InvalidColorError # validation method is defined in each convertor
+      validation_errors = self.validate_input(colour_input)
+      if limit_override == false && validation_errors.present?
+        raise InvalidColorError, "Invalid color input: #{validation_errors.join(', ')}" # validation method is defined in each convertor
       end
 
       r, g, b, a = self.input_to_rgba(colour_input) # conversion method is defined in each convertor

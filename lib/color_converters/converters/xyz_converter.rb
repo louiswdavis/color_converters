@@ -19,8 +19,9 @@ module ColorConverters
     private
 
     def validate_input(colour_input)
-      bounds = XyzConverter.bounds
-      colour_input[:x].to_f.between?(*bounds[:x]) && colour_input[:y].to_f.between?(*bounds[:y]) && colour_input[:z].to_f.between?(*bounds[:z])
+      XyzConverter.bounds.collect do |key, range|
+        "#{key} must be between #{range[0]} and #{range[1]}" unless colour_input[key].to_f.between?(*range)
+      end.compact
     end
 
     def input_to_rgba(colour_input)

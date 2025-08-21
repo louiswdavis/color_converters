@@ -12,7 +12,7 @@ RSpec.describe ColorConverters::NameConverter do
     end
 
     it '.validate_input' do
-      expect { described_class.new('bluee') }.to raise_error(ColorConverters::InvalidColorError)
+      expect { described_class.new('bluee') }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: name could not be found across colour collections')
     end
 
     it '.input_to_rgba for strings' do

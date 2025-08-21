@@ -12,12 +12,12 @@ RSpec.describe ColorConverters::HsvConverter do
     end
 
     it '.validate_input' do
-      expect { described_class.new(h: -74, s: 135, v: 37) }.to raise_error(ColorConverters::InvalidColorError)
-      expect { described_class.new(h: 74, s: -235, v: 37) }.to raise_error(ColorConverters::InvalidColorError)
-      expect { described_class.new(h: 74, s: 35, v: -237) }.to raise_error(ColorConverters::InvalidColorError)
-      expect { described_class.new(h: 474, s: 35, b: 117) }.to raise_error(ColorConverters::InvalidColorError)
-      expect { described_class.new(h: 74, s: 435, b: 117) }.to raise_error(ColorConverters::InvalidColorError)
-      expect { described_class.new(h: 74, s: 115, b: 437) }.to raise_error(ColorConverters::InvalidColorError)
+      expect { described_class.new(h: -74, s: 125, v: 37) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: h must be between 0.0 and 360.0')
+      expect { described_class.new(h: 74, s: -235, v: 37) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: s must be between -128.0 and 127.0')
+      expect { described_class.new(h: 74, s: 35, v: -237) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: v must be between -128.0 and 127.0')
+      expect { described_class.new(h: 474, s: 35, b: 117) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: h must be between 0.0 and 360.0')
+      expect { described_class.new(h: 74, s: 435, b: 117) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: s must be between -128.0 and 127.0')
+      expect { described_class.new(h: 74, s: 115, b: 437) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: b must be between -128.0 and 127.0')
     end
 
     it '.input_to_rgba for strings' do

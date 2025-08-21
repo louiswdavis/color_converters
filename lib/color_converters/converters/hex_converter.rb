@@ -12,7 +12,7 @@ module ColorConverters
 
     def validate_input(_colour_input)
       # TODO
-      true
+      [] # to return no errors
     end
 
     def input_to_rgba(colour_input)

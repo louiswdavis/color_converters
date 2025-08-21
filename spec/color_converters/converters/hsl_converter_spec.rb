@@ -12,9 +12,10 @@ RSpec.describe ColorConverters::HslConverter do
     end
 
     it '.validate_input' do
-      expect { described_class.new(h: 374, s: 35, l: 37) }.to raise_error(ColorConverters::InvalidColorError)
-      expect { described_class.new(h: 74, s: 135, l: 37) }.to raise_error(ColorConverters::InvalidColorError)
-      expect { described_class.new(h: 74, s: 35, l: 137) }.to raise_error(ColorConverters::InvalidColorError)
+      expect { described_class.new(h: 374, s: 35, l: 37) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: h must be between 0.0 and 360.0')
+      expect { described_class.new(h: 74, s: 135, l: 37) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: s must be between 0.0 and 100.0')
+      expect { described_class.new(h: 74, s: 35, l: 137) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: l must be between 0.0 and 100.0')
+      expect { described_class.new(h: 74, s: 35, l: 37, a: 5.0) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: a must be between 0.0 and 1.0')
     end
 
     it '.input_to_rgba for strings' do

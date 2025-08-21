@@ -12,9 +12,9 @@ RSpec.describe ColorConverters::CielabConverter do
     end
 
     it '.validate_input' do
-      expect { described_class.new(l: 274, a: 35, b: 37, space: :cie) }.to raise_error(ColorConverters::InvalidColorError)
-      expect { described_class.new(l: 74, a: 235, b: 37, space: :cie) }.to raise_error(ColorConverters::InvalidColorError)
-      expect { described_class.new(l: 74, a: 35, b: 237, space: :cie) }.to raise_error(ColorConverters::InvalidColorError)
+      expect { described_class.new(l: 274, a: 35, b: 37, space: :cie) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: l must be between 0.0 and 100.0')
+      expect { described_class.new(l: 74, a: 235, b: 37, space: :cie) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: a must be between -128.0 and 127.0')
+      expect { described_class.new(l: 74, a: 35, b: 237, space: :cie) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: b must be between -128.0 and 127.0')
     end
 
     it '.input_to_rgba for strings' do

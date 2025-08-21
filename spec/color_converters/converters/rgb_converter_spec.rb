@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-# require_relative '../../support/shared_examples/classic_colour_shared_examples'
 
 RSpec.describe ColorConverters::RgbConverter do
   context 'methods' do
@@ -13,9 +12,10 @@ RSpec.describe ColorConverters::RgbConverter do
     end
 
     it '.validate_input' do
-      expect { described_class.new(r: 274, g: 35, b: 37) }.to raise_error(ColorConverters::InvalidColorError)
-      expect { described_class.new(r: 74, g: -35, b: 37) }.to raise_error(ColorConverters::InvalidColorError)
-      expect { described_class.new(r: 74, g: 35, b: 337) }.to raise_error(ColorConverters::InvalidColorError)
+      expect { described_class.new(r: 274, g: 35, b: 37) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: r must be between 0.0 and 255.0')
+      expect { described_class.new(r: 74, g: -35, b: 37) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: g must be between 0.0 and 255.0')
+      expect { described_class.new(r: 74, g: 35, b: 337) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: b must be between 0.0 and 255.0')
+      expect { described_class.new(r: 74, g: 35, b: 137, a: 5.0) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: a must be between 0.0 and 1.0')
     end
 
     it '.input_to_rgba for strings' do

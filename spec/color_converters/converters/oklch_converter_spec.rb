@@ -12,9 +12,9 @@ RSpec.describe ColorConverters::OklchConverter do
     end
 
     it '.validate_input' do
-      expect { described_class.new(l: 174, c: 35, h: 37, space: :ok) }.to raise_error(ColorConverters::InvalidColorError)
-      expect { described_class.new(l: 74, c: -135, h: 37, space: :ok) }.to raise_error(ColorConverters::InvalidColorError)
-      expect { described_class.new(l: 74, c: 35, h: 437, space: :ok) }.to raise_error(ColorConverters::InvalidColorError)
+      expect { described_class.new(l: 174, c: 35, h: 37, space: :ok) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: l must be between 0.0 and 100.0')
+      expect { described_class.new(l: 74, c: 635, h: 37, space: :ok) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: c must be between 0.0 and 500.0')
+      expect { described_class.new(l: 74, c: 35, h: 437, space: :ok) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: h must be between 0.0 and 360.0')
     end
 
     it '.input_to_rgba for strings' do

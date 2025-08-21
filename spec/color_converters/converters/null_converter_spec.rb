@@ -10,7 +10,7 @@ RSpec.describe ColorConverters::NullConverter do
     end
 
     it '.validate_input' do
-      expect { described_class.new(l: 74, a: 35, b: 37) }.to raise_error(ColorConverters::InvalidColorError)
+      expect { described_class.new(l: 74, a: 35, b: 37) }.to raise_error(ColorConverters::InvalidColorError, 'Invalid color input: did not recognise colour input')
     end
   end
 end
