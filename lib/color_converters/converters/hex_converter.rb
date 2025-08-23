@@ -10,6 +10,10 @@ module ColorConverters
 
     private
 
+    def clamp_input(colour_input)
+      colour_input # return it as it was
+    end
+
     def validate_input(_colour_input)
       # TODO
       [] # to return no errors

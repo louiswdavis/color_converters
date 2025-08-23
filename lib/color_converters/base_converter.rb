@@ -23,16 +23,17 @@ module ColorConverters
     end
 
     def self.factory(colour_input)
-      converter = BaseConverter.converters.find { |klass| klass.matches?(colour_input.except(:limit_override)) }
+      converter = BaseConverter.converters.find { |klass| klass.matches?(colour_input.except(:limit_override, :limit_clamp)) }
       converter&.new(colour_input)
     end
 
     def initialize(colour_input)
       @original_value = colour_input
-      limit_override = colour_input[:limit_override] || false
-      colour_input.delete(:limit_override)
+      limit_override = colour_input.delete(:limit_override) || false
+      limit_clamp = colour_input.delete(:limit_clamp) || false
+      colour_input.delete(:space)
 
-      # self.clamp_input(colour_input) if limit_clamp == true
+      colour_input = self.clamp_input(colour_input) if limit_clamp == true
 
       validation_errors = self.validate_input(colour_input) # validation method is defined in each convertor
       raise InvalidColorError, "Invalid color input: #{validation_errors.join(', ')}" if limit_override == false && validation_errors.present?

@@ -8,6 +8,10 @@ module ColorConverters
 
     private
 
+    def clamp_input(colour_input)
+      colour_input
+    end
+
     def validate_input(_colour_input)
       ['did not recognise colour input']
     end

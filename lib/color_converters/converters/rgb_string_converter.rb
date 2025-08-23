@@ -14,6 +14,10 @@ module ColorConverters
 
     private
 
+    def clamp_input(colour_input)
+      colour_input.each { |key, value| colour_input[key] = value.clamp(*CielchConverter.bounds[key]) }
+    end
+
     def validate_input(colour_input)
       keys = colour_input.include?('rgba(') ? [:r, :g, :b, :a] : [:r, :g, :b]
       colour_input = RgbStringConverter.sanitize_input(colour_input)
