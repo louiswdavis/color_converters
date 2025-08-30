@@ -38,7 +38,7 @@ module ColorConverters
     def input_to_rgba(colour_input)
       colour_input = HslStringConverter.sanitize_input(colour_input)
 
-      rgba = HslConverter.new(h: colour_input[:h], s: colour_input[:s], l: colour_input[:l], a: colour_input[:a], limit_override: true).rgba
+      rgba = HslConverter.new({ h: colour_input[:h], s: colour_input[:s], l: colour_input[:l], a: colour_input[:a] }, limit_override: true).rgba
 
       [rgba[:r], rgba[:g], rgba[:b], rgba[:a]]
     end
