@@ -14,9 +14,11 @@ module ColorConverters
 
     private
 
-    def clamp_input(colour_input)
-      colour_input.each { |key, value| colour_input[key] = value.clamp(*CielchConverter.bounds[key]) }
-    end
+    # def clamp_input(colour_input)
+    #   colour_input = HslStringConverter.sanitize_input(colour_input)
+    #   colour_input.each { |key, value| colour_input[key] = value.to_f.clamp(*HslConverter.bounds[key]) }
+    #   HslStringConverter.rgb_to_rgbstring([colour_input[:h], colour_input[:s], colour_input[:l]], colour_input[:a])
+    # end
 
     def validate_input(colour_input)
       keys = colour_input.include?('hsla(') ? [:h, :s, :l, :a] : [:h, :s, :l]
@@ -46,5 +48,14 @@ module ColorConverters
       h, s, l, a = matches[1]&.split(',')&.map(&:strip)
       { h: h, s: s, l: l, a: a }
     end
+
+    # def self.rgb_to_hslstring(rgb_array_frac, alpha)
+    #   r, g, b = rgb_array_frac
+    #   if alpha == 1.0
+    #     "hsl(#{[r, g, b].join(', ')})"
+    #   else
+    #     "hsla(#{[r, g, b, alpha].join(', ')})"
+    #   end
+    # end
   end
 end

@@ -28,9 +28,9 @@ module ColorConverters
 
     private
 
-    def clamp_input(colour_input)
-      colour_input.each { |key, value| colour_input[key] = value.clamp(*CielchConverter.bounds[key]) }
-    end
+    # def clamp_input(colour_input)
+    #   colour_input.each { |key, value| colour_input[key] = value.clamp(*CielchConverter.bounds[key]) }
+    # end
 
     def validate_input(colour_input)
       self.class.match_name_from_palettes(colour_input).present? ? [] : ['name could not be found across colour collections']

@@ -14,9 +14,9 @@ module ColorConverters
 
     private
 
-    def clamp_input(colour_input)
-      colour_input.each { |key, value| colour_input[key] = value.clamp(*OklabConverter.bounds[key]) }
-    end
+    # def clamp_input(colour_input)
+    #   colour_input.each { |key, value| colour_input[key] = value.clamp(*OklabConverter.bounds[key]) }
+    # end
 
     def validate_input(colour_input)
       OklabConverter.bounds.collect do |key, range|

@@ -14,9 +14,11 @@ module ColorConverters
 
     private
 
-    def clamp_input(colour_input)
-      colour_input.each { |key, value| colour_input[key] = value.clamp(*CielchConverter.bounds[key]) }
-    end
+    # def clamp_input(colour_input)
+    #   colour_input = RgbStringConverter.sanitize_input(colour_input)
+    #   colour_input.each { |key, value| colour_input[key] = value.to_f.clamp(*RgbConverter.bounds[key]) }
+    #   RgbStringConverter.rgb_to_rgbstring([colour_input[:r], colour_input[:g], colour_input[:b]], colour_input[:a])
+    # end
 
     def validate_input(colour_input)
       keys = colour_input.include?('rgba(') ? [:r, :g, :b, :a] : [:r, :g, :b]
@@ -49,5 +51,14 @@ module ColorConverters
       r, g, b, a = matches[1]&.split(',')&.map(&:strip)
       { r: r, g: g, b: b, a: a }
     end
+
+    # def self.rgb_to_rgbstring(rgb_array_frac, alpha)
+    #   r, g, b = rgb_array_frac
+    #   if alpha == 1.0
+    #     "rgb(#{[r, g, b].join(', ')})"
+    #   else
+    #     "rgba(#{[r, g, b, alpha].join(', ')})"
+    #   end
+    # end
   end
 end
