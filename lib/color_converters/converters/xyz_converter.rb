@@ -8,15 +8,19 @@ module ColorConverters
       colour_input.keys - [:x, :y, :z] == []
     end
 
-    def self.d65
-      { x: 95.047, y: 100.0, z: 108.883 }
-    end
-
     def self.bounds
       { x: [0.0, 100.0], y: [0.0, 100.0], z: [0.0, 110.0] }
     end
 
+    def self.d65
+      { x: 95.047, y: 100.0, z: 108.883 }
+    end
+
     private
+
+    # def clamp_input(colour_input)
+    #   colour_input.each { |key, value| colour_input[key] = value.clamp(*XyzConverter.bounds[key]) }
+    # end
 
     def validate_input(colour_input)
       XyzConverter.bounds.collect do |key, range|

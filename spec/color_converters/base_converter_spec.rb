@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe ColorConverters::BaseConverter do
   context 'methods' do
     it 'conversions to colour spaces' do
@@ -83,6 +81,26 @@ RSpec.describe ColorConverters::BaseConverter do
       colour = ColorConverters::Color.new(r: 255, g: 0, b: 197)
       expect(colour.oklab).to eq({ l: 67.12, a: 0.27, b: -0.09 })
       expect(colour.oklch).to eq({ l: 67.12, c: 0.29, h: 342.2 })
+    end
+
+    it 'options' do
+      colour_input = { r: 274, g: 35, b: 37 }
+
+      expect { ColorConverters::Color.new(**colour_input) }.to raise_error(ColorConverters::InvalidColorError)
+      expect { ColorConverters::Color.new(**colour_input, limit_override: true) }.not_to raise_error
+      # expect { ColorConverters::Color.new(**colour_input, limit_clamp: true) }.not_to raise_error
+
+      expect(ColorConverters::Color.new(**colour_input, limit_override: true).rgb).to eq({ r: 274, g: 35, b: 37 })
+      # expect(ColorConverters::Color.new(**colour_input, limit_clamp: true).rgb).to eq({ r: 255, g: 35, b: 37 })
+
+      colour_input = 'rgb(274, 35, 37)'
+
+      expect { ColorConverters::Color.new(colour_input) }.to raise_error(ColorConverters::InvalidColorError)
+      expect { ColorConverters::Color.new(colour_input, limit_override: true) }.not_to raise_error
+      # expect { ColorConverters::Color.new(colour_input, limit_clamp: true) }.not_to raise_error
+
+      expect(ColorConverters::Color.new(colour_input, limit_override: true).rgb).to eq({ r: 274, g: 35, b: 37 })
+      # expect(ColorConverters::Color.new(colour_input, limit_clamp: true).rgb).to eq({ r: 255, g: 35, b: 37 })
     end
 
     it 'conversions (white point)' do

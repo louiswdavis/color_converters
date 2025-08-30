@@ -14,6 +14,10 @@ module ColorConverters
 
     private
 
+    # def clamp_input(colour_input)
+    #   colour_input.each { |key, value| colour_input[key] = value.clamp(*OklchConverter.bounds[key]) }
+    # end
+
     def validate_input(colour_input)
       OklchConverter.bounds.collect do |key, range|
         "#{key} must be between #{range[0]} and #{range[1]}" unless colour_input[key].to_f.between?(*range)

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe ColorConverters::NameConverter do
   context 'methods' do
     it '.matches?' do
@@ -17,6 +15,20 @@ RSpec.describe ColorConverters::NameConverter do
 
     it '.input_to_rgba for strings' do
       expect(described_class.new('blue').rgba).to eq({ r: 0, g: 0, b: 255, a: 1.0 })
+    end
+
+    it 'options' do
+      colour_input = 'bluee'
+
+      expect { described_class.new(colour_input) }.to raise_error(ColorConverters::InvalidColorError)
+      expect { described_class.new(colour_input, limit_override: true) }.not_to raise_error
+      # expect { described_class.new(colour_input, limit_clamp: true) }.not_to raise_error
+
+      expect(described_class.new(colour_input, limit_override: true).rgba).to eq({ r: 0.0, g: 0.0, b: 0.0, a: 0.0 })
+      expect(described_class.new(colour_input, limit_override: true).name).to eq 'black'
+
+      # expect(described_class.new(colour_input, limit_clamp: true).rgba).to eq({ r: 255.0, g: 234.1313178, b: 215.40997709, a: 1.0 })
+      # expect(described_class.new(colour_input, limit_clamp: true).name).to eq({ l: 93.93, a: 4.11, b: 11.65 })
     end
 
     it '.rgb_to_name' do

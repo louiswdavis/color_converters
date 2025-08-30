@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe ColorConverters::CmykConverter do
   context 'methods' do
     it '.matches?' do
@@ -20,6 +18,20 @@ RSpec.describe ColorConverters::CmykConverter do
     it '.input_to_rgba for strings' do
       expect(described_class.new(c: 75, m: 50, y: 0, k: 20).rgba).to eq({ r: 51.0, g: 102.0, b: 204.0, a: 1.0 })
       expect(described_class.new(c: '75', m: '50', y: '0', k: '20').rgba).to eq({ r: 51.0, g: 102.0, b: 204.0, a: 1.0 })
+    end
+
+    it 'options' do
+      colour_input = { c: 187, m: 69, y: 13, k: 41 }
+
+      expect { described_class.new(colour_input) }.to raise_error(ColorConverters::InvalidColorError)
+      expect { described_class.new(colour_input, limit_override: true) }.not_to raise_error
+      # expect { described_class.new(colour_input, limit_clamp: true) }.not_to raise_error
+
+      expect(described_class.new(colour_input, limit_override: true).rgba).to eq({ r: 0.0, g: 46.6395, b: 130.8915, a: 1.0 })
+      expect(described_class.new(colour_input, limit_override: true).cmyk).to eq({ c: 100.0, m: 64.37, y: 0.0, k: 48.67 })
+
+      # expect(described_class.new(colour_input, limit_clamp: true).rgba).to eq({ r: 255.0, g: 234.1313178, b: 215.40997709, a: 1.0 })
+      # expect(described_class.new(colour_input, limit_clamp: true).cmyk).to eq({ l: 93.93, a: 4.11, b: 11.65 })
     end
   end
 

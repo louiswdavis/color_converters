@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe ColorConverters::XyzConverter do
   context 'methods' do
     it '.matches?' do
@@ -20,6 +18,20 @@ RSpec.describe ColorConverters::XyzConverter do
     it '.input_to_rgba for strings' do
       expect(described_class.new(x: 17.0157, y: 14.5662, z: 59.0415).rgba).to eq({ r: 51.03548592, g: 101.99999871, b: 203.99678845, a: 1.0 })
       expect(described_class.new(x: '17.0157', y: '14.5662', z: '59.0415').rgba).to eq({ r: 51.03548592, g: 101.99999871, b: 203.99678845, a: 1.0 })
+    end
+
+    it 'options' do
+      colour_input = { x: 174, y: 135, z: 137 }
+
+      expect { described_class.new(colour_input) }.to raise_error(ColorConverters::InvalidColorError)
+      expect { described_class.new(colour_input, limit_override: true) }.not_to raise_error
+      # expect { described_class.new(colour_input, limit_clamp: true) }.not_to raise_error
+
+      expect(described_class.new(colour_input, limit_override: true).rgba).to eq({ r: 255.0, g: 243.80279203, b: 255.0, a: 1.0 })
+      expect(described_class.new(colour_input, limit_override: true).xyz).to eq({ x: 91.58, y: 93.06, z: 107.75 })
+
+      # expect(described_class.new(colour_input, limit_clamp: true).rgba).to eq({ r: 255.0, g: 234.1313178, b: 215.40997709, a: 1.0 })
+      # expect(described_class.new(colour_input, limit_clamp: true).xyz).to eq({ l: 93.93, a: 4.11, b: 11.65 })
     end
   end
 

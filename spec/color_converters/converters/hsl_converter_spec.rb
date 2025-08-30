@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe ColorConverters::HslConverter do
   context 'methods' do
     it '.matches?' do
@@ -21,6 +19,20 @@ RSpec.describe ColorConverters::HslConverter do
     it '.input_to_rgba for strings' do
       expect(described_class.new(h: 220.0, s: 60, l: 50).rgba).to eq({ r: 51.0, g: 102.0, b: 204.0, a: 1.0 })
       expect(described_class.new(h: '220.0', s: '60', l: '50').rgba).to eq({ r: 51.0, g: 102.0, b: 204.0, a: 1.0 })
+    end
+
+    it 'options' do
+      colour_input = { h: 374, s: 35, l: 37 }
+
+      expect { described_class.new(colour_input) }.to raise_error(ColorConverters::InvalidColorError)
+      expect { described_class.new(colour_input, limit_override: true) }.not_to raise_error
+      # expect { described_class.new(colour_input, limit_clamp: true) }.not_to raise_error
+
+      expect(described_class.new(colour_input, limit_override: true).rgba).to eq({ r: 127.3725, g: 76.738, b: 61.3275, a: 1.0 })
+      expect(described_class.new(colour_input, limit_override: true).hsl).to eq({ h: 14.0, s: 35.0, l: 37.0 })
+
+      # expect(described_class.new(colour_input, limit_clamp: true).rgba).to eq({ r: 255.0, g: 234.1313178, b: 215.40997709, a: 1.0 })
+      # expect(described_class.new(colour_input, limit_clamp: true).hsl).to eq({ l: 93.93, a: 4.11, b: 11.65 })
     end
   end
 

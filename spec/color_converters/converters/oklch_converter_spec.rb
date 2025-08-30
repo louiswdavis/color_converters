@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe ColorConverters::OklchConverter do
   context 'methods' do
     it '.matches?' do
@@ -20,6 +18,20 @@ RSpec.describe ColorConverters::OklchConverter do
     it '.input_to_rgba for strings' do
       expect(described_class.new(l: 53, c: 0.17, h: 260, space: :ok).rgba).to eq({ r: 40.88007918, g: 102.47077623, b: 203.95430287, a: 1.0 })
       expect(described_class.new(l: '53', c: '0.17', h: '260', space: 'ok').rgba).to eq({ r: 40.88007918, g: 102.47077623, b: 203.95430287, a: 1.0 })
+    end
+
+    it 'options' do
+      colour_input = { l: 174, c: 35, h: 37, space: :ok }
+
+      expect { described_class.new(colour_input) }.to raise_error(ColorConverters::InvalidColorError)
+      expect { described_class.new(colour_input, limit_override: true) }.not_to raise_error
+      # expect { described_class.new(colour_input, limit_clamp: true) }.not_to raise_error
+
+      expect(described_class.new(colour_input, limit_override: true).rgba).to eq({ r: 255.0, g: 255.0, b: 0.0, a: 1.0 })
+      expect(described_class.new(colour_input, limit_override: true).oklch).to eq({ l: 96.8, c: 0.21, h: 109.77 })
+
+      # expect(described_class.new(colour_input, limit_clamp: true).rgba).to eq({ r: 255.0, g: 234.1313178, b: 215.40997709, a: 1.0 })
+      # expect(described_class.new(colour_input, limit_clamp: true).oklch).to eq({ l: 93.93, a: 4.11, b: 11.65 })
     end
   end
 

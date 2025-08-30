@@ -1,5 +1,8 @@
 # Color Converters
 
+[![Gem Version](https://badge.fury.io/rb/color_converters.svg)](https://badge.fury.io/rb/color_converters)
+![Static Badge](https://img.shields.io/badge/RubyGems-red?link=https%3A%2F%2Frubygems.org%2Fgems%color_converters)
+
 > Give me a colour and I'll convert it.
 
 Color Converters is an ruby gem package for use in ruby or other projects that provides conversions for colours to other colour spaces.
@@ -91,6 +94,7 @@ colour = ColorConverters::Color.new("hsl(225, 73%, 57%, 0.5)")
 Converters
 
 ```ruby
+colour = ColorConverters::Color.new("rgba(70, 130, 180, 0.5)")
 colour = ColorConverters::Color.new(r: 70, g: 130, b: 180, a: 0.5)
 
 colour.alpha
@@ -142,16 +146,21 @@ The space parameter allows that, with examples in the usage code above
 
 ```ruby
 ColorConverters::Color.new(l: 64, a: 28, b: -15, space: :cie)
-ColorConverters::Color.new(l: 64, a: 28, b: -15, space: :ok)
+ColorConverters::Color.new(l: 64, a: 0.28, b: -0.15, space: :ok)
 ```
 
 ### limit_override
 
-By default all values are checked to be within the expected number ranges, i.e.; rgb between 0-255 each.
+By default all values are checked to be within the expected number ranges, i.e.; rgb between 0-255 each but there are certain spaces where this is less fixed which this option is purposed for.
 This parameter allows you to ignore those ranges and submit any values you want.
+**WARNING: even if you use this, there may be certain conversions that can not handle the large source values; e.g.**
 
 ```ruby
-ColorConverters::Color.new(r: 270, g: 1300, b: 380, a: 0.5, limit_override: true)
+ColorConverters::Color.new(r: 270, g: 1300, b: 380, a: 0.5, limit_override: true).rgb
+=> {r: 270.0, g: 1300.0, b: 380.0}
+
+ColorConverters::Color.new(x: 174, y: 135, z: 137, limit_override: true).xyz
+=> {x: 91.58, y: 93.06, z: 107.75}
 ```
 
 ### fuzzy

@@ -22,20 +22,18 @@ module ColorConverters
       BaseConverter.converters << subclass
     end
 
-    def self.factory(colour)
-      converter = BaseConverter.converters.find { |klass| klass.matches?(colour) }
-      converter&.new(colour)
+    def self.factory(colour_input, limit_override = false, limit_clamp = false)
+      converter = BaseConverter.converters.find { |klass| klass.matches?(colour_input) }
+      converter&.new(colour_input, limit_override, limit_clamp)
     end
 
-    def initialize(colour_input, limit_override = false)
-      @original_value = colour_input
+    def initialize(colour_input, limit_override = false, limit_clamp = false)
+      colour_input.delete(:space) if colour_input.is_a?(Hash)
 
-      # self.clamp_input(colour_input) if limit_clamp == true
+      # colour_input = self.clamp_input(colour_input) if limit_clamp == true
 
-      validation_errors = self.validate_input(colour_input)
-      if limit_override == false && validation_errors.present?
-        raise InvalidColorError, "Invalid color input: #{validation_errors.join(', ')}" # validation method is defined in each convertor
-      end
+      validation_errors = self.validate_input(colour_input) # validation method is defined in each convertor
+      raise InvalidColorError, "Invalid color input: #{validation_errors.join(', ')}" if limit_override == false && validation_errors.present?
 
       r, g, b, a = self.input_to_rgba(colour_input) # conversion method is defined in each convertor
 
