@@ -1,12 +1,12 @@
 # Color Converters
 
-[![Gem Version](https://badge.fury.io/rb/color_converters.svg)](https://badge.fury.io/rb/color_converters)
-![Static Badge](https://img.shields.io/badge/RubyGems-red?link=https%3A%2F%2Frubygems.org%2Fgems%color_converters)
+![Gem Version](https://badge.fury.io/rb/color_converters.svg)
+[![Static Badge](https://img.shields.io/badge/RubyGems-red)](https://rubygems.org/gems/color_converters)
 
 > Give me a colour and I'll convert it.
 
 Color Converters is an ruby gem package for use in ruby or other projects that provides conversions for colours to other colour spaces.
-Given a colour in [Hexadecimal, RGA(A), HSL(A), HSV, HSB, CMYK, XYZ, CIELAB, or OKLCH format](https://github.com/devrieda/color_conversion), it can convert the colour to those other spaces.
+Given a colour in Hexadecimal, RGA(A), HSL(A), HSV, HSB, CMYK, XYZ, CIELAB, or OKLCH format, it can convert the colour to those other spaces.
 
 > Lab and LCH colour spaces are special in that the perceived difference between two colours is proportional to their Euclidean distance in colour space. This special property, called perceptual uniformity, makes them ideal for accurate visual encoding of data. In contrast, the more familiar RGB and HSL colour spaces distort data when used for visualization.
 
@@ -191,7 +191,7 @@ Bug reports and pull requests are welcome on GitHub at <https://github.com/louis
 
 ## License
 
-Forked from original gem by Derek DeVries.
+Forked from [original gem](https://github.com/devrieda/color_conversion) by Derek DeVries.
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
 
 ## Code of Conduct
