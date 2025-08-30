@@ -30,7 +30,7 @@ module ColorConverters
     def initialize(colour_input, limit_override, limit_clamp)
       colour_input.delete(:space) if colour_input.is_a?(Hash)
 
-      colour_input = self.clamp_input(colour_input) if limit_clamp == true
+      # colour_input = self.clamp_input(colour_input) if limit_clamp == true
 
       validation_errors = self.validate_input(colour_input) # validation method is defined in each convertor
       raise InvalidColorError, "Invalid color input: #{validation_errors.join(', ')}" if limit_override == false && validation_errors.present?
