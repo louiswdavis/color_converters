@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe ColorConverters::BaseConverter do
   context 'methods' do
     it 'conversions to colour spaces' do
