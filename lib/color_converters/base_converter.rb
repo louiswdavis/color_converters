@@ -22,12 +22,12 @@ module ColorConverters
       BaseConverter.converters << subclass
     end
 
-    def self.factory(colour_input, limit_override, limit_clamp)
+    def self.factory(colour_input, limit_override = false, limit_clamp = false)
       converter = BaseConverter.converters.find { |klass| klass.matches?(colour_input) }
       converter&.new(colour_input, limit_override, limit_clamp)
     end
 
-    def initialize(colour_input, limit_override, limit_clamp)
+    def initialize(colour_input, limit_override = false, limit_clamp = false)
       colour_input.delete(:space) if colour_input.is_a?(Hash)
 
       # colour_input = self.clamp_input(colour_input) if limit_clamp == true

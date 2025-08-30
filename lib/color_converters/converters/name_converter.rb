@@ -37,11 +37,9 @@ module ColorConverters
     end
 
     def input_to_rgba(colour_input)
-      found_colour = self.class.match_name_from_palettes(colour_input)
+      found_colour = self.class.match_name_from_palettes(colour_input) || ''
 
-      raise InvalidColorError unless found_colour.present?
-
-      HexConverter.hex_to_rgba(found_colour)
+      HexConverter.hex_to_rgba(found_colour) if found_colour.present?
     end
 
     # this is a checking for a direct naming match against the ColorSwatchCollection
