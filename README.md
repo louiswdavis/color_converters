@@ -1,5 +1,8 @@
 # Color Converters
 
+[![Gem Version](https://badge.fury.io/rb/color_converters.svg)](https://badge.fury.io/rb/color_converters)
+![Static Badge](https://img.shields.io/badge/RubyGems-red?link=https%3A%2F%2Frubygems.org%2Fgems%color_converters)
+
 > Give me a colour and I'll convert it.
 
 Color Converters is an ruby gem package for use in ruby or other projects that provides conversions for colours to other colour spaces.
