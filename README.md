@@ -1,6 +1,6 @@
 # Color Converters
 
-![Gem Version](https://badge.fury.io/rb/color_converters.svg)
+[![Gem Version](https://badge.fury.io/rb/color_converters.svg)](https://badge.fury.io/rb/color_converters)
 [![Static Badge](https://img.shields.io/badge/RubyGems-red)](https://rubygems.org/gems/color_converters)
 
 > Give me a colour and I'll convert it.
