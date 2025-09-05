@@ -40,6 +40,7 @@ If yes, please describe the impact and migration path for existing applications:
 6. [ ] Screenshots
 7. [ ] Run Full Spec Suite
 8. [ ] Requested Reviews
+9. [ ] Changed the Version
 
 ## Other information?
 
