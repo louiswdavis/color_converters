@@ -14,7 +14,7 @@ A list of possible features and how they are progressing
 | Clamp Override | Add clamping of colour values to bounds | 🚧 |  |
 | Improve OK conversions | They are reliable from OK to RGB but less so in the opposite direction. Try calling inverse on the matrixes that work in the conversion method | 🔍 |  |
 | Remove ::Color | Remove the sub-class and have the init be called from the base class | 🔍 |  |
-|  |  | 🔍 |  |
+| Global Config | Allow for a global config so that options like import and output dp can be set | 🔍 |  |
 
 ## Status Legend
 
